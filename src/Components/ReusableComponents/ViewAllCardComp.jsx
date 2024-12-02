@@ -1,0 +1,45 @@
+import { FaStar } from "react-icons/fa6";
+
+// const movieCardData={
+//     image:"https://www.wallsnapy.com/img_gallery/latest-amaran-sk-movie-wallpaper-1200px-548339.jpg",
+//     movieName:"Amaran",
+//     certificate:"UA",
+//     languages:"Tamil",
+//     ratings:"9.2/10",
+//     views:"12.3k"
+// };
+
+const ViewAllCard = ({ data }) => {
+  const { image, movieName, certificate, languages, ratings, views } = data;
+
+  return (
+    <div className={`h-[400px] w-full relative max-sm:h-[450px] shadow-sm shadow-gray-800 rounded-lg hover:-translate-y-1 hover:shadow-md transition hover:shadow-gray-800`}>
+      <div className="w-full h-full overflow-hidden rounded-lg  bg-slate-400 absolute top-0">
+        <img className={`w-full h-full object-cover rounded-lg`} src={image} alt="" />
+
+      </div>
+      <div
+        className={`w-full h-[120px] absolute bottom-0 opacity-90 flex items-start justify-evenly px-2 flex-col bg-[#181921] rounded-b-lg`}
+      ></div>
+      <div
+        className={`w-full h-[120px] absolute bottom-0 flex items-start justify-evenly px-2 flex-col rounded-b-lg`}
+      >
+        <h2 className={`font-semibold text-white`}>{movieName}</h2>
+        <h4 className={`font-medium text-gray-200`}>{certificate}</h4>
+        <h4 className={`font-medium text-sm text-gray-200`}>{languages}</h4>
+        <div className={` w-full flex justify-between items-center text-white`}>
+          <span className={`w-full flex justify-start items-center gap-1`}>
+            <FaStar className={`text-yellow-500`} />
+            {ratings}
+          </span>
+          <span className={`w-full flex justify-end gap-1 items-center`}>
+            <span className={`font-medium text-gray-200`}>Views</span>
+            {views}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ViewAllCard;
