@@ -1,16 +1,9 @@
-// import MovieCard from "../ReusableComponents/CardComponent";
-// import NavBar from "../ReusableComponents/NavbarComponent";
-// import Hero from "./HeroSectionComp";
-
-import { Link } from "react-router-dom";
-import MovieCard from "../Components/ReusableComponents/ViewAllCardComp";
 import Hero from "../Components/ReusableComponents/HeroSectionComp";
 import NavBar from "../Components/ReusableComponents/NavbarComponent";
 import MovieCarousel from "../Components/ReusableComponents/MovieCarouselComp";
 import ViewAllMovie from "../Components/ReusableComponents/ViewAllMoviesComp";
 import { useState } from "react";
 import Footer from "../Components/ReusableComponents/FooterComponent";
-// import MovieCarousel from "../Components/ReusableComponents/Card";
 const movieData = [
   {
     image:
