@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 const sideBarList = [
   {
     page: "Home",
-    path: "/home",
+    path: "/",
     icon: <AiTwotoneHome className="text-xl text-gray-400" />,
   },
   {

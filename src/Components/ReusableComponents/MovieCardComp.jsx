@@ -1,7 +1,10 @@
 import { FaStar } from "react-icons/fa";
 
 const MovieCard = ({ data }) => {
-    const { image, movieName, certificate, languages, ratings, views } = data;
+  const backendURL= "http://localhost:7000"
+  const { fileName, title, certificate, language } = data;
+  const views="234k";
+  const ratings="8.4/10";
   
     return (
       <div
@@ -10,8 +13,8 @@ const MovieCard = ({ data }) => {
         <div className="w-full h-full overflow-hidden rounded-lg bg-slate-400 absolute top-0">
           <img
             className={`w-full h-full object-cover rounded-lg`}
-            src={image}
-            alt=""
+            src={`${backendURL}/upload/${fileName}`}
+            alt={title}
           />
         </div>
         <div
@@ -20,9 +23,9 @@ const MovieCard = ({ data }) => {
         <div
           className={`w-full h-[120px] absolute bottom-0 flex items-start justify-evenly px-2 flex-col rounded-b-lg`}
         >
-          <h2 className={`font-semibold text-white`}>{movieName}</h2>
+          <h2 className={`font-semibold text-white`}>{title}</h2>
           <h4 className={`font-medium text-gray-200`}>{certificate}</h4>
-          <h4 className={`font-medium text-sm text-gray-200`}>{languages}</h4>
+          <h4 className={`font-medium text-sm text-gray-200`}>{language}</h4>
           <div
             className={`w-full flex justify-between items-center text-white`}
           >

@@ -15,22 +15,23 @@ import { FiSearch } from "react-icons/fi";
 
 
 const menuList = [
-  { page: "Home", path: "/home" },
+  { page: "Home", path: "/" },
   { page: "Movies", path: "/movies" },
-  { page: "Theater", path: "/theater" },
+  { page: "Theatre", path: "/theatre" },
   { page: "My Tickets", path: "/mytickets" },
   { page: "Insights", path: "/insights" },
 ];
 
 const movieOptions = [
   { name: "Kollywood", path: "/movies/kollywood" },
-  { name: "Hollywood", path: "/movies/hollywood" },
+  { name: "Tollywood", path: "/movies/tollywood" },
   { name: "Mollywood", path: "/movies/mollywood" },
+  { name: "Hollywood", path: "/movies/hollywood" },
 ];
 
 const dropdownOptions = [
   { name: "Profile", path: "/profile",icon:<FaRegUser className="text-gray-400 font-bold" /> },
-  { name: "SignIn", path: "/" ,icon:<LiaSignInAltSolid className="text-gray-400 font-bold" />},
+  { name: "SignIn", path: "/login" ,icon:<LiaSignInAltSolid className="text-gray-400 font-bold" />},
 ];
  
 
@@ -54,7 +55,7 @@ const NavBar = () => {
       <div className="w-screen min-h-20 flex bg-gray-800 items-center justify-between">
         <div className="max-w-[300px] px-6 min-h-20 flex items-center justify-start">
           <img
-          className="h-16 w-40"
+          className="w-36"
           src={Logo} alt="" />
         </div>
 

@@ -35,8 +35,8 @@ const Login =()=>{
       await axios
         .post("http://localhost:7000/su/login", formData)
         .then((res) => {
+          localStorage.clear();
           localStorage.setItem("token", res.data.token);
-          localStorage.setItem("adminId",res.data.findEmail._id)
           toast.success(res.data.Message);
           setFormData(initialState);
           navigate("/home");
@@ -67,12 +67,12 @@ const Login =()=>{
       await axios
         .post("http://localhost:7000/user/googlelogin", data)
         .then((res) => {
-          // localStorage.setItem("token", res.data.token);
+          localStorage.clear();
+          localStorage.setItem("token", res.data.token);
           // localStorage.setItem("userId",res.data.savedUser._id)
-          console.log(res.data.savedUser);
           toast.success(res.data.Message);
           setFormData(initialState);
-          navigate("/home");
+          navigate("/");
         })
         .catch((err) => {
           console.log(err);
