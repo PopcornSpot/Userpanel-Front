@@ -8,6 +8,7 @@ import TheaterCard from "../../pages/TheatrePage";
 import Kollywood from "../../pages/Kollywoodpage";
 import Tollywood from "../../pages/TollywoodPage";
 import Mollywood from "../../pages/MollyWoodPage";
+import AutoLocation from "./LocationComponent";
 // import AddMovieForm from "../../pages/MovieAddingPage";
 // import MovieFormDemo from "../../pages/ExampleForm";
 // import MovieList from "../../pages/ExampleForm";
@@ -28,7 +29,7 @@ const ParentRouter = () => {
           <Route path="/movies/kollywood" element={<Kollywood/>}/>
           <Route path="/movies/tollywood" element={<Tollywood/>}/>
           <Route path="/movies/mollywood" element={<Mollywood/>}/>
-         
+      
         </Routes>
         
     );
