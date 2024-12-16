@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavbarComponent";
+import Footer from "./FooterComponent"
 
 const MyTickets = () => {
   const tickets = [
@@ -18,56 +19,68 @@ const MyTickets = () => {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFATsenf3axqsp8QZIjOn9LiXSPkSs5n8dfA&s",
       movieName: "Vidaamuyarchi",
       dateTime: "2024-12-06, 5:00 PM",
-      ticketStatus: "Booked",
+      ticketStatus: "pending..",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300">
-      <NavBar />
-      <div className="py-10 text-start px-">
-        <h1 className="text-4xl font-bold text-gray-800 mt-12">My Tickets</h1>
-        
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200">
+
+      <div className="fixed top-0 left-0 w-full z-50">
+        <NavBar />
       </div>
-      <div className="container mx-auto px-4 py-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+
+      <div className="pt-24 pl-10">
+        <h1 className="text-3xl font-bold  mb-4">
+          My Tickets
+        </h1>
+      </div>
+
+
+      <div className="container mx-auto px-6 py-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {tickets.map((ticket) => (
           <div
             key={ticket.id}
-            className="bg-white shadow-md rounded-lg flex flex-col sm:flex-row overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            className="bg-white rounded-lg shadow-lg hover:shadow-2xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300 flex flex-row"
           >
-            {/* Movie Image */}
+
             <img
               src={ticket.movieImage}
               alt={ticket.movieName}
-              className="w-full sm:w-40 h-40 sm:h-auto object-cover"
+              className="w-1/3 object-cover h-auto"
             />
-            {/* Ticket Details */}
-            <div className="p-4 flex flex-col items-start justify-center gap-3">
-              <h3 className="text-xl font-semibold text-gray-900">
+
+
+            <div className="p-6 flex flex-col justify-center gap-3 w-2/3">
+              <h3 className="text-2xl font-semibold text-gray-800">
                 {ticket.movieName}
               </h3>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="text-gray-600">
                 <span className="font-medium">Date & Time:</span> {ticket.dateTime}
               </p>
               <p
-                className={`mt-2 text-sm ${ticket.ticketStatus === "Booked"
-                  ? "text-green-600"
-                  : "text-red-600"
+                className={`text-sm ${ticket.ticketStatus === "Booked" ? "text-green-600" : "text-red-600"
                   }`}
               >
                 <span className="font-medium">Status:</span> {ticket.ticketStatus}
               </p>
-              
-                <Link to={`/tickets/${ticket.id}`}>
-                  <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full">
-                    View Ticket
-                  </button>
-                </Link>
-              
+
+            
+              <Link to={`/tickets/${ticket.id}`}>
+                <button className="mt-4 bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300">
+                  View Ticket
+                </button>
+              </Link>
             </div>
           </div>
         ))}
+
       </div>
+      <div>
+        <Footer/>
+      </div>
+
     </div>
   );
 };
