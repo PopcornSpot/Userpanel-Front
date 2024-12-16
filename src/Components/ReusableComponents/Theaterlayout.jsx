@@ -119,7 +119,7 @@ const TheaterLayout = () => {
 
 
       <div className="flex gap-4 mt-6">
-        <Link>
+        <Link to={"/payment"}>
           <button
             className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:scale-105"
           >

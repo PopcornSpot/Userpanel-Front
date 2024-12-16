@@ -1,96 +1,101 @@
 import React from "react";
 import image from "../../assets/LoginImagebg.jpg";
-import PropTypes from "prop-types";
-import {
-  PencilSquareIcon,
-  UserPlusIcon,
-  RectangleStackIcon,
-} from "@heroicons/react/24/outline";
+import { FaPencilAlt, FaUserFriends, FaWallet } from "react-icons/fa";
+import NavBar from "./NavbarComponent";
+import Footer from "./FooterComponent";
 
 const ProfileCard = ({ title, value }) => (
-  <div className="bg-white shadow-md p-6 rounded-lg text-center">
+  <div className="bg-white shadow-lg p-6 rounded-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-200">
     <p className="text-lg font-semibold text-gray-600">{title}</p>
-    <p className="text-2xl font-bold text-gray-800 mt-2">{value}</p>
+    <p className="text-3xl font-bold text-gray-800 mt-2">{value}</p>
   </div>
 );
 
-ProfileCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-};
-
 const ActionButton = ({ icon: Icon, label, colorClass }) => (
   <button
-    className={`${colorClass} text-white py-2 px-4 rounded-lg shadow-md hover:opacity-90 transition duration-200 flex items-center gap-2`}
+    className={`${colorClass} text-white py-3 px-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2`}
   >
     <Icon className="w-5 h-5" />
     {label}
   </button>
 );
 
-ActionButton.propTypes = {
-  icon: PropTypes.elementType.isRequired,
-  label: PropTypes.string.isRequired,
-  colorClass: PropTypes.string.isRequired,
-};
-
 const UserProfile = () => {
+  const userDetails = [
+    { label: "Name", value: "Delli Babu" },
+    { label: "Email", value: "delli@gmail.com" },
+    { label: "Phone", value: "8248912249" },
+    { label: "Gender", value: "Male" },
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-100">
-      {/* Profile Header */}
-      <div className="mb-6">
-        <div className="p-4 text-lg font-semibold border-b border-gray-300 shadow-sm bg-white">
+    <div className="w-full bg-gray-100 min-h-screen">
+      <div className="w-full fixed top-0 z-50 bg-white shadow-md">
+        <NavBar />
+      </div>
+
+      
+      <div className="mt-24 mb-6">
+        <div className="p-6 text-2xl font-bold  text-start ml-5">
           Profile
         </div>
       </div>
 
-      {/* User Information Section */}
-      <div className="flex flex-col md:flex-row items-center md:items-start justify-between bg-white p-6 rounded-lg shadow-md mb-6">
-        {/* Profile Picture */}
-        <div className="mb-4 md:mb-0">
-          <img
-            src={image}
-            alt="User Profile"
-            className="w-44 h-44 border-4 border-gray-200 shadow-md rounded-full"
-          />
+     
+      <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-10 bg-white p-8 rounded-lg shadow-lg mb-8 mx-4 md:mx-10">
+      
+        <div className="relative">
+          <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
+            <img
+              src={image}
+              alt="User Profile"
+              className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
+            />
+          </div>
         </div>
 
-        {/* User Details */}
+        
         <div className="flex flex-col gap-4 text-lg text-gray-700">
-          <p><span className="font-semibold">Name:</span> Mani</p>
-          <p><span className="font-semibold">Email:</span> mani@gmail.com</p>
-          <p><span className="font-semibold">Phone:</span> 8248912249</p>
-          <p><span className="font-semibold">Gender:</span> Male</p>
+          {userDetails.map((detail, index) => (
+            <p key={index}>
+              <span className="font-semibold text-gray-800">{detail.label}:</span>{" "}
+              {detail.value}
+            </p>
+          ))}
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-4 md:mt-0 flex flex-col gap-4">
+       
+        <div className="flex flex-col gap-4">
           <ActionButton
-            icon={PencilSquareIcon}
+            icon={FaPencilAlt}
             label="Edit Profile"
-            colorClass="bg-green-500"
+            colorClass="bg-gradient-to-r from-green-500 to-green-600"
           />
           <ActionButton
-            icon={UserPlusIcon}
+            icon={FaUserFriends}
             label="Friends"
-            colorClass="bg-yellow-500"
+            colorClass="bg-gradient-to-r from-yellow-500 to-yellow-600"
           />
           <ActionButton
-            icon={RectangleStackIcon}
+            icon={FaWallet}
             label="Subscriptions"
-            colorClass="bg-purple-500"
+            colorClass="bg-gradient-to-r from-purple-500 to-purple-600"
           />
         </div>
       </div>
 
-      {/* Statistics Section */}
-      <div>
-        <h1 className="text-xl font-bold text-gray-700 mb-4">Statistics</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      
+      <div className="mx-4 md:mx-10">
+        <h1 className="text-2xl font-bold  mb-6">Statistics</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <ProfileCard title="Total Money Spent" value="$2000" />
           <ProfileCard title="Total Tickets" value="5" />
           <ProfileCard title="Action Movie Preference" value="70%" />
         </div>
+      </div>
+
+      <div className="mt-10 bg-gray-100">
+        <Footer />
       </div>
     </div>
   );
