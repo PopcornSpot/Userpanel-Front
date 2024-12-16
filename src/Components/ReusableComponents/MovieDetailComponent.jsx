@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const PersonCard = ({ image, name, role }) => (
   <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -17,20 +19,53 @@ const PersonCard = ({ image, name, role }) => (
 );
 
 const MovieDetailComponent = () => {
-  const cast = [
-    { id: 1, name: "Ajith Kumar", role: "Actor", image: "https://via.placeholder.com/100" },
-    { id: 2, name: "Arjun", role: "Actor", image: "https://via.placeholder.com/100" },
-    { id: 3, name: "Thrisha", role: "Actor", image: "https://via.placeholder.com/100" },
-    { id: 4, name: "Delli Babu", role: "Actor", image: "https://via.placeholder.com/100" },
-  ];
+const [movie,setMovie] =useState({});
+const { _id } = useParams();
+const backendURL= "http://localhost:7000"
 
-  const crew = [
-    { id: 1, name: "Makizh Thirumeni", role: "Director", image: "https://via.placeholder.com/100" },
-    { id: 2, name: "LYCA", role: "Producer", image: "https://via.placeholder.com/100" },
-    { id: 3, name: "Aniruth Ravichander", role: "Musician", image: "https://via.placeholder.com/100" },
-    { id: 4, name: "K.G. Venkatesh", role: "Cinematographer", image: "https://via.placeholder.com/100" },
-    { id: 5, name: "Dinesh Ponraj", role: "Editor", image: "https://via.placeholder.com/100" },
-  ];
+
+  // const crew = [
+  //   { id: 1, name: "Makizh Thirumeni", role: "Director", image: "https://via.placeholder.com/100" },
+  //   { id: 2, name: "LYCA", role: "Producer", image: "https://via.placeholder.com/100" },
+  //   { id: 3, name: "Aniruth Ravichander", role: "Musician", image: "https://via.placeholder.com/100" },
+  //   { id: 4, name: "K.G. Venkatesh", role: "Cinematographer", image: "https://via.placeholder.com/100" },
+  //   { id: 5, name: "Dinesh Ponraj", role: "Editor", image: "https://via.placeholder.com/100" },
+  // ];
+
+
+
+  const fetchMovieForUpdate = async () => {
+    try {
+      await axios
+        .get(`http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`,
+        )
+        .then((res) => {
+          toast.success(res.data.Message);
+          toast.error(res.data.Error)
+          setMovie(res.data.movie);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.Message)
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
+  const cast = [
+    { id: 1, name: movie.hero, role: "Hero", image: "https://via.placeholder.com/100" },
+    { id: 2, name:movie.heroine, role: "Heroine", image: "https://via.placeholder.com/100" },
+    { id: 3, name:movie.music, role: "Music", image: "https://via.placeholder.com/100" },
+    { id: 4, name:movie.director, role: "Director", image: "https://via.placeholder.com/100" },
+  ]; 
+  
+  
+  useEffect(() => {
+   fetchMovieForUpdate();
+  }, [])
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex flex-col items-center">
@@ -41,27 +76,29 @@ const MovieDetailComponent = () => {
       <div className="container mx-auto px-6 py-8 mt-20">
         <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-lg overflow-hidden h-auto w-full">
           <div className="w-full lg:w-1/3 flex items-center justify-center">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqQboFYtw-OBMj7dz5jl3sLhYFsDu5i_9Utg&s"
-              alt="Pushpa 2 Movie Poster"
-              className="w-[400px] h-[400px] object-cover rounded-lg"
+           <Link to={movie.trailerUrl}>
+           <img
+               src={`${backendURL}/upload/${movie.fileName}`}
+              alt={movie.title}
+              className="w-[400px] h-[500px] object-cover rounded-l-lg"
             />
+           </Link>
           </div>
 
           <div className="w-full lg:w-2/3 p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white flex flex-col justify-between gap-8">
             <div>
-              <h1 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">Pushpa 2</h1>
+              <h1 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">{movie.title}</h1>
               <div className="flex items-center gap-3 text-lg mb-4">
                 <span className="text-yellow-400 text-2xl font-bold">★ 7.5/10</span>
                 <span className="text-gray-300">(67 Votes)</span>
               </div>
-              <p className="text-lg tracking-wide text-gray-300 mb-2">2D • Tamil, Telugu</p>
-              <p className="text-lg tracking-wide text-gray-300">2h 8m • Comedy, Romantic • U • 13 Dec, 2024</p>
+              <p className="text-lg tracking-wide text-gray-300 mb-2">{movie.format} • {movie.language}</p>
+              <p className="text-lg tracking-wide text-gray-300">{movie.duration} • {movie.genre} • {movie.certificate} • {movie.releaseDate}</p>
             </div>
             <div>
               <h2 className="text-2xl font-bold mb-4">About the Movie</h2>
               <p className="leading-relaxed text-gray-300 text-lg tracking-wide">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae modi nostrum placeat architecto. Non unde ex illum enim vel placeat debitis nulla, aut dicta explicabo fugit voluptatum laborum itaque sit.
+              {movie.synopsis}
               </p>
             </div>
             <Link to={"/theaterlayout"}>
@@ -88,7 +125,7 @@ const MovieDetailComponent = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      {/* <div className="container mx-auto px-6 py-8">
         <h2 className="text-3xl font-bold mb-8 text-gray-800 underline decoration-4 decoration-gray-500 hover:decoration-orange-500 transition-all">
           Crew
         </h2>
@@ -97,7 +134,7 @@ const MovieDetailComponent = () => {
             <PersonCard key={person.id} image={person.image} name={person.name} role={person.role} />
           ))}
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </div>
