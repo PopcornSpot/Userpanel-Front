@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
+import { Link } from "react-router-dom";
 
 const PersonCard = ({ image, name, role }) => (
   <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -63,12 +64,15 @@ const MovieDetailComponent = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae modi nostrum placeat architecto. Non unde ex illum enim vel placeat debitis nulla, aut dicta explicabo fugit voluptatum laborum itaque sit.
               </p>
             </div>
+            <Link to={"/theaterlayout"}>
             <button 
               className="w-[200px] bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105 self-start cursor-pointer" 
               aria-label="Book tickets for Pushpa 2"
             >
               Book Tickets
             </button>
+            </Link>
+            
           </div>
         </div>
       </div>

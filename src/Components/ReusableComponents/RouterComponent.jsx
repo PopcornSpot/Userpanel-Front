@@ -9,6 +9,7 @@ import Kollywood from "../../pages/Kollywoodpage";
 import Tollywood from "../../pages/TollywoodPage";
 import Mollywood from "../../pages/MollyWoodPage";
 import MovieDetailComponent from "./MovieDetailComponent";
+import TheaterLayout from "./Theaterlayout";
 import RegisterFormPage from "../../pages/RegisterPage";
 // import RegisterForm from "../../pages/RegisterPage";
 // import AddMovieForm from "../../pages/MovieAddingPage";
@@ -32,6 +33,7 @@ const ParentRouter = () => {
           <Route path="/movies/tollywood" element={<Tollywood/>}/>
           <Route path="/movies/mollywood" element={<Mollywood/>}/>
           <Route path="/moviedetail" element={<MovieDetailComponent/>}/>
+          <Route path="/theaterlayout" element={<TheaterLayout/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
         </Routes>
         
