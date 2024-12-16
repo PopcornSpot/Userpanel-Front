@@ -108,7 +108,6 @@ src={LoginImage} alt="LoginImage" />
        <img 
     className="w-40 h-16"
     src={logo} alt="" />
-        {/* <h2 className="w-full text-xl font-semibold text-center mb-2">Welcome</h2> */}
          <div className="w-[90%]">
         <GoogleLogin
           text="continue_with"
@@ -170,11 +169,7 @@ src={LoginImage} alt="LoginImage" />
     <section>
     
     <div className="flex justify-center items-center bg-gray-100">
-      
     </div>
-
-           
-    
     </section>
 </div>    
 </div>

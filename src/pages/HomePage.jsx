@@ -19,11 +19,6 @@ const filterMoviesByDate = (movieData,setNewMovies,setUpcomingMovies) => {
 };
 
 
-
-
-
-
-
 const Home = () => {
   const [viewAll, setViewAll] = useState(false);
   let [movieData,setMovieData] = useState([]);
@@ -40,7 +35,7 @@ const Home = () => {
           const allMovies =res.data.findAllMovies
           console.log(res.data.findAllMovies);
           
-          const filteredMovies = allMovies.filter((movies) => movies.status == "publish");
+          const filteredMovies = allMovies.filter((movies) => movies.status == "Published");
           console.log(filteredMovies);
           
           setMovieData(filteredMovies)

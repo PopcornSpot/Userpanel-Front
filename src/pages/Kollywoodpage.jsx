@@ -15,7 +15,7 @@ const Kollywood =()=>{
         .then((res) => {
           toast.error(res.data.Error);
           const allMovies =res.data.findAllMovies
-          const filteredMovies = allMovies.filter((movies) => movies.status == "publish");
+          const filteredMovies = allMovies.filter((movies) => movies.status == "Published");
           const tamilMovies = filteredMovies.filter(movie => 
             movie.language.split(',').map(lang => lang.trim()).includes("Tamil")
           );
