@@ -11,6 +11,7 @@ import Mollywood from "../../pages/MollyWoodPage";
 import MovieDetailComponent from "./MovieDetailComponent";
 import TheaterLayout from "./Theaterlayout";
 import RegisterFormPage from "../../pages/RegisterPage";
+import ForgotPassword from "../../pages/ResetPassword";
 // import RegisterForm from "../../pages/RegisterPage";
 // import AddMovieForm from "../../pages/MovieAddingPage";
 // import MovieFormDemo from "../../pages/ExampleForm";
@@ -35,6 +36,7 @@ const ParentRouter = () => {
           <Route path="/moviedetail" element={<MovieDetailComponent/>}/>
           <Route path="/theaterlayout" element={<TheaterLayout/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
+          <Route path="/resetpassword" element={<ForgotPassword/>}/>
         </Routes>
         
         

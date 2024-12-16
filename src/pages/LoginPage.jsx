@@ -33,13 +33,13 @@ const Login =()=>{
 
     try {
       await axios
-        .post("http://localhost:7000/su/login", formData)
+        .post("http://localhost:7000/user/login", formData)
         .then((res) => {
           localStorage.clear();
           localStorage.setItem("token", res.data.token);
           toast.success(res.data.Message);
           setFormData(initialState);
-          navigate("/home");
+          navigate("/");
         })
         .catch((err) => {
           console.log(err);
