@@ -1,14 +1,18 @@
 import { FaStar } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MovieCard = ({ data }) => {
   const backendURL= "http://localhost:7000"
   const { fileName, title, certificate, language } = data;
   const views="234k";
   const ratings="8.4/10";
+  const navigate = useNavigate();
   
     return (
       <div
-        className={`h-[400px] w-full relative max-sm:h-[450px] shadow-sm shadow-gray-800 rounded-lg hover:-translate-y-1 hover:shadow-md transition hover:shadow-gray-800`}
+        className={`h-[400px] w-full relative max-sm:h-[450px] shadow-sm shadow-gray-800 rounded-lg hover:-translate-y-1 hover:shadow-md transition hover:shadow-gray-800`
+        }
+        onClick={() => navigate("/moviedetail")}
       >
         <div className="w-full h-full overflow-hidden rounded-lg bg-slate-400 absolute top-0">
           <img
