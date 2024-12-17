@@ -101,7 +101,7 @@ const backendURL= "http://localhost:7000"
               {movie.synopsis}
               </p>
             </div>
-            <Link to={"/theaterlayout"}>
+            <Link to={`/moviebooking/${movie._id}`} >
             <button 
               className="w-[200px] bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105 self-start cursor-pointer" 
               aria-label="Book tickets for Pushpa 2"

@@ -1,118 +1,191 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Link, useParams } from "react-router-dom";
 
 const MovieBooking = () => {
-  const movieData = {
-    title: "Pushpa 2: The Rule (Tamil)",
-    genre: ["Action", "Thriller"],
-    dates: ["TUE 17 DEC", "WED 18 DEC", "THU 19 DEC", "FRI 20 DEC", "SAT 21 DEC"],
-    language: "Tamil - 2D",
-    theaters: [
-      {
-        name: "The Vijay Park Multiplex: Injambakkam ECR 4K Atmos",
-        showTimes: ["07:50 PM", "10:00 PM"],
-        features: ["4K DOLBY ATMOS", "Non-cancellable"],
-        discount: "5% off for Superstars",
-      },
-      {
-        name: "PVR: Sathyam, Royapettah",
-        showTimes: ["06:10 PM", "10:00 PM"],
-        features: ["Cancellation Available", "Food & Beverage"],
-      },
-      {
-        name: "PVR: Escape-Express, Avenue Mall",
-        showTimes: ["06:25 PM", "10:50 PM"],
-        features: ["Cancellation Available", "Food & Beverage"],
-      },
-    ],
+  const [movie, setMovie] = useState({});
+  const [showTimes, setShowTimes] = useState([]);
+  const [theatres, setTheatres] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const { _id } = useParams();
+
+  const fetchMovie = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`
+      );
+      toast.success(res.data.Message);
+      toast.error(res.data.Error);
+      setMovie(res.data.movie);
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error fetching movie details.");
+    }
   };
+
+  const fetchTheatres = async () => {
+    if (!movie.adminId) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/theatre/user/gettheatredetails/?adminId=${movie.adminId}`
+      );
+      toast.success(res.data.Message);
+      setTheatres(res.data.theatres);
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error fetching theatre details.");
+    }
+  };
+
+  const fetchShows = async () => {
+    if (!movie.adminId) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/show/user/getshowdetails/?adminId=${movie.adminId}`
+      );
+      const filteredShows = res.data.shows.filter(
+        (show) => show.movie === movie.title
+      );
+      setShowTimes(filteredShows);
+      const dates = filteredShows.map((show) => new Date(show.showDate));
+      const lastDates = filteredShows.map((show) => new Date(show.lastDate));
+      setStartDate(new Date(Math.min(...dates)));
+      setEndDate(new Date(Math.max(...lastDates)));
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Error fetching showtimes.");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchMovie();
+      await fetchTheatres();
+      await fetchShows();
+    };
+    fetchData();
+  }, [_id, movie.adminId]);
+
+  const getWeekDates = (start, end) => {
+    const dates = [];
+    const currentDate = new Date(start);
+
+    while (currentDate <= end) {
+      const dateStr = currentDate.toISOString().split("T")[0];
+      const weekday = new Intl.DateTimeFormat("en-US", {
+        weekday: "long",
+      }).format(currentDate);
+      dates.push({ date: dateStr, weekday });
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+  };
+
+  const allDates = getWeekDates(startDate, endDate);
+  const itemsPerPage = 5;
+  const startIndex = currentPage * itemsPerPage;
+  const paginatedDates = allDates.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleNext = () => {
+    if ((currentPage + 1) * itemsPerPage < allDates.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const groupedShowTimes = theatres.map((theatre) => {
+    const showsForTheatre = showTimes.filter(
+      (show) => show.theatreId === theatre._id
+    );
+    return { ...theatre, shows: showsForTheatre };
+  });
 
   return (
     <div className="bg-gradient-to-r from-gray-50 to-gray-100 min-h-screen">
-      {/* Navbar */}
       <div className="w-full fixed top-0 z-50 shadow-md bg-white">
         <NavBar />
       </div>
 
-      {/* Page Content */}
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
-
-          {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-gray-800 mb-4">
-              {movieData.title}
+              {movie.title} - {movie.language}
             </h1>
             <div className="flex flex-wrap gap-2">
-              {movieData.genre.map((g, i) => (
-                <span
-                  key={i}
-                  className="inline-block px-3 py-1 bg-gray-200 text-gray-700 font-medium rounded-full shadow-sm"
-                >
-                  {g}
-                </span>
-              ))}
+              <span className="inline-block px-3 py-1 bg-gray-200 text-gray-700 font-medium rounded-full shadow-sm">
+                {movie.genre}
+              </span>
             </div>
           </div>
 
-          {/* Date Selector */}
-          <div className="flex flex-wrap gap-3 mb-10">
-            {movieData.dates.map((date, index) => (
+          <div className="flex flex-col items-center gap-4 mb-10">
+            <div className="flex flex-wrap gap-3">
+              {paginatedDates.map((dateObj, index) => (
+                <button
+                  key={index}
+                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white transition-all duration-300"
+                >
+                  {dateObj.weekday} ({dateObj.date})
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-4">
               <button
-                key={index}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 shadow-sm
-                  ${
-                    index === 0
-                      ? "bg-orange-500 text-white shadow-md"
-                      : "bg-gray-300 text-gray-700 hover:bg-orange-500 hover:text-white"
-                  }`}
+                onClick={handlePrevious}
+                disabled={currentPage === 0}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:opacity-50"
               >
-                {date}
+                Previous
               </button>
-            ))}
+              <button
+                onClick={handleNext}
+                disabled={(currentPage + 1) * itemsPerPage >= allDates.length}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
           </div>
 
-          {/* Theater List */}
           <div className="space-y-8">
-            {movieData.theaters.map((theater, index) => (
+            {groupedShowTimes.map((theatre) => (
               <div
-                key={index}
+                key={theatre._id}
                 className="p-6 bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300"
               >
-                {/* Theater Name */}
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                  {theater.name}
+                  {theatre.theatreName} - {theatre.city}
                 </h2>
 
-                {/* Discount */}
-                {theater.discount && (
-                  <p className="text-sm text-red-500 font-medium mb-2">
-                    {theater.discount}
-                  </p>
-                )}
-
-                {/* Features */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {theater.features.map((feature, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md text-sm"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Showtimes */}
                 <div className="flex flex-wrap gap-4">
-                  {theater.showTimes.map((time, idx) => (
-                    <button
-                      key={idx}
-                      className="px-5 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 transition-colors duration-300"
-                    >
-                      {time}
-                    </button>
+                  {theatre.shows.map((show, idx) => (
+                    <div key={idx} className="flex flex-wrap gap-2">
+                      {show.showTime.map((time, timeIdx) => (
+                        <Link to={"/theatrelayout"}>
+                        <button
+                          key={timeIdx}
+                          className="px-5 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
+                        >
+                          {time}
+                        </button>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -121,7 +194,6 @@ const MovieBooking = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

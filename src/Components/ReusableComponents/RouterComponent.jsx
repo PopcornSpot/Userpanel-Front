@@ -38,9 +38,9 @@ const ParentRouter = () => {
           <Route path="/movies/tollywood" element={<Tollywood/>}/>
           <Route path="/movies/mollywood" element={<Mollywood/>}/>
           <Route path="/moviedetail/:_id" element={<MovieDetailComponent/>}/>
-          <Route path="/theaterlayout" element={<TheaterLayout/>}/>
-          <Route path="/booking" element={<TheaterBooking/>}/>
-          <Route path="/moviebooking" element={<MovieBooking/>}/>
+          <Route path="/theatrelayout" element={<TheaterLayout/>}/>
+          <Route path="/theatrebooking/:_id" element={<TheaterBooking/>}/>
+          <Route path="/moviebooking/:_id" element={<MovieBooking/>}/>
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
