@@ -14,6 +14,7 @@ import RegisterFormPage from "../../pages/RegisterPage";
 import ForgotPassword from "../../pages/ResetPassword";
 import UserProfile from "./ProfilePageComponent";
 import RazorpayComponent from "../RazorpayComponent";
+import TheaterBooking from "./TheaterComponent";
 // import RegisterForm from "../../pages/RegisterPage";
 // import AddMovieForm from "../../pages/MovieAddingPage";
 // import MovieFormDemo from "../../pages/ExampleForm";
@@ -37,6 +38,7 @@ const ParentRouter = () => {
           <Route path="/movies/mollywood" element={<Mollywood/>}/>
           <Route path="/moviedetail/:_id" element={<MovieDetailComponent/>}/>
           <Route path="/theaterlayout" element={<TheaterLayout/>}/>
+          <Route path="/theater2" element={<TheaterBooking/>}/>
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
