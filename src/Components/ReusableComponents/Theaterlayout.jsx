@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { MdEventSeat } from "react-icons/md";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import CryptoJS from "crypto-js"; // Import crypto-js
 
 const TheaterLayout = () => {
-
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
+  const [shows, setShows] = useState({});
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const movieId = params.get("movieId");
+  const showId = params.get("showId");
+  const showTime = decodeURIComponent(params.get("showTime"));
+
+  const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK"; 
+
+  const fetchShows = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/show/user/getshowfortheatrelayout/?_id=${showId}`
+      );
+      setShows(res.data.shows);
+    } catch (error) {
+      toast.error("Error fetching showtimes.");
+    }
+  };
+
+  useEffect(() => {
+    fetchShows();
+  }, []);
 
   const rows = [
-    { label: "DIAMOND (Rs. 190)", range: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"] },
+    { label: `DIAMOND (${shows.firstClassPrice})`, range: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"] },
     { label: "", range: ["L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"] },
-    { label: "PEARL (Rs. 60)", range: ["V", "W"] },
+    { label: `PEARL (${shows.secondClassPrice})`, range: ["V", "W"] },
   ];
 
   const seatsPerRow = 23;
@@ -28,12 +55,15 @@ const TheaterLayout = () => {
     )
   );
 
-
   const getSeatPrice = (seatId) => {
     const row = seatId.split("-")[0];
-    if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"].includes(row)) return 190; 
-    if (["V", "W"].includes(row)) return 60; 
-    return 190;
+    const firstClassPrice = Number(shows.firstClassPrice);
+    const secondClassPrice = Number(shows.secondClassPrice);
+
+    if (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"].includes(row))
+      return firstClassPrice;
+    if (["V", "W"].includes(row)) return secondClassPrice;
+    return firstClassPrice;
   };
 
   const calculateTotalCost = () => {
@@ -48,7 +78,8 @@ const TheaterLayout = () => {
     );
   };
 
-  // useEffect(() => {
+
+    // useEffect(() => {
   //   const fetchBookedSeats = async () => {
   //     try {
   //       const response = await axios.get("/api/booked-seats");
@@ -65,19 +96,22 @@ const TheaterLayout = () => {
   //   // fetchBookedSeats();
   // }, []);
 
-
-
-
   const handleReset = () => {
     setSelectedSeats([]);
   };
+
+  // Encrypt total cost
+  const encryptedTotalCost = CryptoJS.AES.encrypt(
+    JSON.stringify(calculateTotalCost()),
+    secretKey
+  ).toString();
 
   return (
     <div className="flex items-center justify-center flex-col bg-gray-100 min-h-screen">
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-      
+
       <div className="space-y-10 mt-24">
         {rows.map((section, sectionIndex) => (
           <div key={sectionIndex} className="space-y-6">
@@ -124,45 +158,14 @@ const TheaterLayout = () => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-6 mt-6">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-gray-300 border rounded flex items-center justify-center">
-            <MdEventSeat size={14} />
-          </div>
-          <span>Available</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-green-500 border rounded flex items-center justify-center text-white">
-            <MdEventSeat size={14} />
-          </div>
-          <span>Selected</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-red-500 border rounded flex items-center justify-center text-white">
-            <MdEventSeat size={14} />
-          </div>
-          <span>Sold</span>
-        </div>
-      </div>
-
-      <div className="mt-6 text-center">
-        <h2 className="text-2xl font-semibold mb-2">Selected Seats:</h2>
-        <p className="text-lg">
-          {selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}
-        </p>
-        <h2 className="text-2xl font-semibold mt-4">Total Cost: Rs. {calculateTotalCost()}</h2>
-      </div>
-
       <div className="flex gap-4 mt-6">
-      
-        <Link to={"/payment"}>
+        <Link
+          to={`/payment?movieId=${movieId}&showId=${showId}&selectedSeats=${encodeURIComponent(
+            selectedSeats.join(",")
+          )}&encryptedTotalCost=${encodeURIComponent(encryptedTotalCost)}&showTime=${encodeURIComponent(showTime)}`}
+        >
           <button className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:scale-105">
             Continue
-          </button>
-        </Link>
-        <Link to={"/moviedetail"}>
-          <button className="bg-red-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-red-600 transition-transform transform hover:scale-105">
-            Cancel
           </button>
         </Link>
         <button

@@ -20,7 +20,7 @@ const Card = ({ _id ,image, title, address,screenType }) => {
           className="w-full h-[150px] object-cover rounded-lg"
         />
       )}
-      <div className="absolute top-0 w-full h-full bg-gray-900 bg-opacity-90 rounded-lg"></div>
+      <div className="absolute top-0 w-full h-full bg-gray-900 bg-opacity-75 rounded-lg"></div>
       <div className="absolute top-0 w-full h-full flex flex-col items-start justify-start mt-2 gap-1 p-4">
         <p className="text-lg font-bold text-white">{title} - {screenType}</p>
         <p className="text-gray-200 text-sm">{address}</p>
