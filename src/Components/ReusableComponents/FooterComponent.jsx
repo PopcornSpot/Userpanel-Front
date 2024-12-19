@@ -43,7 +43,7 @@ const Footer = () => {
                     <div className="flex-1 min-w-[200px]">
                         <h4 className="text-xl font-bold mb-4 text-orange-400">Legal & Policies</h4>
                         <ul className="space-y-3">
-                            <li><a href="/terms" className="hover:text-orange-400 transition duration-300">Terms of Service</a></li>
+                            <li><a href="/termsandcondition" className="hover:text-orange-400 transition duration-300">Terms of Service</a></li>
                             <li><a href="/privacy" className="hover:text-orange-400 transition duration-300">Privacy Policy</a></li>
                             <li><a href="/refund" className="hover:text-orange-400 transition duration-300">Refund Policy</a></li>
                         </ul>
