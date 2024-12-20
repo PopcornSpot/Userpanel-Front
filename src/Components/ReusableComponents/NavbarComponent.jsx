@@ -19,14 +19,14 @@ const menuList = [
   { page: "Movies", path: "/movies" },
   { page: "Theatre", path: "/theatre" },
   { page: "My Tickets", path: "/mytickets" },
-  { page: "Insights", path: "/insights" },
+  // { page: "Insights", path: "/insights" },
 ];
 
 const movieOptions = [
   { name: "Kollywood", path: "/movies/kollywood" },
   { name: "Tollywood", path: "/movies/tollywood" },
   { name: "Mollywood", path: "/movies/mollywood" },
-  { name: "Hollywood", path: "/movies/hollywood" },
+  // { name: "Hollywood", path: "/movies/hollywood" },
 ];
 
 const dropdownOptions = [

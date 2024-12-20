@@ -25,19 +25,10 @@ const ActionButton = ({ icon: Icon, label, colorClass }) => (
 
 
 
-
 const UserProfile = () => {
-  // const userDetails = [
-  //   { label: "Name", value: "Delli Babu" },
-  //   { label: "Email", value: "delli@gmail.com" },
-  //   { label: "Phone", value: "8248912249" },
-  //   { label: "Gender", value: "Male" },
-  // ];
-
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
   const backendURL= "http://localhost:7000"
-
 
   const fetchUser = async () => {
     try {
@@ -52,8 +43,8 @@ const UserProfile = () => {
           if(res.data.Error=="jwt expired"){
             navigate("/login") 
           }
-          console.log(res.data);
-          toast.success(res.data.Message)
+          console.log(res.data.details.picture);
+          // toast.success(res.data.Message)
           setUserDetails(res.data.details);
         })
         .catch((err) =>{
@@ -78,13 +69,9 @@ const UserProfile = () => {
       <div className="w-full fixed top-0 z-50 bg-white shadow-md">
         <NavBar />
       </div>
-
-  
       <div className="mt-24 mb-6">
         <div className="p-6 text-2xl font-bold text-start ml-5">Profile</div>
       </div>
-
-
       <div className="mx-4 md:mx-10 bg-white p-8 rounded-lg shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex flex-col items-center md:items-start gap-8">
@@ -92,19 +79,20 @@ const UserProfile = () => {
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
                 <img
-                 src={userDetails.fileName 
-                  ? `${backendURL}/upload/${userDetails.fileName}` 
-                  : userDetails.picture}
-                  alt="User Profile"
+                //  src={userDetails.fileName 
+                //   ? `${backendURL}/upload/${userDetails.fileName}` 
+                //   : userDetails.picture}
+                  src={image}
+                  alt={userDetails.userName}
                   className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
                 />
               </div>
             </div>
 
             <div className="text-lg text-gray-700 space-y-2">
-              <p className="text-gray-300">User Name: {userDetails.userName}</p>
-              <p className="text-gray-300">Email: {userDetails.email}</p>
-              <p className="text-gray-300">Mobile Number: {userDetails.mobileNumber}</p>
+              <p className="text-gray-500 flex"><strong className="block w-36">User Name:</strong>  {userDetails.userName}</p>
+              <p className="text-gray-500 flex"><strong className="block w-36">Email:</strong>{userDetails.email}</p>
+              <p className="text-gray-500 flex"><strong className="block w-36">Mobile Number:</strong> {userDetails.mobileNumber}</p>
             </div>
 
             <div className="flex gap-4">

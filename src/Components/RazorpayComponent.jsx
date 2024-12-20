@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "./ReusableComponents/FooterComponent";
 import NavBar from "./ReusableComponents/NavbarComponent";
-import CryptoJS from "crypto-js"; 
+import CryptoJS from "crypto-js";
 import { toast } from "react-toastify";
 import axios from "axios";
+import logo from "../assets/POPFINAL.png";
 
 const RazorpayButton = () => {
-  const backendURL= "http://localhost:7000"
+  const backendURL = "http://localhost:7000";
   const location = useLocation();
   const navigate = useNavigate();
-   const [shows, setShows] = useState({});
-   const [theatre, setTheatre] = useState({});
-   const [movie, setMovie] = useState({});
-  const params = new URLSearchParams(location.search);
 
+  const [shows, setShows] = useState({});
+  const [theatre, setTheatre] = useState({});
+  const [movie, setMovie] = useState({});
+  const [timeLeft, setTimeLeft] = useState(480);
+  const params = new URLSearchParams(location.search);
 
   const decryptTotalCost = (encryptedCost, secretKey) => {
     try {
@@ -22,7 +24,7 @@ const RazorpayButton = () => {
       return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     } catch (error) {
       console.error("Decryption failed:", error);
-      return 0; 
+      return 0;
     }
   };
 
@@ -32,18 +34,16 @@ const RazorpayButton = () => {
   const showTime = decodeURIComponent(params.get("showTime"));
   const selectedSeats = params.get("selectedSeats")?.split(",") || [];
   const encryptedTotalCost = params.get("encryptedTotalCost");
-  const totalCost = decryptTotalCost(encryptedTotalCost, secretKey); 
+  const totalCost = decryptTotalCost(encryptedTotalCost, secretKey);
 
-  const gstAmount = Math.round(totalCost * 0.18); // GST = 18% of totalCost
-  const finalTotal = totalCost + gstAmount; 
+  const gstAmount = Math.round(totalCost * 0.18);
+  const finalTotal = totalCost + gstAmount;
   const seatNumbers = selectedSeats.join(", ");
-
-  const [timeLeft, setTimeLeft] = useState(480); 
 
   const fetchShows = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/show/user/getshowfortheatrelayout/?_id=${showId}`
+        `${backendURL}/show/user/getshowfortheatrelayout/?_id=${showId}`
       );
       setShows(res.data.shows);
     } catch (error) {
@@ -54,7 +54,7 @@ const RazorpayButton = () => {
   const fetchTheatre = async (theatreId) => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/theatre/user/getonedetails/?_id=${theatreId}`
+        `${backendURL}/theatre/user/getonedetails/?_id=${theatreId}`
       );
       setTheatre(res.data.theatres);
     } catch (error) {
@@ -65,7 +65,7 @@ const RazorpayButton = () => {
   const fetchMovie = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getMovieDetails/?_id=${movieId}`
+        `${backendURL}/movie/user/getMovieDetails/?_id=${movieId}`
       );
       setMovie(res.data.movie);
     } catch (error) {
@@ -73,17 +73,36 @@ const RazorpayButton = () => {
     }
   };
 
+  const saveSeats = async (bookingDetails) => {
+    try {
+      const response = await axios.post(`${backendURL}/payment/save`, bookingDetails, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.data.Message) {
+        toast.success("Seats booked successfully!");
+        // navigate("/confirmation", { state: bookingDetails });
+      } else {
+        toast.error("Failed to book seats. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error saving seat details:", error);
+      toast.error("An error occurred while booking seats.");
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      await fetchShows(); 
+      await fetchShows();
       if (shows?.theatreId) {
-        await fetchTheatre(shows.theatreId); 
+        await fetchTheatre(shows.theatreId);
       }
     };
     fetchData();
     fetchMovie();
   }, [shows?.theatreId]);
-
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -100,7 +119,6 @@ const RazorpayButton = () => {
     return () => clearInterval(timer);
   }, []);
 
-
   const handleTimeout = () => {
     alert("Your session has expired. Please try again.");
     navigate(`/theatrelayout?movieId=${movieId}&showId=${showId}`);
@@ -114,47 +132,65 @@ const RazorpayButton = () => {
 
   const handlePayment = async () => {
     try {
-      const amountInPaisa = finalTotal * 100; // Convert to paisa for Razorpay
+      const amountInPaisa = finalTotal * 100;
 
-      const response = await fetch("http://localhost:7000/payment/createorder", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: amountInPaisa }),
+      const response = await axios.post(`${backendURL}/payment/createorder`, {
+        amount: amountInPaisa,
       });
-      const order = await response.json();
+      const order = response.data;
 
-      if (!order || !order.id) {
+      if (!order || !order.orderId) {
         alert("Failed to create Razorpay order");
         return;
       }
 
       const options = {
-        key: "YOUR_RAZORPAY_KEY", // Replace with your Razorpay key
-        amount: order.amount,
+        key: "rzp_test_xWDLy6FLoOyTeJ",
+        amount: order.paymentOptions.amount,
         currency: "INR",
-        name: "Your App Name",
+        name: "Popcorn Spot",
         description: `Payment for Seats: ${seatNumbers}`,
-        image: "https://your-logo-url/logo.png", // Replace with your logo URL
-        order_id: order.id,
-        handler: function (response) {
-          alert(`Payment ID: ${response.razorpay_payment_id}`);
-          fetch("http://localhost:7000/payment/verifypayment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.success) {
-                alert("Payment verified successfully!");
-                navigate("/confirmation"); // Redirect to confirmation page
-              } else {
-                alert("Payment verification failed!");
-              }
-            });
+        image: logo,
+        order_id: order.orderId,
+        handler: async (response) => {
+          const paymentDetails = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          try {
+            const verifyResponse = await axios.post(
+              `${backendURL}/payment/verifypayment`,
+              paymentDetails
+            );
+
+            if (verifyResponse.data.success) {
+              alert("Payment verified successfully!");
+
+              const bookingDetails = {
+                movieId,
+                theatreId: shows.theatreId,
+                showId,
+                seatNumbers: selectedSeats,
+                totalCost: finalTotal,
+                paymentId: paymentDetails.razorpay_payment_id,
+                orderId: paymentDetails.razorpay_order_id,
+                paymentMethod: "Razorpay",
+              };
+
+              // Save seats to backend
+              await saveSeats(bookingDetails);
+            } else {
+              alert("Payment verification failed!");
+            }
+          } catch (error) {
+            console.error("Verification error:", error);
+            alert("Payment verification error");
+          }
         },
         prefill: {
-          name: "John Doe", // Replace with user details if available
+          name: "John Doe",
           email: "johndoe@example.com",
           contact: "9876543210",
         },
@@ -179,7 +215,6 @@ const RazorpayButton = () => {
 
       <div className="flex flex-col items-center justify-center flex-1 mt-24 px-4">
         <div className="flex flex-wrap md:flex-nowrap items-center justify-center w-full max-w-6xl gap-8">
-
           <div className="w-full md:w-1/2">
             <img
               src={`${backendURL}/upload/${movie.fileName}`}
@@ -189,11 +224,11 @@ const RazorpayButton = () => {
           </div>
 
           <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
               Movie Details
             </h1>
             <p className="text-gray-600 mb-4">
-              <strong>Movie Name: </strong>{shows.movie}
+              <strong>Movie Name: </strong>{movie.title}
             </p>
             <p className="text-gray-600 mb-4">
               <strong>Screen: </strong> {shows.screen}
@@ -211,7 +246,7 @@ const RazorpayButton = () => {
             <p className="text-gray-600 mb-4">
               <strong>Address: </strong> {theatre.address}
             </p>
-            
+
             <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
               Payment Summary
             </h1>

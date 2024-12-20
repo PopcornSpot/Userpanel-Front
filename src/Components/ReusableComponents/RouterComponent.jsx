@@ -18,6 +18,7 @@ import TheaterBooking from "./TheaterBooking";
 import MovieBooking from "./MovieBookingComponent";
 import AboutPage from "./AboutPage";
 import TermsAndConditions from "./TermsandConditionPage";
+import PrivateRoute from "./PrivateRouteComp";
 // import RegisterForm from "../../pages/RegisterPage";
 // import AddMovieForm from "../../pages/MovieAddingPage";
 // import MovieFormDemo from "../../pages/ExampleForm";
@@ -46,9 +47,13 @@ const ParentRouter = () => {
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
-          <Route path="/profile" element={<UserProfile/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
+
+          <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<UserProfile/>}/>
+          </Route>
+
         </Routes>
         
         
