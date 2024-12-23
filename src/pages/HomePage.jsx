@@ -52,7 +52,6 @@ const Home = () => {
       <main className="relative top-20">
         <Hero />
 
-        {/* Suggestion Movies Section */}
         <section className="mt-12 px-2">
           <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Suggestion Movies
@@ -79,7 +78,6 @@ const Home = () => {
           )}
         </section>
 
-        {/* Latest Movies Section */}
         <section className="mt-12 px-2">
           <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Latest Movies
@@ -106,7 +104,6 @@ const Home = () => {
           )}
         </section>
 
-        {/* Upcoming Movies Section */}
         <section className="mt-12 px-2">
           <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Upcoming Movies

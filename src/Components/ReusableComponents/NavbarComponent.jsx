@@ -11,7 +11,7 @@ import Logo from "../../assets/POPFINAL.png"
 import { LiaSignInAltSolid } from "react-icons/lia";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
-
+ 
 
 
 const menuList = [
@@ -107,11 +107,6 @@ const NavBar = () => {
             )
           )}
         </div>
-
-
-
-
-
 
         <div className="min-w-[100px] h-full pr-10 flex justify-end items-center gap-5">
           <Link>

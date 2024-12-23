@@ -31,6 +31,7 @@ const RazorpayButton = () => {
   const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK";
   const movieId = params.get("movieId");
   const showId = params.get("showId");
+  const showDate = params.get("selectedDate");
   const showTime = decodeURIComponent(params.get("showTime"));
   const selectedSeats = params.get("selectedSeats")?.split(",") || [];
   const encryptedTotalCost = params.get("encryptedTotalCost");
@@ -40,7 +41,7 @@ const RazorpayButton = () => {
   const finalTotal = totalCost + gstAmount;
   const seatNumbers = selectedSeats.join(", ");
 
-  const fetchShows = async () => {
+  const fetchShows = async () => { 
     try {
       const res = await axios.get(
         `${backendURL}/show/user/getshowfortheatrelayout/?_id=${showId}`
@@ -169,6 +170,7 @@ const RazorpayButton = () => {
               alert("Payment verified successfully!");
 
               const bookingDetails = {
+                showDate,
                 movieId,
                 theatreId: shows.theatreId,
                 showId,
@@ -179,7 +181,6 @@ const RazorpayButton = () => {
                 paymentMethod: "Razorpay",
               };
 
-              // Save seats to backend
               await saveSeats(bookingDetails);
             } else {
               alert("Payment verification failed!");
@@ -235,6 +236,9 @@ const RazorpayButton = () => {
             </p>
             <p className="text-gray-600 mb-4">
               <strong>Show Time: </strong> {showTime}
+            </p>
+            <p className="text-gray-600 mb-4">
+              <strong>Show Date: </strong> {showDate}
             </p>
 
             <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">

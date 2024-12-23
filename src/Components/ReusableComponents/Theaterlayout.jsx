@@ -6,7 +6,7 @@ import Footer from "./FooterComponent";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import CryptoJS from "crypto-js"; // Import crypto-js
+import CryptoJS from "crypto-js";
 
 const TheaterLayout = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -17,6 +17,7 @@ const TheaterLayout = () => {
 
   const movieId = params.get("movieId");
   const showId = params.get("showId");
+  const selectedDate = params.get("selectedDate");
   const showTime = decodeURIComponent(params.get("showTime"));
 
   const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK"; 
@@ -100,7 +101,7 @@ const TheaterLayout = () => {
     setSelectedSeats([]);
   };
 
-  // Encrypt total cost
+
   const encryptedTotalCost = CryptoJS.AES.encrypt(
     JSON.stringify(calculateTotalCost()),
     secretKey
@@ -162,7 +163,7 @@ const TheaterLayout = () => {
         <Link
           to={`/payment?movieId=${movieId}&showId=${showId}&selectedSeats=${encodeURIComponent(
             selectedSeats.join(",")
-          )}&encryptedTotalCost=${encodeURIComponent(encryptedTotalCost)}&showTime=${encodeURIComponent(showTime)}`}
+          )}&encryptedTotalCost=${encodeURIComponent(encryptedTotalCost)}&showTime=${encodeURIComponent(showTime)}&selectedDate=${selectedDate}`}
         >
           <button className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:scale-105">
             Continue
