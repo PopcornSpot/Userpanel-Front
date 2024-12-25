@@ -4,6 +4,7 @@ import Footer from "./FooterComponent";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "./LoaderComponent";
 
 const PersonCard = ({ image, name, role }) => (
   <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -22,16 +23,6 @@ const MovieDetailComponent = () => {
 const [movie,setMovie] =useState({});
 const { _id } = useParams();
 const backendURL= "http://localhost:7000"
-
-
-  // const crew = [
-  //   { id: 1, name: "Makizh Thirumeni", role: "Director", image: "https://via.placeholder.com/100" },
-  //   { id: 2, name: "LYCA", role: "Producer", image: "https://via.placeholder.com/100" },
-  //   { id: 3, name: "Aniruth Ravichander", role: "Musician", image: "https://via.placeholder.com/100" },
-  //   { id: 4, name: "K.G. Venkatesh", role: "Cinematographer", image: "https://via.placeholder.com/100" },
-  //   { id: 5, name: "Dinesh Ponraj", role: "Editor", image: "https://via.placeholder.com/100" },
-  // ];
-
 
 
   const fetchMovieForUpdate = async () => {
@@ -73,6 +64,9 @@ const backendURL= "http://localhost:7000"
         <NavBar />
       </div>
 
+      {
+        movie && Object.keys(movie).length > 0 ?
+        <>
       <div className="container mx-auto px-6 py-8 mt-20">
         <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-lg overflow-hidden h-auto w-full">
           <div className="w-full lg:w-1/3 flex items-center justify-center">
@@ -115,7 +109,7 @@ const backendURL= "http://localhost:7000"
       </div>
 
       <div className="container mx-auto px-6 py-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800 underline decoration-4 decoration-gray-500 hover:decoration-orange-500 transition-all">
+        <h2 className="text-3xl font-bold mb-8 text-gray-800  ">
           Cast
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -124,19 +118,14 @@ const backendURL= "http://localhost:7000"
           ))}
         </div>
       </div>
+      </>
+      :
+      <Loader/>
+}
 
-      {/* <div className="container mx-auto px-6 py-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800 underline decoration-4 decoration-gray-500 hover:decoration-orange-500 transition-all">
-          Crew
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {crew.map((person) => (
-            <PersonCard key={person.id} image={person.image} name={person.name} role={person.role} />
-          ))}
-        </div>
-      </div> */}
-
-      <Footer />
+     <div className="w-full"> 
+     <Footer />
+     </div>
     </div>
   );
 };

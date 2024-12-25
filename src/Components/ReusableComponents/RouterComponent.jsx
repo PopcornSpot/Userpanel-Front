@@ -3,7 +3,6 @@ import Login from "../../pages/LoginPage";
 import Home from "../../pages/HomePage";
 import NotFoundPage from "./PageNotFound";
 import MyTickets from "../ReusableComponents/MyTicket"
-import TicketPage from "./ViewMyTicket";
 import TheaterCard from "../../pages/TheatrePage";
 import Kollywood from "../../pages/Kollywoodpage";
 import Tollywood from "../../pages/TollywoodPage";
@@ -19,12 +18,9 @@ import MovieBooking from "./MovieBookingComponent";
 import AboutPage from "./AboutPage";
 import TermsAndConditions from "./TermsandConditionPage";
 import PrivateRoute from "./PrivateRouteComp";
-// import RegisterForm from "../../pages/RegisterPage";
-// import AddMovieForm from "../../pages/MovieAddingPage";
-// import MovieFormDemo from "../../pages/ExampleForm";
-// import MovieList from "../../pages/ExampleForm";
-// import SearchBox from "./SearchBoxComp";
-// import SearchBox2 from "./SearchBoxComp";
+import TicketConfirmation from "../../pages/TicketConfirmationPage";
+
+
 
 
 const ParentRouter = () => {
@@ -34,8 +30,6 @@ const ParentRouter = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="*" element={<NotFoundPage/>} />
           <Route index element={<Home/>}/>
-          <Route path="/mytickets" element={<MyTickets/>}/>
-          <Route path="/tickets" element={<TicketPage/>}/>
           <Route path="/theatre" element={<TheaterCard/>}/>
           <Route path="/movies/kollywood" element={<Kollywood/>}/>
           <Route path="/movies/tollywood" element={<Tollywood/>}/>
@@ -49,9 +43,13 @@ const ParentRouter = () => {
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
+          <Route path="/confirmation" element={<TicketConfirmation/>}/>
+
+
 
           <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<UserProfile/>}/>
+          <Route path="/mytickets" element={<MyTickets/>}/>
           </Route>
 
         </Routes>

@@ -18,9 +18,7 @@ const initialState = {
 
 
 const Login =()=>{
- 
   const [formData, setFormData] = useState(initialState);
-  console.log(formData);
   const handleOnChange = (e) => {
     const { value, name } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -69,7 +67,6 @@ const Login =()=>{
         .then((res) => {
           localStorage.clear();
           localStorage.setItem("token", res.data.token);
-          // localStorage.setItem("userId",res.data.savedUser._id)
           toast.success(res.data.Message);
           setFormData(initialState);
           navigate("/");

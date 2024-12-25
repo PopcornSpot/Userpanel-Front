@@ -1,36 +1,57 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import { ImSearch } from "react-icons/im";
-
-const items = [
-  "Vidhya",
-  "Kamala",
-  "Amaran",
-  "Kanguva",
-  "AM Theatre",
-  "Pushpa 2",
-  "Vettri",
-  "Rohini",
-  "Lucky Basker"
-];
-
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
 const SerachBar = ({ setSearchBarValue }) => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [movie, setMovie] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const filteredItems = items.filter((item) =>
+  const fetchMovie = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/movie/user/getallmovie`
+      );
+    const movieNames = res.data.findAllMovies.map((movie) => movie.title);
+    setMovie(movieNames); 
+    } catch (error) {
+      toast.error("Error fetching Movies.");
+    }
+  };
+
+  const fetchMovieData = async (name) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/movie//user/getMoviebookinglayout/?name=${name}`
+      );
+    return res.data.movie;
+    } catch (error) {
+      toast.error("Error fetching Movies.");
+    }
+  };
+
+
+useEffect(() => {
+    fetchMovie();
+  }, []);
+ 
+
+  const filteredItems = movie.filter((item) =>
     item.toLowerCase().includes(query.toLowerCase())
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault(); 
     setShowDropdown(false);
+    const movieData = await fetchMovieData(query)
     setSearchBarValue(false);
-    console.log("Submitted ", query); 
+    navigate(`/moviedetail/${movieData._id}`)
   };
 
   const handleItemClick = (item) => {
@@ -38,9 +59,11 @@ const SerachBar = ({ setSearchBarValue }) => {
     setShowDropdown(false);
   };
 
+ 
+
   return (
     <>
-      <div className="w-screen h-screen absolute top-20 bg-[#181921] opacity-80 flex justify-center items-center"></div>
+      <div className="w-screen h-screen absolute top-20 bg-gray-950 opacity-95 flex justify-center items-center"></div>
       <div className="absolute top-0 w-screen h-screen flex flex-col items-center justify-center">
         <div className="w-[60%] sm:max-lg:w-[80%] max-sm:w-[90%] max-sm:px-4 min-h-20 rounded flex  bg-white justify-center items-center gap-4 px-10">
           <form 
@@ -49,7 +72,7 @@ const SerachBar = ({ setSearchBarValue }) => {
             <input
               className="h-14 w-[80%] max-sm:w-[85%] outline-2 px-2 text-xl outline outline-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
               type="text"
-              placeholder="Search..."
+              placeholder="Search movies..."
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);

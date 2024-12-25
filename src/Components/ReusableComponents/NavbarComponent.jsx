@@ -1,8 +1,6 @@
-
 import React, { useState } from "react";
-import { FaCircleUser, FaRegHeart, FaRegUser, FaXmark } from "react-icons/fa6";
+import { FaCircleUser, FaRegUser, FaXmark } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { ImSearch } from "react-icons/im";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "./SideBarComp";
 import SerachBar from "./SearchBoxComp";
@@ -19,14 +17,13 @@ const menuList = [
   { page: "Movies", path: "/movies" },
   { page: "Theatre", path: "/theatre" },
   { page: "My Tickets", path: "/mytickets" },
-  // { page: "Insights", path: "/insights" },
+  { page: "Insights", path: "/insights" },
 ];
 
 const movieOptions = [
   { name: "Kollywood", path: "/movies/kollywood" },
   { name: "Tollywood", path: "/movies/tollywood" },
   { name: "Mollywood", path: "/movies/mollywood" },
-  // { name: "Hollywood", path: "/movies/hollywood" },
 ];
 
 const dropdownOptions = [
@@ -114,9 +111,6 @@ const NavBar = () => {
               onClick={() => setSearchBarValue(true)}
               className="max-lg:hidden text-2xl font-bold text-white hover:-translate-y-0.5 transition"
             />
-          </Link>
-          <Link>
-            <FaRegHeart className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition" />
           </Link>
           <div
       className="relative min-h-20 w-6 flex items-center justify-center"

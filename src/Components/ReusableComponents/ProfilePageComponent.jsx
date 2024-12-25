@@ -64,8 +64,7 @@ const UserProfile = () => {
 
 
   return (
-    <div className="w-full bg-gray-100 min-h-screen">
-    
+    <div className="w-full min-h-screen"> 
       <div className="w-full fixed top-0 z-50 bg-white shadow-md">
         <NavBar />
       </div>
@@ -119,7 +118,7 @@ const UserProfile = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <ProfileCard title="Total Money Spent" value="$2000" />
               <ProfileCard title="Total Tickets" value="5" />
-              <ProfileCard title="Action Movie Preference" value="70%" />
+              <ProfileCard title="Total Friends" value="100" />
             </div>
           </div>
         </div>

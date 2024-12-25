@@ -4,6 +4,7 @@ import Footer from "./FooterComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
+import Loader from "./LoaderComponent";
 
 const MovieBooking = () => {
   const [movie, setMovie] = useState({});
@@ -88,14 +89,10 @@ const MovieBooking = () => {
     }
     return dates;
   };
-
   const nextSevenDays = getNextSevenDays();
-
-
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
-
 
   const filteredShows = allShows.filter((show) => {
     const showStartDate = new Date(show.showDate);
@@ -125,7 +122,10 @@ const MovieBooking = () => {
       <div className="w-full fixed top-0 z-50 shadow-md bg-white">
         <NavBar />
       </div>
-
+{
+  movie && Object.keys(movie).length > 0 &&
+  allShows.length!==0 &&
+  theatres.length!==0 ?
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="mb-8">
@@ -199,8 +199,12 @@ const MovieBooking = () => {
           </div>
         </div>
       </div>
-
+      :
+      <Loader/>
+}
+      <div className="w-full">
       <Footer />
+      </div>
     </div>
   );
 };

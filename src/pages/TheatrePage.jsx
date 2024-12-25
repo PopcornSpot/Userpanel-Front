@@ -6,6 +6,7 @@ import axios from "axios";
 import Footer from "../Components/ReusableComponents/FooterComponent";
 import NavBar from "../Components/ReusableComponents/NavbarComponent";
 import { Link } from "react-router-dom";
+import Loader from "../Components/ReusableComponents/LoaderComponent";
 
 const Card = ({ _id ,image, title, address,screenType }) => {
   const backendURL = "http://localhost:7000";
@@ -62,6 +63,8 @@ const TheaterCard = () => {
     <div className="w-full sticky top-0 z-50">
       <NavBar />
     </div>
+{
+  theaters.length!==0?
     <div className="bg-white p-7 mt-20">
     <div className="flex flex-col sm:flex-row items-center justify-between border-1 rounded-sm shadow-md border-gray-950 p-3 bg-gray-200 mb-6">
       <h1 className="font-semibold text-2xl text-gray-700 mb-4 sm:mb-0">Cinema in Chennai</h1>
@@ -96,7 +99,12 @@ const TheaterCard = () => {
       )}
     </div>
   </div>
-  <Footer />
+  :
+  <Loader/> 
+}
+      <div className="w-full">
+        <Footer />
+      </div>
   </div>
   
   );

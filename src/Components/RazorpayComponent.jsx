@@ -84,7 +84,7 @@ const RazorpayButton = () => {
 
       if (response.data.Message) {
         toast.success("Seats booked successfully!");
-        // navigate("/confirmation", { state: bookingDetails });
+        navigate(`/confirmation?bookingDetails=${response.data.createdScreen._id}&movieId=${response.data.createdScreen.movieId}`);
       } else {
         toast.error("Failed to book seats. Please try again.");
       }
@@ -134,7 +134,6 @@ const RazorpayButton = () => {
   const handlePayment = async () => {
     try {
       const amountInPaisa = finalTotal * 100;
-
       const response = await axios.post(`${backendURL}/payment/createorder`, {
         amount: amountInPaisa,
       });
@@ -165,11 +164,10 @@ const RazorpayButton = () => {
               `${backendURL}/payment/verifypayment`,
               paymentDetails
             );
-
             if (verifyResponse.data.success) {
-              alert("Payment verified successfully!");
-
+              alert("Payment successfully!");
               const bookingDetails = {
+                showTime,
                 showDate,
                 movieId,
                 theatreId: shows.theatreId,
@@ -199,7 +197,10 @@ const RazorpayButton = () => {
           color: "#F37254",
         },
       };
-
+      if (!window.Razorpay) {
+        alert("Razorpay script not loaded!");
+        return;
+      }
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
@@ -213,7 +214,6 @@ const RazorpayButton = () => {
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-
       <div className="flex flex-col items-center justify-center flex-1 mt-24 px-4">
         <div className="flex flex-wrap md:flex-nowrap items-center justify-center w-full max-w-6xl gap-8">
           <div className="w-full md:w-1/2">

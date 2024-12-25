@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Footer from "../Components/ReusableComponents/FooterComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "../Components/ReusableComponents/LoaderComponent";
 
 const filterMoviesByDate = (movieData, setNewMovies, setUpcomingMovies) => {
   const today = new Date();
@@ -49,9 +50,12 @@ const Home = () => {
       <header>
         <NavBar />
       </header>
+      {
+        movieData.length!==0 &&
+        newMovies.length!==0 &&
+        upcomingMovies.length!==0 ?
       <main className="relative top-20">
         <Hero />
-
         <section className="mt-12 px-2">
           <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Suggestion Movies
@@ -128,12 +132,14 @@ const Home = () => {
           ) : (
             <MovieCarousel movieData={upcomingMovies} />
           )}
-        </section>
-
-        <footer className="mt-12 px-2">
-          <Footer />
-        </footer>
+        </section> 
       </main>
+      :
+      <Loader/>
+      }
+      <footer className="w-full mt-36">
+          <Footer />
+      </footer>
     </>
   );
 };

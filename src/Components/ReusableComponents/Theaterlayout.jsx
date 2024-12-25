@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { MdEventSeat } from "react-icons/md";
 import NavBar from "./NavbarComponent";
@@ -7,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import CryptoJS from "crypto-js";
+import Loader from "./LoaderComponent";
 
 const TheaterLayout = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -14,12 +14,10 @@ const TheaterLayout = () => {
   const [shows, setShows] = useState({});
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-
   const movieId = params.get("movieId");
   const showId = params.get("showId");
   const selectedDate = params.get("selectedDate");
   const showTime = decodeURIComponent(params.get("showTime"));
-
   const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK"; 
 
   const fetchShows = async () => {
@@ -33,8 +31,29 @@ const TheaterLayout = () => {
     }
   };
 
+
+  const fetchBookedSeats = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/payment/user/getbookedseats`,
+        {
+          params: { movieId, showId, selectedDate,showTime },
+        }
+      );
+      console.log(res.data);
+      if (res.data.Message) {
+        setBookedSeats(res.data.bookedSeats || []);
+      } else {
+        toast.error("No booked seats available.");
+      } 
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchShows();
+    fetchBookedSeats();
   }, []);
 
   const rows = [
@@ -46,13 +65,16 @@ const TheaterLayout = () => {
   const seatsPerRow = 23;
   const seatData = rows.flatMap((section) =>
     section.range.flatMap((row) =>
-      Array.from({ length: seatsPerRow }, (_, seatIndex) => ({
-        id: `${row}-${seatIndex + 1}`,
-        row: row,
-        section: section.label,
-        number: seatIndex + 1,
-        status: bookedSeats.includes(`${row}-${seatIndex + 1}`) ? "sold" : "available",
-      }))
+      Array.from({ length: seatsPerRow }, (_, seatIndex) => {
+        const seatId = `${row}-${seatIndex + 1}`;
+        return {
+          id: seatId,
+          row: row,
+          section: section.label,
+          number: seatIndex + 1,
+          status: bookedSeats.includes(seatId) ? "sold" : "available",
+        };
+      })
     )
   );
 
@@ -80,22 +102,7 @@ const TheaterLayout = () => {
   };
 
 
-    // useEffect(() => {
-  //   const fetchBookedSeats = async () => {
-  //     try {
-  //       const response = await axios.get("/api/booked-seats");
-  //       if (response.data.success) {
-  //         setBookedSeats(response.data.bookedSeats);
-  //       } else {
-  //         console.error("Failed to fetch booked seats");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching booked seats:", error);
-  //     }
-  //   };
-  
-  //   // fetchBookedSeats();
-  // }, []);
+   
 
   const handleReset = () => {
     setSelectedSeats([]);
@@ -108,11 +115,15 @@ const TheaterLayout = () => {
   ).toString();
 
   return (
-    <div className="flex items-center justify-center flex-col bg-gray-100 min-h-screen">
+    <div className="flex items-center justify-center flex-col min-h-screen">
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
 
+{
+  shows && Object.keys(shows).length > 0 &&
+  bookedSeats.length!==0?
+     <>
       <div className="space-y-10 mt-24">
         {rows.map((section, sectionIndex) => (
           <div key={sectionIndex} className="space-y-6">
@@ -176,8 +187,11 @@ const TheaterLayout = () => {
           Reset
         </button>
       </div>
-
-      <div className="mt-6">
+      </>
+      :
+      <Loader/> 
+}
+      <div className="mt-6 w-full">
         <Footer />
       </div>
     </div>
