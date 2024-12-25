@@ -10,7 +10,7 @@ const ratings="8.4/10";
    
   return (
      <Link to={`/moviedetail/${_id}`} >
-    <div className={`h-[400px] w-full relative max-sm:h-[450px] shadow-sm shadow-gray-800 rounded-lg hover:-translate-y-1 hover:shadow-md transition hover:shadow-gray-800`}>
+    <div className={`h-[400px] w-full relative max-sm:h-[450px] mt-10 shadow-sm shadow-gray-800 rounded-lg hover:-translate-y-1 hover:shadow-md transition hover:shadow-gray-800`}>
       <div className="w-full h-full overflow-hidden rounded-lg  bg-slate-400 absolute top-0">
         <img className={`w-full h-full object-cover rounded-lg`}
          src={`${backendURL}/upload/${fileName}`}

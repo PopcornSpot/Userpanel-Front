@@ -1,35 +1,62 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/LoginPage";
+import NotFoundPage from "./Components/ReusableComponents/PageNotFound";
+import Home from "./pages/HomePage";
+import TheaterCard from "./pages/TheatrePage";
+import MovieDetailComponent from "./Components/ReusableComponents/MovieDetailComponent";
+import TheaterLayout from "./Components/ReusableComponents/Theaterlayout";
+import TheaterBooking from "./Components/ReusableComponents/TheaterBooking";
+import MovieBooking from "./Components/ReusableComponents/MovieBookingComponent";
+import RegisterFormPage from "./pages/RegisterPage";
+import ForgotPassword from "./pages/ResetPassword";
+import AboutPage from "./Components/ReusableComponents/AboutPage";
+import TermsAndConditions from "./Components/ReusableComponents/TermsandConditionPage";
+import TicketConfirmation from "./pages/TicketConfirmationPage";
+import NestedMovies from "./Components/ReusableComponents/MovieNestedComp";
+import Kollywood from "./pages/Kollywoodpage";
+import Tollywood from "./pages/TollywoodPage";
+import Mollywood from "./pages/MollyWoodPage";
+import PrivateRoute from "./Components/ReusableComponents/PrivateRouteComp";
+import UserProfile from "./Components/ReusableComponents/ProfilePageComponent";
+import MyTickets from "./Components/ReusableComponents/MyTicket";
+import RazorpayComponent from "./Components/RazorpayComponent";
 
-// function App() {
-//   const [count, setCount] = useState(0)
 
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
 
-// export default App
+const AppRouter = () => {
+    return (
+    
+        <Routes>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="*" element={<NotFoundPage/>} />
+          <Route index element={<Home/>}/>
+          <Route path="/theatre" element={<TheaterCard/>}/> 
+          <Route path="/moviedetail/:_id" element={<MovieDetailComponent/>}/>
+          <Route path="/theatrelayout" element={<TheaterLayout/>}/>
+          <Route path="/theatrebooking/:_id" element={<TheaterBooking/>}/>
+          <Route path="/moviebooking/:_id" element={<MovieBooking/>}/>
+          <Route path="/payment" element={<RazorpayComponent/>}/>
+          <Route path="/register" element={<RegisterFormPage/>}/>
+          <Route path="/resetpassword" element={<ForgotPassword/>}/>
+          <Route path="/about" element={<AboutPage/>}/>
+          <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
+          <Route path="/confirmation" element={<TicketConfirmation/>}/>
+
+          <Route path="movies" element={<NestedMovies/>}>
+          <Route path="kollywood" element={<Kollywood />} />
+          <Route path="tollywood" element={<Tollywood />} />
+          <Route path="mollywood" element={<Mollywood />} />
+          </Route>
+
+          <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<UserProfile/>}/>
+          <Route path="/mytickets" element={<MyTickets/>}/>
+          </Route>
+
+        </Routes>
+        
+        
+    );
+  };
+  
+  export default AppRouter;

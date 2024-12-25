@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { FaCircleUser, FaRegUser, FaXmark } from "react-icons/fa6";
+import { FaCircleUser, FaRegUser } from "react-icons/fa6";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "./SideBarComp";
 import SerachBar from "./SearchBoxComp";
 import { VscActivateBreakpoints } from "react-icons/vsc";
-import Logo from "../../assets/POPFINAL.png"
+import Logo from "../../assets/POPFINAL.png";
 import { LiaSignInAltSolid } from "react-icons/lia";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
- 
-
 
 const menuList = [
   { page: "Home", path: "/" },
@@ -27,10 +25,9 @@ const movieOptions = [
 ];
 
 const dropdownOptions = [
-  { name: "Profile", path: "/profile",icon:<FaRegUser className="text-gray-400 font-bold" /> },
-  { name: "SignIn", path: "/login" ,icon:<LiaSignInAltSolid className="text-gray-400 font-bold" />},
+  { name: "Profile", path: "/profile", icon: <FaRegUser className="text-gray-400 font-bold" /> },
+  { name: "SignIn", path: "/login", icon: <LiaSignInAltSolid className="text-gray-400 font-bold" /> },
 ];
- 
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -40,23 +37,19 @@ const NavBar = () => {
   const [isMoviesDropdownOpen, setIsMoviesDropdownOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
-  
 
   return (
     <nav className="fixed z-20">
       <div className="w-screen min-h-20 flex bg-gray-800 items-center justify-between">
         <div className="max-w-[300px] px-6 min-h-20 flex items-center justify-start">
-          <img
-          className="w-36"
-          src={Logo} alt="" />
+          <img className="w-36" src={Logo} alt="" />
         </div>
 
-         <div className="max-w-[60%] min-h-20 max-lg:hidden font-medium flex justify-center items-center gap-6">
+        <div className="max-w-[60%] min-h-20 max-lg:hidden font-medium flex justify-center items-center gap-6">
           {menuList.map((value, index) =>
             value.page === "Movies" ? (
               <div
@@ -67,8 +60,8 @@ const NavBar = () => {
               >
                 <span
                   className={`px-2 w-full min-h-20 pt-2 pb-7 font-medium ${
-                    value.path === location.pathname
-                      ? "text-orange-500 "
+                    location.pathname.startsWith("/movies")
+                      ? "text-orange-500"
                       : "text-white"
                   } hover:rounded-none hover:text-gray-400 transition hover:duration-500 hover:ease-linear hover:border-b-white`}
                 >
@@ -93,9 +86,7 @@ const NavBar = () => {
               <Link key={index} to={value.path}>
                 <span
                   className={`px-2 w-full min-h-20 pt-2 pb-7 font-medium ${
-                    value.path === location.pathname
-                      ? "text-orange-400 "
-                      : "text-white"
+                    location.pathname === value.path ? "text-orange-400" : "text-white"
                   } hover:rounded-none hover:text-gray-400 transition hover:duration-500 hover:ease-linear hover:border-b-white`}
                 >
                   {value.page}
@@ -113,42 +104,45 @@ const NavBar = () => {
             />
           </Link>
           <div
-      className="relative min-h-20 w-6 flex items-center justify-center"
-      onMouseEnter={()=>setIsDropdownOpen(true)}
-      onMouseLeave={()=>setIsDropdownOpen(false)}
-    >
-      <FaCircleUser className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition cursor-pointer" />
-      {isDropdownOpen && (
-        <div className="absolute -right-20 mt-36 w-32 bg-gray-800 shadow-lg rounded-b-lg">
-          {dropdownOptions.map((option, index) => (
-            <Link
-              key={index}
-              to={option.path}
-              className="flex gap-3 items-center px-4 py-2 text-white hover:bg-gray-700 transition"
-            >
-              {option.icon}
-              {option.name}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
+            className="relative min-h-20 w-6 flex items-center justify-center"
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
+          >
+            <FaCircleUser className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition cursor-pointer" />
+            {isDropdownOpen && (
+              <div className="absolute -right-20 mt-36 w-32 bg-gray-800 shadow-lg rounded-b-lg">
+                {dropdownOptions.map((option, index) => (
+                  <Link
+                    key={index}
+                    to={option.path}
+                    className="flex gap-3 items-center px-4 py-2 text-white hover:bg-gray-700 transition"
+                  >
+                    {option.icon}
+                    {option.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
           <RiLogoutBoxLine
-          onClick={handleLogout}
-          className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition" />
+            onClick={handleLogout}
+            className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition"
+          />
           <GiHamburgerMenu
-            onClick={()=>setBurgerValue(true)}
+            onClick={() => setBurgerValue(true)}
             className="lg:hidden font-bold text-2xl text-white"
           />
         </div>
       </div>
-      {searchBarValue && 
-      <SerachBar setSearchBarValue={setSearchBarValue} />
-      }
-     {burgerValue && 
-     <SideBar setBurgerValue={setBurgerValue} movieOptions={movieOptions} location={location} setSearchBarValue={setSearchBarValue}/>
-     }
-
+      {searchBarValue && <SerachBar setSearchBarValue={setSearchBarValue} />}
+      {burgerValue && (
+        <SideBar
+          setBurgerValue={setBurgerValue}
+          movieOptions={movieOptions}
+          location={location}
+          setSearchBarValue={setSearchBarValue}
+        />
+      )}
     </nav>
   );
 };

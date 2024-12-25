@@ -39,11 +39,8 @@ const Tollywood = () => {
 
   return (
     <>
-      <header className="">
-        <NavBar />
-      </header>
       {movieData.length !== 0 ? (
-        <section className="relative top-32">
+        <section className="relative top-24">
           <ViewAllMovie movieData={movieData} />
         </section>
       ) : (

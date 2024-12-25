@@ -64,7 +64,7 @@ useEffect(() => {
   return (
     <>
       <div className="w-screen h-screen absolute top-20 bg-gray-950 opacity-95 flex justify-center items-center"></div>
-      <div className="absolute top-0 w-screen h-screen flex flex-col items-center justify-center">
+      <div className="absolute top-0 bottom-0 w-screen h-screen flex flex-col items-center justify-start mt-36">
         <div className="w-[60%] sm:max-lg:w-[80%] max-sm:w-[90%] max-sm:px-4 min-h-20 rounded flex  bg-white justify-center items-center gap-4 px-10">
           <form 
           onSubmit={handleSubmit}
@@ -93,21 +93,22 @@ useEffect(() => {
           />
         </div>
         {showDropdown && query && (
-          <ul className="w-[60%] sm:max-lg:w-[80%] max-sm:w-[90%]  mt-4 rounded-md  bg-white">
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
-                <li
-                  key={index}
-                  className="p-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleItemClick(item)}
-                >
-                  {item}
-                </li>
-              ))
-            ) : (
-              <li className="p-2 text-gray-500">No results found</li>
-            )}
-          </ul>
+          <ul className="w-[60%] sm:max-lg:w-[80%] max-sm:w-[90%] mt-4 rounded-md bg-white max-h-48 overflow-y-auto">
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item, index) => (
+              <li
+                key={index}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleItemClick(item)}
+              >
+                {item}
+              </li>
+            ))
+          ) : (
+            <li className="p-2 text-gray-500">No results found</li>
+          )}
+        </ul>
+        
         )}
       </div>
     </>
