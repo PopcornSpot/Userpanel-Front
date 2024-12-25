@@ -25,7 +25,6 @@ import RazorpayComponent from "./Components/RazorpayComponent";
 
 const AppRouter = () => {
     return (
-    
         <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route path="*" element={<NotFoundPage/>} />
@@ -41,7 +40,6 @@ const AppRouter = () => {
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
           <Route path="/confirmation" element={<TicketConfirmation/>}/>
-
           <Route path="movies" element={<NestedMovies/>}>
           <Route path="kollywood" element={<Kollywood />} />
           <Route path="tollywood" element={<Tollywood />} />
@@ -52,7 +50,6 @@ const AppRouter = () => {
           <Route path="/profile" element={<UserProfile/>}/>
           <Route path="/mytickets" element={<MyTickets/>}/>
           </Route>
-
         </Routes>
         
         

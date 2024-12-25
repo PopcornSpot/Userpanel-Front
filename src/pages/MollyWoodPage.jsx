@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ViewAllMovie from "../Components/ReusableComponents/ViewAllMoviesComp";
-import NavBar from "../Components/ReusableComponents/NavbarComponent";
 import Footer from "../Components/ReusableComponents/FooterComponent";
 import Loader from "../Components/ReusableComponents/LoaderComponent";
 
@@ -23,7 +22,11 @@ const Mollywood = () => {
               .split(",")
               .map((lang) => lang.trim())
               .includes("Malayalam")
-          );
+          )
+          .map((movie) => ({
+            ...movie,
+            language: "Malayalam",
+          }));
           setMovieData(tamilMovies);
         })
         .catch((err) => {

@@ -23,7 +23,11 @@ const Tollywood = () => {
               .split(",")
               .map((lang) => lang.trim())
               .includes("Telugu")
-          );
+          )
+          .map((movie) => ({
+            ...movie,
+            language: "Telugu",
+          }));
           setMovieData(tamilMovies);
         })
         .catch((err) => {

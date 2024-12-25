@@ -44,7 +44,6 @@ const UserProfile = () => {
             navigate("/login") 
           }
           console.log(res.data.details.picture);
-          // toast.success(res.data.Message)
           setUserDetails(res.data.details);
         })
         .catch((err) =>{
@@ -54,7 +53,8 @@ const UserProfile = () => {
           toast.error(err.response.data.Error)
         });
     } catch (error) {
-      toast.error(error.message)
+      console.log(error.message);
+      
     }
   };
 

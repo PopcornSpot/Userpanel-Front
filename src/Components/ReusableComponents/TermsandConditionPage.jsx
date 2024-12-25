@@ -11,15 +11,13 @@ const Section = ({ title, children }) => (
 
 const TermsAndConditions = () => {
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
-      {/* Navbar */}
+    <div className="bg-white min-h-screen flex flex-col">
       <div className="w-full fixed z-50 bg-white shadow-md">
         <NavBar />
       </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 max-w-5xl bg-white p-10 mt-28 rounded-lg shadow-lg">
-        <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-12">
+      <div className="container mx-auto px-6 max-w-5xl bg-gray-50 p-10 mt-28 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-extrabold text-gray-900 text-center mb-12">
           Terms and Conditions 
         </h1>
 

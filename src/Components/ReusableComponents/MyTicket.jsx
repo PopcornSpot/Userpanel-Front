@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "./LoaderComponent";
+import ticketImage from "../../assets/ticket-Image.jpg"
 
 const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
   const backendURL = "http://localhost:7000";
-
+const navigate = useNavigate();
   const fetchTicket = async () => {
     try {
       const res = await axios.get(
@@ -20,6 +21,9 @@ const MyTickets = () => {
           }
         }
       );
+      if(res.data.status=="401"){
+       navigate("/login")
+      }
       const ticketData = res.data.tickets;
       const ticketsWithMovies = await Promise.all(
         ticketData.map(async (ticket) => {
@@ -29,7 +33,7 @@ const MyTickets = () => {
       );
       setTickets(ticketsWithMovies);
     } catch (error) {
-      toast.error("Error fetching tickets.");
+      console.log(error.message);
     }
   };
 
@@ -56,8 +60,15 @@ const MyTickets = () => {
       </div>
      {tickets.length!==0?(
       <>
-      <div className="pt-24 pl-10">
-        <h1 className="text-2xl font-bold mb-4 w-full">My Tickets</h1>
+      <div className="mt-20 relative mb-10 w-full h-56 bg-gray-300">
+       <img
+       className="object-cover h-56 w-full"
+       src={ticketImage} alt="" />
+       <div className="w-full h-56 bg-gray-950 flex justify-center items-center bg-opacity-50 absolute top-0">
+        <h1
+        className="text-3xl font-bold text-white"
+        >My Tickets</h1>
+       </div>
       </div>
 
       <div className="container mx-auto px-6 py-6 mb-8 grid gap-12  lg:grid-cols-2  xl:grid-cols-3 ">
