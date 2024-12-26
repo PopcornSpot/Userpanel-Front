@@ -21,7 +21,6 @@ const fetchUserForUpdate = async (_id, setUser) => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
-        console.log(res.data);
         toast.error(res.data.Error);
         setUser(res.data.details);
       })
@@ -69,7 +68,6 @@ const EditProfile = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
           toast.success(res.data.Message);
           navigate("/profile");
         })
