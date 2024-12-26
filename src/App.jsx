@@ -21,6 +21,7 @@ import UserProfile from "./Components/ReusableComponents/ProfilePageComponent";
 import MyTickets from "./Components/ReusableComponents/MyTicket";
 import RazorpayComponent from "./Components/RazorpayComponent";
 import EditProfile from "./Components/ReusableComponents/EditProfilePage";
+import UserVotingPage from "./pages/UserVotingPage";
 
 
 
@@ -43,6 +44,7 @@ const AppRouter = () => {
           <Route path="kollywood" element={<Kollywood />} />
           <Route path="tollywood" element={<Tollywood />} />
           <Route path="mollywood" element={<Mollywood />} />
+          <Route path="/voting/:_id" element={<UserVotingPage />} />
           </Route>
 
           <Route element={<PrivateRoute />}>

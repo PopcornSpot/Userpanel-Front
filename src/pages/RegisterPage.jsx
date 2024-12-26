@@ -29,9 +29,11 @@ function RegisterFormPage() {
 
         try {
             const response = await axios.post("http://localhost:7000/user/register", formData);
-            toast.success(response.data.Message);
+            toast.info("Registered Successfully! Check your email for the password.");
             setFormData(initialState);
-            navigate("/login");
+            setTimeout(() => {
+                navigate("/login");
+            }, 2000);
         } catch (err) {
             toast.error(err.response?.data?.Message || "Registration failed. Please try again.");
         }
@@ -45,12 +47,9 @@ function RegisterFormPage() {
 
     return (
         <div className="w-full h-screen flex items-center justify-center bg-gray-50">
-            {/* Background Image Section */}
             <div className="hidden md:flex w-1/2 h-full">
                 <img src={Background} alt="Background" className="w-full h-full object-cover" />
             </div>
-    
-            {/* Registration Form Section */}
             <div className="w-full md:w-1/2 h-screen flex flex-col items-center bg-gradient-to-br from-gray-100 to-gray-200 justify-center px-6">
                 <form 
                     className="w-full max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center" 
@@ -59,8 +58,7 @@ function RegisterFormPage() {
                 >
                     <img src={Logo} alt="Logo" className="w-28 h-auto mb-4" />
                     <h2 className="text-3xl font-bold text-white">Register</h2>
-    
-                    {/* Name Input */}
+
                     <div className="w-full">
                         <label htmlFor="userName" className="block text-sm font-medium text-gray-100">Full Name</label>
                         <input
@@ -74,8 +72,7 @@ function RegisterFormPage() {
                             required
                         />
                     </div>
-    
-                    {/* Email Input */}
+
                     <div className="w-full">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-100">Email Address</label>
                         <input
@@ -90,7 +87,6 @@ function RegisterFormPage() {
                         />
                     </div>
     
-                    {/* Mobile Number Input */}
                     <div className="w-full">
                         <label htmlFor="mobileNumber" className="block text-sm font-medium text-gray-100">Mobile Number</label>
                         <input
@@ -106,7 +102,6 @@ function RegisterFormPage() {
                         />
                     </div>
     
-                    {/* Register Button */}
                     <button
                         type="submit"
                         className="w-full py-3 bg-orange-500 text-white font-bold rounded-lg shadow-md hover:bg-orange-600 focus:ring-2 focus:ring-orange-500"
@@ -114,7 +109,6 @@ function RegisterFormPage() {
                         Register
                     </button>
     
-                    {/* Login Link */}
                     <p className="text-gray-600">
                         Already have an account?{' '}
                         <Link to="/login" className="text-orange-500 font-medium hover:underline">
