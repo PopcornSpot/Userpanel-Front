@@ -11,7 +11,6 @@ const RazorpayButton = () => {
   const backendURL = "http://localhost:7000";
   const location = useLocation();
   const navigate = useNavigate();
-
   const [shows, setShows] = useState({});
   const [theatre, setTheatre] = useState({});
   const [movie, setMovie] = useState({});
@@ -36,7 +35,6 @@ const RazorpayButton = () => {
   const selectedSeats = params.get("selectedSeats")?.split(",") || [];
   const encryptedTotalCost = params.get("encryptedTotalCost");
   const totalCost = decryptTotalCost(encryptedTotalCost, secretKey);
-
   const gstAmount = Math.round(totalCost * 0.18);
   const finalTotal = totalCost + gstAmount;
   const seatNumbers = selectedSeats.join(", ");
@@ -59,7 +57,7 @@ const RazorpayButton = () => {
       );
       setTheatre(res.data.theatres);
     } catch (error) {
-      toast.error("Error fetching theatre details.");
+      console.log(error.message); 
     }
   };
 
@@ -70,7 +68,7 @@ const RazorpayButton = () => {
       );
       setMovie(res.data.movie);
     } catch (error) {
-      toast.error("Error fetching movie details.");
+      console.log(error.message);      
     }
   };
 
@@ -81,9 +79,11 @@ const RazorpayButton = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
+      if (response.data.status === "401") {
+        navigate("/login");
+      }
       if (response.data.Message) {
-        toast.success("Seats booked successfully!");
+        toast.success("Show booked successfully!");
         navigate(`/confirmation?bookingDetails=${response.data.createdScreen._id}&movieId=${response.data.createdScreen.movieId}`);
       } else {
         toast.error("Failed to book seats. Please try again.");
@@ -189,9 +189,9 @@ const RazorpayButton = () => {
           }
         },
         prefill: {
-          name: "John Doe",
-          email: "johndoe@example.com",
-          contact: "9876543210",
+          name: "PopcornSpot",
+          email: "popcornspot.official@gmail.com",
+          contact: "8344024735",
         },
         theme: {
           color: "#F37254",

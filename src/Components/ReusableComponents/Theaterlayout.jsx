@@ -18,7 +18,7 @@ const TheaterLayout = () => {
   const showId = params.get("showId");
   const selectedDate = params.get("selectedDate");
   const showTime = decodeURIComponent(params.get("showTime"));
-  const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK"; 
+  const secretKey = "asdfgh,wertyop67890.,[];09ASDFGHJK";
 
   const fetchShows = async () => {
     try {
@@ -31,21 +31,19 @@ const TheaterLayout = () => {
     }
   };
 
-
   const fetchBookedSeats = async () => {
     try {
       const res = await axios.get(
         `http://localhost:7000/payment/user/getbookedseats`,
         {
-          params: { movieId, showId, selectedDate,showTime },
+          params: { movieId, showId, selectedDate, showTime },
         }
       );
-      console.log(res.data);
       if (res.data.Message) {
         setBookedSeats(res.data.bookedSeats || []);
       } else {
         toast.error("No booked seats available.");
-      } 
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -57,7 +55,10 @@ const TheaterLayout = () => {
   }, []);
 
   const rows = [
-    { label: `DIAMOND (${shows.firstClassPrice})`, range: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"] },
+    {
+      label: `DIAMOND (${shows.firstClassPrice})`,
+      range: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+    },
     { label: "", range: ["L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"] },
     { label: `PEARL (${shows.secondClassPrice})`, range: ["V", "W"] },
   ];
@@ -90,7 +91,10 @@ const TheaterLayout = () => {
   };
 
   const calculateTotalCost = () => {
-    return selectedSeats.reduce((total, seatId) => total + getSeatPrice(seatId), 0);
+    return selectedSeats.reduce(
+      (total, seatId) => total + getSeatPrice(seatId),
+      0
+    );
   };
 
   const toggleSeatSelection = (seatId) => {
@@ -104,87 +108,124 @@ const TheaterLayout = () => {
   const handleReset = () => {
     setSelectedSeats([]);
   };
-  
+
   const encryptedTotalCost = CryptoJS.AES.encrypt(
     JSON.stringify(calculateTotalCost()),
     secretKey
   ).toString();
 
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-{
-  shows && Object.keys(shows).length > 0 ?
-     <>
-      <div className="space-y-10 mt-24">
-        {rows.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="space-y-6">
-            <h2 className="text-2xl font-bold text-center text-gray-800 underline decoration-gray-500">
-              {section.label}
-            </h2>
-            <div className="overflow-x-auto">
-              {section.range.map((row) => (
-                <div key={row} className="flex items-center mb-4">
-                  <div className="w-8 text-center font-bold text-gray-700">{row}</div>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    {seatData
-                      .filter((seat) => seat.row === row)
-                      .map((seat) => (
+      <div className="flex-1 mt-24">
+        {shows && Object.keys(shows).length > 0 ? (
+          <>
+            <div className="space-y-10 px-4">
+              {rows.map((section, sectionIndex) => (
+                <div
+                  key={sectionIndex}
+                  className="space-y-6 text-center flex flex-col items-center"
+                >
+                  <h2 className="text-2xl font-bold text-gray-800 underline decoration-gray-500">
+                    {section.label}
+                  </h2>
+                  <div className="overflow-x-auto w-full">
+                    <div className="inline-block">
+                      {section.range.map((row) => (
                         <div
-                          key={seat.id}
-                          onClick={() =>
-                            seat.status === "available" && toggleSeatSelection(seat.id)
-                          }
-                          className={`w-10 h-10 flex items-center justify-center rounded cursor-pointer border 
-                            ${seat.status === "sold"
-                              ? "bg-red-500 text-white cursor-not-allowed"
-                              : selectedSeats.includes(seat.id)
-                              ? "bg-green-500 text-white"
-                              : "bg-gray-300 hover:bg-gray-200"
-                            } 
-                            ${seat.number === 4 || seat.number === 19 ? "ml-16" : ""}`}
-                          title={`Row ${seat.row}, Seat ${seat.number}`}
+                          key={row}
+                          className="flex items-center mb-4 relative"
                         >
-                          <MdEventSeat size={20} />
+                          <div className="w-8 text-center font-bold text-gray-900 rounded sticky left-0 bg-orange-500 mr-3 px-3 py-1.5 z-10">
+                            {row}
+                          </div>
+                          <div className="flex flex-nowrap gap-2">
+                            {seatData
+                              .filter((seat) => seat.row === row)
+                              .map((seat) => (
+                                <div
+                                  key={seat.id}
+                                  onClick={() =>
+                                    seat.status === "available" &&
+                                    toggleSeatSelection(seat.id)
+                                  }
+                                  className={`w-10 h-10 flex items-center justify-center rounded cursor-pointer border 
+                                ${
+                                  seat.status === "sold"
+                                    ? "bg-red-500 text-white cursor-not-allowed"
+                                    : selectedSeats.includes(seat.id)
+                                    ? "bg-green-500 text-white"
+                                    : "bg-gray-300 hover:bg-gray-200"
+                                } ${
+                                  seat.number === 5
+                                    ? "ml-16"
+                                    : seat.number === 20
+                                    ? "mr-16"
+                                    : ""
+                                }`}
+                                  title={`Row ${seat.row}, Seat ${seat.number}`}
+                                >
+                                  <MdEventSeat size={20} />
+                                </div>
+                              ))}
+                          </div>
                         </div>
                       ))}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        ))}
-      </div>
 
-      <div className="mt-16 w-full flex items-center justify-center h-20">
-        <div className="w-[90%] max-w-4xl h-8 bg-gray-800 text-white text-center flex items-center justify-center rounded-md shadow-md">
-          Theater Screen
-        </div>
-      </div>
+            <div className="mt-16 w-full flex items-center justify-center h-20">
+              <div className="w-[90%] max-w-4xl h-8 bg-gray-800 text-white text-center flex items-center justify-center rounded-md shadow-md">
+                Theater Screen
+              </div>
+            </div>
 
-      <div className="flex gap-4 mt-6">
-        <Link
-          to={`/payment?movieId=${movieId}&showId=${showId}&selectedSeats=${encodeURIComponent(
-            selectedSeats.join(",")
-          )}&encryptedTotalCost=${encodeURIComponent(encryptedTotalCost)}&showTime=${encodeURIComponent(showTime)}&selectedDate=${selectedDate}`}
-        >
-          <button className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:scale-105">
-            Continue
-          </button>
-        </Link>
-        <button
-          className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:scale-105"
-          onClick={handleReset}
-        >
-          Reset
-        </button>
+            <div className="text-center mt-4">
+              <p className="text-lg font-medium text-gray-700">
+                Selected Seats:{" "}
+                <span className="font-bold text-green-600">
+                  {selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}
+                </span>
+              </p>
+              <p className="text-lg font-medium text-gray-700">
+                Total Cost:{" "}
+                <span className="font-bold text-blue-600">
+                  ₹{calculateTotalCost()}
+                </span>
+              </p>
+            </div>
+
+            <div className="flex gap-4 mt-6 justify-center">
+              <Link
+                to={`/payment?movieId=${movieId}&showId=${showId}&selectedSeats=${encodeURIComponent(
+                  selectedSeats.join(",")
+                )}&encryptedTotalCost=${encodeURIComponent(
+                  encryptedTotalCost
+                )}&showTime=${encodeURIComponent(
+                  showTime
+                )}&selectedDate=${selectedDate}`}
+              >
+                <button className="bg-green-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition-transform transform hover:scale-105">
+                  Continue
+                </button>
+              </Link>
+              <button
+                className="bg-orange-400 text-white py-2 px-10 rounded-lg shadow-md hover:bg-orange-500 transition-transform transform hover:scale-105"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
+            </div>
+          </>
+        ) : (
+          <Loader />
+        )}
       </div>
-      </>
-      :
-      <Loader/> 
-}
       <div className="mt-6 w-full">
         <Footer />
       </div>
