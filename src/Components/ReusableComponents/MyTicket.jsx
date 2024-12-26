@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "./NavbarComponent";
@@ -70,17 +69,18 @@ const MyTickets = () => {
       <div className="fixed top-0 left-0 w-full z-50">
         <NavBar />
       </div>
-
-      {loading ? (
-        <Loader />
-      ) : tickets.length !== 0 ? (
-        <>
-          <div className="mt-20 relative mb-10 w-full h-56 bg-gray-300">
+      <div className="mt-20 relative mb-10 w-full h-56 bg-gray-300">
             <img className="object-cover h-56 w-full" src={ticketImage} alt="" />
             <div className="w-full h-56 bg-gray-950 flex justify-center items-center bg-opacity-50 absolute top-0">
               <h1 className="text-3xl font-bold text-white">My Tickets</h1>
             </div>
           </div>
+
+      {loading ? (
+        <Loader />
+      ) : tickets.length !== 0 ? (
+        <>
+         
 
           <div className="container mx-auto px-6 py-6 mb-8 grid gap-12 lg:grid-cols-2 xl:grid-cols-3">
             {tickets.map((ticket) => (
@@ -124,8 +124,8 @@ const MyTickets = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center items-center min-h-screen w-full text-xl text-gray-700">
-          No tickets found
+        <div className="flex font-semibold text-3xl justify-center items-center py-56 w-full text-gray-700">
+          Oops! No Tickets Found...
         </div>
       )}
 
