@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import NavBar from "../Components/ReusableComponents/NavbarComponent";
+import Footer from "../Components/ReusableComponents/FooterComponent";
 
 const UserVotingPage = () => {
   const [pollData, setPollData] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState("");
-  const { _id } = useParams(); // Extract poll ID from URL params
+  const { _id } = useParams();
+  const navigate = useNavigate();
 
-  // Fetch poll data when component loads
   useEffect(() => {
     const fetchPollData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:7000/poll/getpoll/?_id=${_id}`
         );
-        toast.success(response.data.Message);
         setPollData(response.data.getpoll);
       } catch (err) {
         toast.error(err.response?.data?.Error || "Failed to load poll data.");
@@ -25,17 +26,14 @@ const UserVotingPage = () => {
     fetchPollData();
   }, [_id]);
 
-  // Handle vote submission
   const handleVote = async () => {
     if (!selectedMovie) {
       alert("Please select a movie to vote for!");
       return;
     }
-
-    // Update movie votes
     const updatedMovies = pollData.movies.map((movie) =>
       movie._id === selectedMovie
-        ? { ...movie, votes: (movie.votes || 0) + 1 } // Increment votes safely
+        ? { ...movie, votes: (Number(movie.votes) || 0) + 1 } 
         : movie
     );
 
@@ -46,51 +44,62 @@ const UserVotingPage = () => {
       );
       toast.success(response.data.Message);
       alert("Your vote has been counted!");
+      navigate("/");
 
-      // Update local state with new poll data
-      setPollData((prevData) => ({
-        ...prevData,
-        movies: updatedMovies,
-      }));
     } catch (err) {
       toast.error(err.response?.data?.Error || "Failed to update vote.");
       console.error(err.message);
     }
   };
 
-  // Show loading message if poll data is not yet loaded
   if (!pollData) {
     return <div>Loading poll...</div>;
   }
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-bold mb-4">{pollData.pollName}</h1>
-      <h3 className="text-lg mb-4">Vote for your favorite movie:</h3>
-      <div className="mb-6">
-        {pollData.movies.map((movie) => (
-          <div key={movie._id} className="mb-2">
-            <input
-              type="radio"
-              name="movieVote"
-              id={movie._id}
-              value={movie._id}
-              checked={selectedMovie === movie._id}
-              onChange={() => setSelectedMovie(movie._id)}
-              className="mr-2"
-            />
-            <label htmlFor={movie._id} className="text-lg">
-              {movie.movieName} - Votes: {movie.votes || 0}
-            </label>
-          </div>
-        ))}
+    <div className="min-h-screen flex flex-col items-center">
+      <div className="w-full sticky top-0 z-50">
+        <NavBar />
       </div>
-      <button
-        onClick={handleVote}
-        className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
-      >
-        Vote
-      </button>
+      <div className="w-full py-32 mt-20 flex flex-col justify-center items-center">
+        <div className="p-10 rounded-lg bg-gradient-to-b from-gray-700 via-gray-700 to-gray-600">
+          <h1 className="text-2xl text-center text-white font-bold mb-4">
+            {pollData.pollName}
+          </h1>
+          <h3 className="text-lg text-gray-50 mb-4">Vote for your favorite movie:</h3>
+          <div className="mb-6">
+            {pollData.movies.map((movie) => (
+              <div key={movie._id} className="mb-2 text-orange-50">
+                <input
+                  type="radio"
+                  name="movieVote"
+                  id={movie._id}
+                  value={movie._id}
+                  checked={selectedMovie === movie._id}
+                  onChange={() => setSelectedMovie(movie._id)}
+                  className="mr-2"
+                />
+                <label htmlFor={movie._id} className="text-lg text-gray-100">
+                  {movie.movieName} - <strong>Votes:</strong>{" "}
+                  <span className="text-orange-400">{movie.votes || 0}</span>
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <div className="w-full flex justify-center items-center">
+            <button
+              onClick={handleVote}
+              className="px-6 py-2 bg-orange-500 text-white font-bold rounded hover:bg-orange-600"
+            >
+              Vote
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 };
