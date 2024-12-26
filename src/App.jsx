@@ -20,6 +20,7 @@ import PrivateRoute from "./Components/ReusableComponents/PrivateRouteComp";
 import UserProfile from "./Components/ReusableComponents/ProfilePageComponent";
 import MyTickets from "./Components/ReusableComponents/MyTicket";
 import RazorpayComponent from "./Components/RazorpayComponent";
+import EditProfile from "./Components/ReusableComponents/EditProfilePage";
 
 
 
@@ -49,6 +50,7 @@ const AppRouter = () => {
           <Route path="/mytickets" element={<MyTickets/>}/>
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/confirmation" element={<TicketConfirmation/>}/>
+          <Route path="/editprofile" element={<EditProfile/>}/>
           </Route>
         </Routes>
         
