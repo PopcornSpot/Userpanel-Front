@@ -20,43 +20,41 @@ const PersonCard = ({ image, name, role }) => (
 );
 
 const MovieDetailComponent = () => {
-const [movie,setMovie] =useState({});
-const { _id } = useParams();
-const backendURL= "http://localhost:7000"
+  const [movie, setMovie] = useState({});
+  const { _id } = useParams();
+  const backendURL = "http://localhost:7000";
 
+  // Scroll to top effect
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+  }, []);
 
   const fetchMovieForUpdate = async () => {
     try {
       await axios
-        .get(`http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`,
-        )
+        .get(`http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`)
         .then((res) => {
-          toast.success(res.data.Message);
-          toast.error(res.data.Error)
+          toast.error(res.data.Error);
           setMovie(res.data.movie);
         })
         .catch((err) => {
-          toast.error(err.response.data.Message)
+          toast.error(err.response.data.Message);
         });
     } catch (error) {
       console.log(error.message);
     }
   };
-  
+
   const cast = [
     { id: 1, name: movie.hero, role: "Hero", image: "https://via.placeholder.com/100" },
-    { id: 2, name:movie.heroine, role: "Heroine", image: "https://via.placeholder.com/100" },
-    { id: 3, name:movie.music, role: "Music", image: "https://via.placeholder.com/100" },
-    { id: 4, name:movie.director, role: "Director", image: "https://via.placeholder.com/100" },
-  ]; 
-  
-  
+    { id: 2, name: movie.heroine, role: "Heroine", image: "https://via.placeholder.com/100" },
+    { id: 3, name: movie.music, role: "Music", image: "https://via.placeholder.com/100" },
+    { id: 4, name: movie.director, role: "Director", image: "https://via.placeholder.com/100" },
+  ];
+
   useEffect(() => {
-   fetchMovieForUpdate();
-  }, [])
-
-
-
+    fetchMovieForUpdate();
+  }, [_id]); // Use _id as dependency to trigger fetch on URL change
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex flex-col items-center">
@@ -64,68 +62,64 @@ const backendURL= "http://localhost:7000"
         <NavBar />
       </div>
 
-      {
-        movie && Object.keys(movie).length > 0 ?
+      {movie && Object.keys(movie).length > 0 ? (
         <>
-      <div className="container mx-auto px-6 py-8 mt-20">
-        <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-lg overflow-hidden h-auto w-full">
-          <div className="w-full lg:w-1/3 flex items-center justify-center">
-           <Link to={movie.trailerUrl}>
-           <img
-               src={`${backendURL}/upload/${movie.fileName}`}
-              alt={movie.title}
-              className="w-[400px] h-[500px] object-cover rounded-l-lg"
-            />
-           </Link>
-          </div>
-
-          <div className="w-full lg:w-2/3 p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white flex flex-col justify-between gap-8">
-            <div>
-              <h1 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">{movie.title}</h1>
-              <div className="flex items-center gap-3 text-lg mb-4">
-                <span className="text-yellow-400 text-2xl font-bold">★ 7.5/10</span>
-                <span className="text-gray-300">(67 Votes)</span>
+          <div className="container mx-auto px-6 py-8 mt-20">
+            <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-lg overflow-hidden h-auto w-full">
+              <div className="w-full lg:w-1/3 flex items-center justify-center">
+                <Link to={movie.trailerUrl}>
+                  <img
+                    src={`${backendURL}/upload/${movie.fileName}`}
+                    alt={movie.title}
+                    className="w-[400px] h-[500px] object-cover rounded-l-lg"
+                  />
+                </Link>
               </div>
-              <p className="text-lg tracking-wide text-gray-300 mb-2">{movie.format} • {movie.language}</p>
-              <p className="text-lg tracking-wide text-gray-300">{movie.duration} • {movie.genre} • {movie.certificate} • {movie.releaseDate}</p>
+
+              <div className="w-full lg:w-2/3 p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white flex flex-col justify-between gap-8">
+                <div>
+                  <h1 className="text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">{movie.title}</h1>
+                  <div className="flex items-center gap-3 text-lg mb-4">
+                    <span className="text-yellow-400 text-2xl font-bold">★ 7.5/10</span>
+                    <span className="text-gray-300">(67 Votes)</span>
+                  </div>
+                  <p className="text-lg tracking-wide text-gray-300 mb-2">{movie.format} • {movie.language}</p>
+                  <p className="text-lg tracking-wide text-gray-300">{movie.duration} • {movie.genre} • {movie.certificate} • {movie.releaseDate}</p>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">About the Movie</h2>
+                  <p className="leading-relaxed text-gray-300 text-lg tracking-wide">
+                    {movie.synopsis}
+                  </p>
+                </div>
+                <Link to={`/moviebooking/${movie._id}`}>
+                  <button
+                    className="w-[200px] bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105 self-start cursor-pointer"
+                    aria-label="Book tickets for Pushpa 2"
+                  >
+                    Book Tickets
+                  </button>
+                </Link>
+              </div>
             </div>
-            <div>
-              <h2 className="text-2xl font-bold mb-4">About the Movie</h2>
-              <p className="leading-relaxed text-gray-300 text-lg tracking-wide">
-              {movie.synopsis}
-              </p>
-            </div>
-            <Link to={`/moviebooking/${movie._id}`} >
-            <button 
-              className="w-[200px] bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105 self-start cursor-pointer" 
-              aria-label="Book tickets for Pushpa 2"
-            >
-              Book Tickets
-            </button>
-            </Link>
-            
           </div>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-6 py-8">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800  ">
-          Cast
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {cast.map((person) => (
-            <PersonCard key={person.id} image={person.image} name={person.name} role={person.role} />
-          ))}
-        </div>
-      </div>
-      </>
-      :
-      <Loader/>
-}
+          <div className="container mx-auto px-6 py-8">
+            <h2 className="text-3xl font-bold mb-8 text-gray-800">Cast</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {cast.map((person) => (
+                <PersonCard key={person.id} image={person.image} name={person.name} role={person.role} />
+              ))}
+            </div>
+          </div>
+        </>
+      ) : (
+        <Loader />
+      )}
 
-     <div className="w-full"> 
-     <Footer />
-     </div>
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 };
