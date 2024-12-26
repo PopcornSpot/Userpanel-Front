@@ -124,7 +124,7 @@ const MyTickets = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center items-center h-full text-xl text-gray-700">
+        <div className="flex justify-center items-center min-h-screen w-full text-xl text-gray-700">
           No tickets found
         </div>
       )}
