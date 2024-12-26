@@ -40,11 +40,12 @@ const AppRouter = () => {
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
+          <Route path="/voting/:_id" element={<UserVotingPage />} />
+
           <Route path="movies" element={<NestedMovies/>}>
           <Route path="kollywood" element={<Kollywood />} />
           <Route path="tollywood" element={<Tollywood />} />
           <Route path="mollywood" element={<Mollywood />} />
-          <Route path="/voting/:_id" element={<UserVotingPage />} />
           </Route>
 
           <Route element={<PrivateRoute />}>
