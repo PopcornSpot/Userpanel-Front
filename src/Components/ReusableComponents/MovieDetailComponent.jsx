@@ -24,9 +24,8 @@ const MovieDetailComponent = () => {
   const { _id } = useParams();
   const backendURL = "http://localhost:7000";
 
-  // Scroll to top effect
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+    window.scrollTo(0, 0);
   }, []);
 
   const fetchMovieForUpdate = async () => {
@@ -54,7 +53,7 @@ const MovieDetailComponent = () => {
 
   useEffect(() => {
     fetchMovieForUpdate();
-  }, [_id]); // Use _id as dependency to trigger fetch on URL change
+  }, [_id]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex flex-col items-center">

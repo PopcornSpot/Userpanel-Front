@@ -17,6 +17,10 @@ const RazorpayButton = () => {
   const [timeLeft, setTimeLeft] = useState(480);
   const params = new URLSearchParams(location.search);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const decryptTotalCost = (encryptedCost, secretKey) => {
     try {
       const bytes = CryptoJS.AES.decrypt(encryptedCost, secretKey);
@@ -39,7 +43,7 @@ const RazorpayButton = () => {
   const finalTotal = totalCost + gstAmount;
   const seatNumbers = selectedSeats.join(", ");
 
-  const fetchShows = async () => { 
+  const fetchShows = async () => {
     try {
       const res = await axios.get(
         `${backendURL}/show/user/getshowfortheatrelayout/?_id=${showId}`
@@ -57,7 +61,7 @@ const RazorpayButton = () => {
       );
       setTheatre(res.data.theatres);
     } catch (error) {
-      console.log(error.message); 
+      console.log(error.message);
     }
   };
 
@@ -68,23 +72,29 @@ const RazorpayButton = () => {
       );
       setMovie(res.data.movie);
     } catch (error) {
-      console.log(error.message);      
+      console.log(error.message);
     }
   };
 
   const saveSeats = async (bookingDetails) => {
     try {
-      const response = await axios.post(`${backendURL}/payment/save`, bookingDetails, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${backendURL}/payment/save`,
+        bookingDetails,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (response.data.status === "401") {
         navigate("/login");
       }
       if (response.data.Message) {
         toast.success("Show booked successfully!");
-        navigate(`/confirmation?bookingDetails=${response.data.createdScreen._id}&movieId=${response.data.createdScreen.movieId}`);
+        navigate(
+          `/confirmation?bookingDetails=${response.data.createdScreen._id}&movieId=${response.data.createdScreen.movieId}`
+        );
       } else {
         toast.error("Failed to book seats. Please try again.");
       }
@@ -128,7 +138,10 @@ const RazorpayButton = () => {
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   const handlePayment = async () => {
@@ -215,66 +228,72 @@ const RazorpayButton = () => {
         <NavBar />
       </div>
       <div className="flex flex-col items-center justify-center flex-1 mt-24 px-4">
-        <div className="flex flex-wrap md:flex-nowrap items-center justify-center w-full max-w-6xl gap-8">
-          <div className="w-full md:w-1/2">
+        <div className="flex mt-10 mb-10 flex-wrap md:flex-nowrap items-stretch justify-center w-full max-w-6xl gap-8">
+          <div className="w-full md:w-1/2 flex items-stretch">
             <img
               src={`${backendURL}/upload/${movie.fileName}`}
               alt={movie.title}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg w-full h-full object-cover"
             />
           </div>
 
-          <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Movie Details
-            </h1>
-            <p className="text-gray-600 mb-4">
-              <strong>Movie Name: </strong>{movie.title}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Screen: </strong> {shows.screen}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Show Time: </strong> {showTime}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Show Date: </strong> {showDate}
-            </p>
-
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Theatre Details
-            </h1>
-            <p className="text-gray-600 mb-4">
-              <strong>Theatre Name: </strong>{theatre.theatreName}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Address: </strong> {theatre.address}
-            </p>
-
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-              Payment Summary
-            </h1>
-            <p className="text-gray-600 mb-4">
-              <strong>Base Cost:</strong> ₹{totalCost}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>GST Amount (18%):</strong> ₹{gstAmount}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Total (Base + GST):</strong> ₹{finalTotal}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <strong>Seats:</strong> {seatNumbers}
-            </p>
-            <p className="text-red-600 text-lg font-semibold mb-6 text-center">
-              Time Remaining: {formatTime(timeLeft)}
-            </p>
-            <button
-              onClick={handlePayment}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 rounded-lg shadow-md hover:scale-105 transition transform duration-300"
-            >
-              Pay Now
-            </button>
+          <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow-lg flex flex-col justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Movie Details
+              </h1>
+              <p className="text-gray-600 mb-4">
+                <strong>Movie Name: </strong>
+                {movie.title}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Screen: </strong> {shows.screen}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Show Time: </strong> {showTime}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Show Date: </strong> {showDate}
+              </p>
+              <hr className="mt-10 mb-5" />
+              <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Theatre Details
+              </h1>
+              <p className="text-gray-600 mb-4">
+                <strong>Theatre Name: </strong>
+                {theatre.theatreName}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Address: </strong> {theatre.address}
+              </p>
+              <hr className="mt-10 mb-5" />
+              <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Payment Summary
+              </h1>
+              <p className="text-gray-600 mb-4">
+                <strong>Base Cost:</strong> ₹{totalCost}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>GST Amount (18%):</strong> ₹{gstAmount}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Total (Base + GST):</strong> ₹{finalTotal}
+              </p>
+              <p className="text-gray-600 mb-4">
+                <strong>Seats:</strong> {seatNumbers}
+              </p>
+            </div>
+            <div className="mt-6">
+              <p className="text-red-600 text-lg font-semibold mb-6 text-center">
+                Time Remaining: {formatTime(timeLeft)}
+              </p>
+              <button
+                onClick={handlePayment}
+                className="w-full bg-gradient-to-r from-orange-500 to-gray-900 text-white py-3 rounded-lg shadow-md hover:scale-105 transition transform duration-300"
+              >
+                Pay Now
+              </button>
+            </div>
           </div>
         </div>
       </div>

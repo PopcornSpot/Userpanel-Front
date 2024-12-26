@@ -6,7 +6,7 @@ import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CgPassword } from "react-icons/cg";
 
 const ProfileCard = ({ title, value }) => (
@@ -60,10 +60,6 @@ const UserProfile = () => {
     navigate("/login");
   };
 
-  const handleEditProfile = () => {
-    navigate("/editprofile");
-  }
-
   useEffect(() => {
     fetchUser();
   }, []);
@@ -82,7 +78,7 @@ const UserProfile = () => {
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
                 <img
-                  src={image}
+                  src={userDetails.fileName?`${backendURL}/upload/${userDetails.fileName}`:image}
                   alt={userDetails.userName || "User"}
                   className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
                 />
@@ -102,19 +98,25 @@ const UserProfile = () => {
                 <strong className="block w-36">Mobile Number:</strong>
                 {userDetails.mobileNumber}
               </p>
+              <p className="text-gray-500 flex">
+                <strong className="block w-36">Gender:</strong>
+                {userDetails.gender}
+              </p>
             </div>
 
             <div className="flex gap-4">
-              <ActionButton
+             <Link to={`/editprofile/${userDetails._id}`}
+             >
+             <ActionButton
                 icon={FaPencilAlt}
                 label="Edit Profile"
-                colorClass="bg-gradient-to-r from-green-500 to-green-600"
-                onClick={handleEditProfile}
+                colorClass="bg-gradient-to-r from-blue-500 to-blue-600"
               />
+             </Link>
               <ActionButton
                 icon={FaUserFriends}
                 label="Friends"
-                colorClass="bg-gradient-to-r from-yellow-500 to-yellow-600"
+                colorClass="bg-gradient-to-r from-orange-400 to-orange-500"
                 onClick={() => toast.info("Friends clicked")}
               />
               <ActionButton
@@ -135,9 +137,10 @@ const UserProfile = () => {
           <div>
             <h1 className="text-2xl font-bold mb-6 text-gray-800">Statistics</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <ProfileCard title="Total Money Spent" value="$2000" />
+              <ProfileCard title="Money Spent" value="$2000" />
               <ProfileCard title="Total Tickets" value="5" />
               <ProfileCard title="Total Friends" value="100" />
+              <ProfileCard title="Total Movies" value="100" />
             </div>
           </div>
         </div>

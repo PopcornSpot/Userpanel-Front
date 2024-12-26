@@ -50,7 +50,7 @@ const AppRouter = () => {
           <Route path="/mytickets" element={<MyTickets/>}/>
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/confirmation" element={<TicketConfirmation/>}/>
-          <Route path="/editprofile" element={<EditProfile/>}/>
+          <Route path="/editprofile/:_id" element={<EditProfile/>}/>
           </Route>
         </Routes>
         
