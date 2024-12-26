@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Background from "../assets/ticket-Image.jpg";
 import Logo from "../assets/POPFINAL.png";
 import { Link } from 'react-router-dom';
+import { FaUser, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 const initialState = {
     userName: '',
@@ -41,71 +42,69 @@ function RegisterFormPage() {
         setFormData(initialState);
     };
 
-  
-
     return (
         <div className="w-full h-screen flex items-center justify-center bg-gray-50">
             {/* Background Image Section */}
             <div className="hidden md:flex w-1/2 h-full">
                 <img src={Background} alt="Background" className="w-full h-full object-cover" />
             </div>
-    
+
             {/* Registration Form Section */}
             <div className="w-full md:w-1/2 h-screen flex flex-col items-center bg-gradient-to-br from-gray-100 to-gray-200 justify-center px-6">
-                <form 
-                    className="w-full max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center" 
-                    onSubmit={handleSubmit} 
+                <form
+                    className="w-full max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center"
+                    onSubmit={handleSubmit}
                     onReset={handleReset}
                 >
                     <img src={Logo} alt="Logo" className="w-28 h-auto mb-4" />
                     <h2 className="text-3xl font-bold text-white">Register</h2>
-    
+
                     {/* Name Input */}
-                    <div className="w-full">
-                        <label htmlFor="userName" className="block text-sm font-medium text-gray-100">Full Name</label>
+                    <div className="w-full relative">
+                        <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
                         <input
                             type="text"
                             id="userName"
                             name="userName"
                             placeholder="Enter your name"
-                            className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
                             value={formData.userName}
                             onChange={handleChange}
                             required
                         />
                     </div>
-    
+
                     {/* Email Input */}
-                    <div className="w-full">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-100">Email Address</label>
+                    <div className="w-full relative">
+                        <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
                         <input
                             type="email"
                             id="email"
                             name="email"
                             placeholder="Enter your email"
-                            className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
                             value={formData.email}
                             onChange={handleChange}
                             required
                         />
                     </div>
-    
+
                     {/* Mobile Number Input */}
-                    <div className="w-full">
-                        <label htmlFor="mobileNumber" className="block text-sm font-medium text-gray-100">Mobile Number</label>
+                    <div className="w-full relative">
+                        <FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
                         <input
                             type="tel"
                             id="mobileNumber"
                             name="mobileNumber"
                             placeholder="Enter your mobile number"
                             pattern="[0-9]{10}"
-                            className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500"
                             value={formData.mobileNumber}
                             onChange={handleChange}
                             required
                         />
                     </div>
-    
+
                     {/* Register Button */}
                     <button
                         type="submit"
@@ -113,9 +112,9 @@ function RegisterFormPage() {
                     >
                         Register
                     </button>
-    
+
                     {/* Login Link */}
-                    <p className="text-gray-600">
+                    <p className="text-gray-200">
                         Already have an account?{' '}
                         <Link to="/login" className="text-orange-500 font-medium hover:underline">
                             Login
@@ -125,7 +124,6 @@ function RegisterFormPage() {
             </div>
         </div>
     );
-    
 }
 
 export default RegisterFormPage;
