@@ -34,12 +34,10 @@ const AppRouter = () => {
           <Route path="/theatrelayout" element={<TheaterLayout/>}/>
           <Route path="/theatrebooking/:_id" element={<TheaterBooking/>}/>
           <Route path="/moviebooking/:_id" element={<MovieBooking/>}/>
-          <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/register" element={<RegisterFormPage/>}/>
           <Route path="/resetpassword" element={<ForgotPassword/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
-          <Route path="/confirmation" element={<TicketConfirmation/>}/>
           <Route path="movies" element={<NestedMovies/>}>
           <Route path="kollywood" element={<Kollywood />} />
           <Route path="tollywood" element={<Tollywood />} />
@@ -49,6 +47,8 @@ const AppRouter = () => {
           <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<UserProfile/>}/>
           <Route path="/mytickets" element={<MyTickets/>}/>
+          <Route path="/payment" element={<RazorpayComponent/>}/>
+          <Route path="/confirmation" element={<TicketConfirmation/>}/>
           </Route>
         </Routes>
         
