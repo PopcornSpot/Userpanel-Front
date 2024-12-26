@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import image from "../../assets/LoginImagebg.jpg";
-import { FaPencilAlt, FaUserFriends, FaWallet } from "react-icons/fa";
+import { FaPencilAlt, FaUserFriends } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
 import NavBar from "./NavbarComponent";
 import Footer from "./FooterComponent";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { CgPassword } from "react-icons/cg";
 
 const ProfileCard = ({ title, value }) => (
   <div className="bg-white shadow-lg p-6 rounded-lg text-center hover:shadow-xl transition-shadow duration-300 border border-gray-200">
@@ -28,33 +30,33 @@ const ActionButton = ({ icon: Icon, label, colorClass }) => (
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
-  const backendURL= "http://localhost:7000"
+  const backendURL = "http://localhost:7000"
 
   const fetchUser = async () => {
     try {
       const authToken = localStorage.getItem("token");
       await axios
         .get("http://localhost:7000/user/getdetails",
-           {
-              headers: { Authorization: `Bearer ${authToken}` }
-            }
+          {
+            headers: { Authorization: `Bearer ${authToken}` }
+          }
         )
         .then((res) => {
-          if(res.data.Error=="jwt expired"){
-            navigate("/login") 
+          if (res.data.Error == "jwt expired") {
+            navigate("/login")
           }
           console.log(res.data.details.picture);
           setUserDetails(res.data.details);
         })
-        .catch((err) =>{
+        .catch((err) => {
           if (err.status === 401) {
-              return toast.error("Request to Login Again")
-                }
+            return toast.error("Request to Login Again")
+          }
           toast.error(err.response.data.Error)
         });
     } catch (error) {
       console.log(error.message);
-      
+
     }
   };
 
@@ -64,7 +66,7 @@ const UserProfile = () => {
 
 
   return (
-    <div className="w-full min-h-screen"> 
+    <div className="w-full min-h-screen">
       <div className="w-full fixed top-0 z-50 bg-white shadow-md">
         <NavBar />
       </div>
@@ -74,13 +76,13 @@ const UserProfile = () => {
       <div className="mx-4 md:mx-10 bg-white p-8 rounded-lg shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex flex-col items-center md:items-start gap-8">
-        
+
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
                 <img
-                //  src={userDetails.fileName 
-                //   ? `${backendURL}/upload/${userDetails.fileName}` 
-                //   : userDetails.picture}
+                  //  src={userDetails.fileName 
+                  //   ? `${backendURL}/upload/${userDetails.fileName}` 
+                  //   : userDetails.picture}
                   src={image}
                   alt={userDetails.userName}
                   className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
@@ -106,9 +108,14 @@ const UserProfile = () => {
                 colorClass="bg-gradient-to-r from-yellow-500 to-yellow-600"
               />
               <ActionButton
-                icon={FaWallet}
-                label="Subscriptions"
-                colorClass="bg-gradient-to-r from-purple-500 to-purple-600"
+                icon={CiLogout}
+                label="Logout"
+                colorClass="bg-gradient-to-r from-red-500 to-red-600"
+              />
+              <ActionButton
+                icon={CgPassword}
+                label="Change Password"
+                colorClass="bg-gradient-to-r from-green-500 to-green-600"
               />
             </div>
           </div>
