@@ -19,8 +19,6 @@ const Hero = () => {
       }
 
       const bannerImages = allBanner.map((banner) => `${backendURL}${banner.fileName}`);
-      console.log(bannerImages);
-      
       setImages(bannerImages);
     } catch (error) {
       if (error.response?.status === 401) {

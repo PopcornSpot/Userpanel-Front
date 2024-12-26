@@ -178,7 +178,7 @@ const TicketConfirmation = () => {
       :
       <Loader/>
       }
-      <div className="mt-6">
+      <div className="mt-6 w-full">
         <Footer />
       </div>
     </div>

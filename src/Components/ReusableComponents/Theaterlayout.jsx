@@ -101,14 +101,10 @@ const TheaterLayout = () => {
     );
   };
 
-
-   
-
   const handleReset = () => {
     setSelectedSeats([]);
   };
-
-
+  
   const encryptedTotalCost = CryptoJS.AES.encrypt(
     JSON.stringify(calculateTotalCost()),
     secretKey
@@ -119,7 +115,6 @@ const TheaterLayout = () => {
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-
 {
   shows && Object.keys(shows).length > 0 ?
      <>
