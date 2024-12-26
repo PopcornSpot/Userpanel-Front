@@ -121,8 +121,7 @@ const TheaterLayout = () => {
       </div>
 
 {
-  shows && Object.keys(shows).length > 0 &&
-  bookedSeats.length!==0?
+  shows && Object.keys(shows).length > 0 ?
      <>
       <div className="space-y-10 mt-24">
         {rows.map((section, sectionIndex) => (
