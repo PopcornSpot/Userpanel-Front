@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import image from "../../assets/LoginImagebg.jpg";
 import { FaPencilAlt, FaUserFriends } from "react-icons/fa";
@@ -18,7 +19,7 @@ const ProfileCard = ({ title, value }) => (
 
 const ActionButton = ({ icon: Icon, label, colorClass, onClick }) => (
   <button
-    onClick={onClick} // Corrected here
+    onClick={onClick}
     className={`${colorClass} text-white py-3 px-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2`}
   >
     <Icon className="w-5 h-5" />
@@ -28,30 +29,65 @@ const ActionButton = ({ icon: Icon, label, colorClass, onClick }) => (
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState({});
+  const [totalTicket, setTotalTicket] = useState([]);
+  const [statistics, setStatistics] = useState({
+    moneySpent: 0,
+    totalTheatres: 0,
+    totalMovies: 0,
+  });
   const navigate = useNavigate();
   const backendURL = "http://localhost:7000";
+
+  const calculateStatistics = (tickets) => {
+    const moneySpent = tickets.reduce(
+      (total, ticket) => total + parseFloat(ticket.totalCost || "0"),
+      0
+    );
+
+    const uniqueTheatreIds = new Set(tickets.map((ticket) => ticket.theatreId));
+    const uniqueMovieIds = new Set(tickets.map((ticket) => ticket.movieId));
+
+    setStatistics({
+      moneySpent,
+      totalTheatres: uniqueTheatreIds.size,
+      totalMovies: uniqueMovieIds.size,
+    });
+  };
 
   const fetchUser = async () => {
     try {
       const authToken = localStorage.getItem("token");
-      await axios
-        .get("http://localhost:7000/user/getdetails", {
-          headers: { Authorization: `Bearer ${authToken}` },
-        })
-        .then((res) => {
-          if (res.data.Error === "jwt expired") {
-            navigate("/login");
-          }
-          setUserDetails(res.data.details);
-        })
-        .catch((err) => {
-          if (err.response?.status === 401) {
-            return toast.error("Request to Login Again");
-          }
-          toast.error(err.response?.data?.Error || "An error occurred");
-        });
+      const res = await axios.get(`${backendURL}/user/getdetails`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+
+      if (res.data.Error === "jwt expired") {
+        navigate("/login");
+        return null;
+      }
+
+      const fetchedUser = res.data.details;
+      setUserDetails(fetchedUser);
+      return fetchedUser;
+    } catch (err) {
+      if (err.response?.status === 401) {
+        toast.error("Request to Login Again");
+      } else {
+        toast.error(err.response?.data?.Error || "An error occurred");
+      }
+      return null;
+    }
+  };
+
+  const fetchTotalTickets = async (userId) => {
+    try {
+      const response = await axios.get(
+        `${backendURL}/payment/getallticketsforUser/?_id=${userId}`
+      );
+      setTotalTicket(response.data.allTickets);
+      calculateStatistics(response.data.allTickets);
     } catch (error) {
-      console.error(error.message);
+      toast.error(error.response?.data?.Error || error.message);
     }
   };
 
@@ -61,7 +97,19 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    fetchUser();
+    const fetchData = async () => {
+      try {
+        const fetchedUser = await fetchUser();
+        if (fetchedUser) {
+          await fetchTotalTickets(fetchedUser._id);
+        } else {
+          console.error("User details not fetched.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -78,7 +126,11 @@ const UserProfile = () => {
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
                 <img
-                  src={userDetails.fileName?`${backendURL}/upload/${userDetails.fileName}`:image}
+                  src={
+                    userDetails.fileName
+                      ? `${backendURL}/upload/${userDetails.fileName}`
+                      : image
+                  }
                   alt={userDetails.userName || "User"}
                   className="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover border-4 border-white"
                 />
@@ -105,14 +157,13 @@ const UserProfile = () => {
             </div>
 
             <div className="flex gap-4">
-             <Link to={`/editprofile/${userDetails._id}`}
-             >
-             <ActionButton
-                icon={FaPencilAlt}
-                label="Edit Profile"
-                colorClass="bg-gradient-to-r from-blue-500 to-blue-600"
-              />
-             </Link>
+              <Link to={`/editprofile/${userDetails._id}`}>
+                <ActionButton
+                  icon={FaPencilAlt}
+                  label="Edit Profile"
+                  colorClass="bg-gradient-to-r from-blue-500 to-blue-600"
+                />
+              </Link>
               <ActionButton
                 icon={FaUserFriends}
                 label="Friends"
@@ -125,22 +176,37 @@ const UserProfile = () => {
                 colorClass="bg-gradient-to-r from-red-500 to-red-600"
                 onClick={handleLogout}
               />
-              <ActionButton
-                icon={CgPassword}
-                label="Change Password"
-                colorClass="bg-gradient-to-r from-green-500 to-green-600"
-                onClick={() => toast.info("Change Password clicked")}
-              />
+              <Link to={"/resetpassword"}>
+                <ActionButton
+                  icon={CgPassword}
+                  label="Change Password"
+                  colorClass="bg-gradient-to-r from-green-500 to-green-600"
+                />
+              </Link>
             </div>
           </div>
 
           <div>
-            <h1 className="text-2xl font-bold mb-6 text-gray-800">Statistics</h1>
+            <h1 className="text-2xl font-bold mb-6 text-gray-800">
+              Statistics
+            </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <ProfileCard title="Money Spent" value="$2000" />
-              <ProfileCard title="Total Tickets" value="5" />
-              <ProfileCard title="Total Friends" value="100" />
-              <ProfileCard title="Total Movies" value="100" />
+              <ProfileCard
+                title="Money Spent"
+                value={`₹ ${statistics.moneySpent.toFixed(2)}`}
+              />
+              <ProfileCard
+                title="Total Tickets"
+                value={totalTicket.length}
+              />
+              <ProfileCard
+                title="Total Theatres"
+                value={statistics.totalTheatres}
+              />
+              <ProfileCard
+                title="Total Movies"
+                value={statistics.totalMovies}
+              />
             </div>
           </div>
         </div>

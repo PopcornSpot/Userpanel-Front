@@ -15,7 +15,7 @@ const menuList = [
   { page: "Movies", path: "/movies" },
   { page: "Theatre", path: "/theatre" },
   { page: "My Tickets", path: "/mytickets" },
-  { page: "Insights", path: "/insights" },
+  // { page: "Insights", path: "/insights" },
 ];
 
 const movieOptions = [
@@ -96,21 +96,25 @@ const NavBar = () => {
           )}
         </div>
 
-        <div className="min-w-[100px] h-full pr-10 flex justify-end items-center gap-5">
-          <Link>
+        <div className=" h-full mr-8 flex justify-end items-center gap-4 ">
+          <Link 
+           onClick={() => setSearchBarValue(true)}
+          className="flex px-2 py-2 rounded-md max-lg:hidden text-gray-100 justify-center items-center border-gray-700 border-2 hover:bg-gray-700 gap-1 ">
             <FiSearch
-              onClick={() => setSearchBarValue(true)}
-              className="max-lg:hidden text-2xl font-bold text-white hover:-translate-y-0.5 transition"
-            />
+              className="text-xl font-bold text-gray-100 hover:-translate-y-0.5 transition"
+            />Search
           </Link>
           <div
-            className="relative min-h-20 w-6 flex items-center justify-center"
+            className="relative min-h-20 w-20 flex items-center justify-center"
             onMouseEnter={() => setIsDropdownOpen(true)}
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
-            <FaCircleUser className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition cursor-pointer" />
+            <div className="hover:bg-gray-700 max-lg:hidden border-gray-700 border-2 rounded-md gap-1.5 justify-center items-center text-gray-100 flex py-2 px-2">
+            <FaCircleUser className="text-xl text-gray-100 hover:-translate-y-0.5 transition cursor-pointer" />
+            Profile
+            </div>
             {isDropdownOpen && (
-              <div className="absolute -right-20 mt-36 w-32 bg-gray-800 shadow-lg rounded-b-lg">
+              <div className="absolute -right-6 mt-36 w-32 bg-gray-800 shadow-lg rounded-b-lg">
                 {dropdownOptions.map((option, index) => (
                   <Link
                     key={index}
@@ -124,10 +128,6 @@ const NavBar = () => {
               </div>
             )}
           </div>
-          <RiLogoutBoxLine
-            onClick={handleLogout}
-            className="max-lg:hidden text-2xl text-white hover:-translate-y-0.5 transition"
-          />
           <GiHamburgerMenu
             onClick={() => setBurgerValue(true)}
             className="lg:hidden font-bold text-2xl text-white"
