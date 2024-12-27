@@ -13,9 +13,9 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-10 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-20">
-        {/* Footer Content */}
+
         <div className="flex flex-wrap justify-between gap-8 sm:gap-12 lg:gap-20 text-center sm:text-left">
-          {/* About Section */}
+
           <div className="flex-1 min-w-[250px]">
             <img
               src={Logo}
@@ -35,7 +35,7 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Quick Links Section */}
+
           <div className="flex-1 min-w-[150px]">
             <h4 className="text-xl font-bold mb-4 text-orange-400">
               Quick Links
@@ -51,15 +51,15 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/new-movies"
+                  href="/laestmovies"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
-                  New Movies
+                  Latest Movies
                 </a>
               </li>
               <li>
                 <a
-                  href="/upcoming-movies"
+                  href="/upcomingmovies"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Upcoming Movies
@@ -75,7 +75,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/my-tickets"
+                  href="/mytickets"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   My Tickets
@@ -84,7 +84,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal & Policies Section */}
+
           <div className="flex-1 min-w-[150px]">
             <h4 className="text-xl font-bold mb-4 text-orange-400">
               Legal & Policies
@@ -117,7 +117,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Section */}
+
           <div className="flex-1 min-w-[250px]">
             <h4 className="text-xl font-bold mb-4 text-orange-400">
               Contact Us
