@@ -43,25 +43,23 @@ function RegisterFormPage() {
     };
 
     return (
-        <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full h-screen flex items-center justify-between bg-gray-50">
             {/* Background Image Section */}
-            <div className="hidden md:flex w-1/2 h-full">
+            <div className="w-[60%] sm:max-lg:w-[45%]  lg:max-xl:[50%] xl:max-2xl: h-full max-sm:hidden">
                 <img src={Background} alt="Background" className="w-full h-full object-cover" />
             </div>
 
             {/* Registration Form Section */}
-            <div className="w-full md:w-1/2 h-screen flex flex-col items-center bg-gradient-to-br from-gray-100 to-gray-200 justify-center px-6">
+            <div className="w-full md:w-[40%] h-screen flex flex-col items-center bg-gradient-to-br from-gray-100 to-gray-200 justify-center px-6">
                 <form
-                    className="w-full max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center"
+                    className="w-[400px] h-[500px] max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center"
                     onSubmit={handleSubmit}
                     onReset={handleReset}
                 >
                     <img src={Logo} alt="Logo" className="w-28 h-auto mb-4" />
-                    <h2 className="text-3xl font-bold text-white">Register</h2>
 
-                    {/* Name Input */}
                     <div className="w-full relative">
-                        <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
+                        <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-500 text-xl" />
                         <input
                             type="text"
                             id="userName"
@@ -73,10 +71,8 @@ function RegisterFormPage() {
                             required
                         />
                     </div>
-
-                    {/* Email Input */}
                     <div className="w-full relative">
-                        <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
+                        <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-500 text-xl" />
                         <input
                             type="email"
                             id="email"
@@ -89,9 +85,8 @@ function RegisterFormPage() {
                         />
                     </div>
 
-                    {/* Mobile Number Input */}
                     <div className="w-full relative">
-                        <FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl" />
+                        <FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-500 text-xl" />
                         <input
                             type="tel"
                             id="mobileNumber"
@@ -105,7 +100,6 @@ function RegisterFormPage() {
                         />
                     </div>
 
-                    {/* Register Button */}
                     <button
                         type="submit"
                         className="w-full py-3 bg-orange-500 text-white font-bold rounded-lg shadow-md hover:bg-orange-600 focus:ring-2 focus:ring-orange-500"
@@ -113,7 +107,6 @@ function RegisterFormPage() {
                         Register
                     </button>
 
-                    {/* Login Link */}
                     <p className="text-gray-200">
                         Already have an account?{' '}
                         <Link to="/login" className="text-orange-500 font-medium hover:underline">

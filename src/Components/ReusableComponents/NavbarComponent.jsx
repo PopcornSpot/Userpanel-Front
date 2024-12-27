@@ -99,9 +99,9 @@ const NavBar = () => {
         <div className=" h-full mr-8 flex justify-end items-center gap-4 ">
           <Link 
            onClick={() => setSearchBarValue(true)}
-          className="flex px-2 py-2 rounded-md max-lg:hidden text-gray-100 justify-center items-center border-gray-700 border-2 hover:bg-gray-700 gap-1 ">
+          className="flex px-2 py-2 rounded-md max-lg:hidden text-gray-100  justify-center items-center border-gray-700 border-2 hover:bg-gray-700 gap-1 ">
             <FiSearch
-              className="text-xl font-bold text-gray-100 hover:-translate-y-0.5 transition"
+              className="text-xl font-bold text-gray-100 hover:-translate-y-0.5 transition "
             />Search
           </Link>
           <div
@@ -110,7 +110,7 @@ const NavBar = () => {
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
             <div className="hover:bg-gray-700 max-lg:hidden border-gray-700 border-2 rounded-md gap-1.5 justify-center items-center text-gray-100 flex py-2 px-2">
-            <FaCircleUser className="text-xl text-gray-100 hover:-translate-y-0.5 transition cursor-pointer" />
+            <FaCircleUser className="text-xl text-gray-100  hover:-translate-y-0.5 transition cursor-pointer" />
             Profile
             </div>
             {isDropdownOpen && (
@@ -119,7 +119,7 @@ const NavBar = () => {
                   <Link
                     key={index}
                     to={option.path}
-                    className="flex gap-3 items-center px-4 py-2 text-white hover:bg-gray-700 transition"
+                    className="flex gap-3 items-center px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-400 transition"
                   >
                     {option.icon}
                     {option.name}
