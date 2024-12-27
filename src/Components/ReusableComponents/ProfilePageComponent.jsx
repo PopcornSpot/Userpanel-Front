@@ -96,6 +96,10 @@ const UserProfile = () => {
     navigate("/login");
   };
 
+  const handleFriend = () => {
+    navigate("/addfriend");
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -168,7 +172,7 @@ const UserProfile = () => {
                 icon={FaUserFriends}
                 label="Friends"
                 colorClass="bg-gradient-to-r from-orange-400 to-orange-500"
-                onClick={() => toast.info("Friends clicked")}
+                onClick={handleFriend}
               />
               <ActionButton
                 icon={CiLogout}

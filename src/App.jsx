@@ -22,6 +22,7 @@ import MyTickets from "./Components/ReusableComponents/MyTicket";
 import RazorpayComponent from "./Components/RazorpayComponent";
 import EditProfile from "./Components/ReusableComponents/EditProfilePage";
 import UserVotingPage from "./pages/UserVotingPage";
+import FriendListComponent from "./Components/ReusableComponents/FriendListComponent"
 
 
 
@@ -54,6 +55,7 @@ const AppRouter = () => {
           <Route path="/payment" element={<RazorpayComponent/>}/>
           <Route path="/confirmation" element={<TicketConfirmation/>}/>
           <Route path="/editprofile/:_id" element={<EditProfile/>}/>
+          <Route path="/addfriend" element={<FriendListComponent/>}/>
           </Route>
         </Routes>
         
