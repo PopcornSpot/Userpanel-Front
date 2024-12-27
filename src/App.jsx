@@ -25,6 +25,7 @@ import UserVotingPage from "./pages/UserVotingPage";
 import FriendListComponent from "./Components/ReusableComponents/FriendListComponent"
 import PrivacyPolicy from "./Components/ReusableComponents/PrivacyComponent";
 import RefundPolicy from "./Components/ReusableComponents/RefundComponent";
+import FriendListPage from "./pages/FriendListPage";
 
 
 
@@ -60,6 +61,7 @@ const AppRouter = () => {
           <Route path="/confirmation" element={<TicketConfirmation/>}/>
           <Route path="/editprofile/:_id" element={<EditProfile/>}/>
           <Route path="/addfriend" element={<FriendListComponent/>}/>
+          <Route path="/friends" element={<FriendListPage/>}/>
           </Route>
         </Routes>
         

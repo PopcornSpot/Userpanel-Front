@@ -7,8 +7,7 @@ import Footer from "./FooterComponent";
 
 const initialState = {
   friendName: "",
-  email: "",
-  phone: "",
+  mobileNumber: "",
 };
 
 const FormInput = ({ type, name, placeholder, value, onChange, required }) => (
@@ -26,6 +25,7 @@ const FormInput = ({ type, name, placeholder, value, onChange, required }) => (
 const AddFriendComponent = () => {
   const [formData, setFormData] = useState(initialState);
   const navigate = useNavigate();
+  const authToken = localStorage.getItem("token");
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;
@@ -35,13 +35,21 @@ const AddFriendComponent = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:7000/friends/add", formData);
-      toast.success("Friend added successfully!");
+      const res = await axios.post("http://localhost:7000/friend/createfriend", formData,
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      );
+      if (res.data.Error === "jwt expired") {
+        navigate("/login");
+        return null;
+      }
+      toast.success(res.data.Message);
       setFormData(initialState);
       navigate("/friends");
     } catch (error) {
       console.error(error);
-      toast.error(error.response?.data?.message || "Failed to add friend");
+      toast.error(error.response.data.Message);
     }
   };
 
@@ -58,7 +66,7 @@ const AddFriendComponent = () => {
         <form
           onSubmit={handleOnSubmit}
           onReset={handleReset}
-          className="flex flex-col gap-6 p-8 bg-gray-800 shadow-xl rounded-lg w-full max-w-md"
+          className="flex flex-col gap-6 p-8 mt-8 bg-gray-800 shadow-xl rounded-lg w-full max-w-md"
         >
           <h1 className="text-3xl font-bold text-gray-100 text-center">
             Add a New Friend
@@ -72,18 +80,10 @@ const AddFriendComponent = () => {
             required
           />
           <FormInput
-            type="email"
-            name="email"
-            placeholder="Enter friend's email"
-            value={formData.email}
-            onChange={handleOnChange}
-            required
-          />
-          <FormInput
             type="text"
-            name="phone"
+            name="mobileNumber"
             placeholder="Enter friend's phone number"
-            value={formData.phone}
+            value={formData.mobileNumber}
             onChange={handleOnChange}
             required
           />

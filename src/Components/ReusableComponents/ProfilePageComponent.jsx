@@ -96,7 +96,7 @@ const UserProfile = () => {
   };
 
   const handleFriend = () => {
-    navigate("/addfriend");
+    navigate("/friends");
   };
 
   useEffect(() => {
