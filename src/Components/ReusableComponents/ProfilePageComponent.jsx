@@ -125,8 +125,11 @@ const UserProfile = () => {
         <div className="p-6 text-2xl font-bold text-start ml-5">Profile</div>
       </div>
       <div className="mx-4 md:mx-10 bg-white p-8 rounded-lg shadow-lg">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="flex flex-col items-center md:items-start gap-8">
+        <div className="flex flex-col md:flex-row gap-10">
+
+          {/* Left Section: Profile, Details, and Buttons */}
+          <div className="flex-1 flex flex-col items-center md:items-start gap-8">
+            {/* Profile Image */}
             <div className="relative">
               <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
                 <img
@@ -141,7 +144,8 @@ const UserProfile = () => {
               </div>
             </div>
 
-            <div className="text-lg text-gray-700 space-y-2">
+            {/* User Details */}
+            <div className="text-lg text-gray-700 space-y-2 w-full">
               <p className="text-gray-500 flex">
                 <strong className="block w-36">User Name:</strong>
                 {userDetails.userName}
@@ -160,7 +164,8 @@ const UserProfile = () => {
               </p>
             </div>
 
-            <div className="flex gap-4">
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-4">
               <Link to={`/editprofile/${userDetails._id}`}>
                 <ActionButton
                   icon={FaPencilAlt}
@@ -190,7 +195,8 @@ const UserProfile = () => {
             </div>
           </div>
 
-          <div>
+          {/* Right Section: Statistics */}
+          <div className="flex-1">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">
               Statistics
             </h1>
@@ -220,6 +226,7 @@ const UserProfile = () => {
         <Footer />
       </div>
     </div>
+
   );
 };
 
