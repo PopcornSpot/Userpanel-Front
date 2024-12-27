@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import image from "../../assets/LoginImagebg.jpg";
 import { FaPencilAlt, FaUserFriends } from "react-icons/fa";
@@ -98,7 +97,7 @@ const UserProfile = () => {
 
   const handleFriend = () => {
     navigate("/addfriend");
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +116,7 @@ const UserProfile = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen bg-gray-50">
       <div className="w-full fixed top-0 z-50 bg-white shadow-md">
         <NavBar />
       </div>
@@ -125,13 +124,10 @@ const UserProfile = () => {
         <div className="p-6 text-2xl font-bold text-start ml-5">Profile</div>
       </div>
       <div className="mx-4 md:mx-10 bg-white p-8 rounded-lg shadow-lg">
-        <div className="flex flex-col md:flex-row gap-10">
-
-          {/* Left Section: Profile, Details, and Buttons */}
-          <div className="flex-1 flex flex-col items-center md:items-start gap-8">
-            {/* Profile Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="flex flex-col items-center lg:items-start gap-8">
             <div className="relative">
-              <div className="bg-gradient-to-r from-blue-300 to-blue-400 p-1 rounded-full shadow-lg">
+              <div className="bg-gradient-to-r from-orange-300 to-orange-500 p-1 rounded-full shadow-lg">
                 <img
                   src={
                     userDetails.fileName
@@ -144,27 +140,25 @@ const UserProfile = () => {
               </div>
             </div>
 
-            {/* User Details */}
-            <div className="text-lg text-gray-700 space-y-2 w-full">
-              <p className="text-gray-500 flex">
+            <div className="text-lg text-gray-700 space-y-2">
+              <p className="flex">
                 <strong className="block w-36">User Name:</strong>
                 {userDetails.userName}
               </p>
-              <p className="text-gray-500 flex">
+              <p className="flex">
                 <strong className="block w-36">Email:</strong>
                 {userDetails.email}
               </p>
-              <p className="text-gray-500 flex">
+              <p className="flex">
                 <strong className="block w-36">Mobile Number:</strong>
                 {userDetails.mobileNumber}
               </p>
-              <p className="text-gray-500 flex">
+              <p className="flex">
                 <strong className="block w-36">Gender:</strong>
                 {userDetails.gender}
               </p>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex flex-wrap gap-4">
               <Link to={`/editprofile/${userDetails._id}`}>
                 <ActionButton
@@ -195,15 +189,12 @@ const UserProfile = () => {
             </div>
           </div>
 
-          {/* Right Section: Statistics */}
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold mb-6 text-gray-800">
-              Statistics
-            </h1>
+          <div>
+            <h1 className="text-2xl font-bold mb-6 text-gray-800">Statistics</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <ProfileCard
                 title="Money Spent"
-                value={`₹ ${statistics.moneySpent.toFixed(2)}`}
+                value={`\u20B9 ${statistics.moneySpent.toFixed(2)}`}
               />
               <ProfileCard
                 title="Total Tickets"
@@ -226,7 +217,6 @@ const UserProfile = () => {
         <Footer />
       </div>
     </div>
-
   );
 };
 

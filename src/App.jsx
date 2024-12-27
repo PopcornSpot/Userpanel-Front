@@ -23,6 +23,8 @@ import RazorpayComponent from "./Components/RazorpayComponent";
 import EditProfile from "./Components/ReusableComponents/EditProfilePage";
 import UserVotingPage from "./pages/UserVotingPage";
 import FriendListComponent from "./Components/ReusableComponents/FriendListComponent"
+import PrivacyPolicy from "./Components/ReusableComponents/PrivacyComponent";
+import RefundPolicy from "./Components/ReusableComponents/RefundComponent";
 
 
 
@@ -42,6 +44,8 @@ const AppRouter = () => {
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/termsandcondition" element={<TermsAndConditions/>}/>
           <Route path="/voting/:_id" element={<UserVotingPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy/>}/>
+          <Route path="/refund" element={<RefundPolicy/>}/>
 
           <Route path="movies" element={<NestedMovies/>}>
           <Route path="kollywood" element={<Kollywood />} />

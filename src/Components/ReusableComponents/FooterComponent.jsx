@@ -44,7 +44,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Home
                 </a>
@@ -52,7 +52,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/new-movies"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   New Movies
                 </a>
@@ -60,7 +60,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/upcoming-movies"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Upcoming Movies
                 </a>
@@ -68,7 +68,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/movies"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Movies
                 </a>
@@ -76,7 +76,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/my-tickets"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   My Tickets
                 </a>
@@ -93,7 +93,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/termsandcondition"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Terms of Service
                 </a>
@@ -101,7 +101,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/privacy"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Privacy Policy
                 </a>
@@ -109,7 +109,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/refund"
-                  className="hover:text-orange-400 transition duration-300"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Refund Policy
                 </a>
@@ -129,7 +129,7 @@ const Footer = () => {
               </div>
               <div className="flex items-start gap-3">
                 <FaEnvelope className="text-orange-400 w-5 h-5" />
-                <p className="text-gray-300">popcornspot.support@gmail.com</p>
+                <p className="text-gray-300">popcornspotofficial@gmail.com</p>
               </div>
               <div className="flex items-start gap-3">
                 <FaMapMarkerAlt className="text-orange-400 w-5 h-5" />
