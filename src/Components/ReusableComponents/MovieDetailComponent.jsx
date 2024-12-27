@@ -5,6 +5,8 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "./LoaderComponent";
+import maleImage from "../../assets/male.jpeg"
+import femaleImage from "../../assets/female.jpeg"
 
 const PersonCard = ({ image, name, role }) => (
   <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -45,10 +47,10 @@ const MovieDetailComponent = () => {
   };
 
   const cast = [
-    { id: 1, name: movie.hero, role: "Hero", image: "https://via.placeholder.com/100" },
-    { id: 2, name: movie.heroine, role: "Heroine", image: "https://via.placeholder.com/100" },
-    { id: 3, name: movie.music, role: "Music", image: "https://via.placeholder.com/100" },
-    { id: 4, name: movie.director, role: "Director", image: "https://via.placeholder.com/100" },
+    { id: 1, name: movie.hero, role: "Hero", image: maleImage },
+    { id: 2, name: movie.heroine, role: "Heroine", image: femaleImage },
+    { id: 3, name: movie.music, role: "Music", image: maleImage },
+    { id: 4, name: movie.director, role: "Director", image: maleImage },
   ];
 
   useEffect(() => {
