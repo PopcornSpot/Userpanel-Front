@@ -48,7 +48,7 @@ const RefundPolicy = () => {
           <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-gray-800">Refund Process</h2>
           <p className="text-gray-700 mb-4">To request a refund, please follow these steps:</p>
           <ol className="list-decimal ml-8 space-y-2 text-gray-700">
-            <li>Contact us at <span className="font-semibold text-orange-500">popcornspot.support@gmail.com</span> with your booking details.</li>
+            <li>Contact us at <span className="font-semibold text-orange-500">popcornspotofficial@gmail.com</span> with your booking details.</li>
             <li>Provide a reason for your refund request.</li>
             <li>Our team will review your request and respond within <span className="font-semibold">5-7 business days</span>.</li>
           </ol>
