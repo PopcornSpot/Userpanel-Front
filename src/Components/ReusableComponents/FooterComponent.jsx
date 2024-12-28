@@ -51,7 +51,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/laestmovies"
+                  href="/"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Latest Movies
@@ -59,7 +59,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/upcomingmovies"
+                  href="/"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Upcoming Movies
@@ -67,7 +67,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/movies"
+                  href="/movies/kollywood"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Movies
@@ -118,14 +118,15 @@ const Footer = () => {
           </div>
 
 
-          <div className="flex-1 min-w-[250px]">
-            <h4 className="text-xl font-bold mb-4 text-orange-400">
+          <div className="flex-1 min-w-[250px] flex flex-col justify-start max-lg:items-center">
+            <h4 className="text-xl text-start font-bold mb-4 text-orange-400">
               Contact Us
             </h4>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
+            <div className="space-y-4 -space-x-2 gap-3 ">
+              <div className="flex items-center -ml-3 gap-3">
                 <FaPhoneAlt className="text-orange-400 w-5 h-5" />
-                <p className="text-gray-300">+91 9344262658 | +91 8344024734</p>
+                <p className="text-gray-300 flex flex-col"><span>
+                +91 9344262658</span> <span>+91 8344024734</span></p>
               </div>
               <div className="flex items-start gap-3">
                 <FaEnvelope className="text-orange-400 w-5 h-5" />
