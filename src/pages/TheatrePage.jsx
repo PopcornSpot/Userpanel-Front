@@ -66,8 +66,8 @@ const TheaterCard = () => {
 {
   theaters.length!==0?
     <div className="bg-white p-7 mt-20">
-    <div className="flex flex-col sm:flex-row items-center justify-between border-1 rounded-sm shadow-md border-gray-950 p-3 bg-gray-200 mb-6">
-      <h1 className="font-semibold text-2xl text-gray-700 mb-4 sm:mb-0">Cinema in Chennai</h1>
+    <div className="flex flex-col sm:flex-row bg-gray-800 items-center justify-between border-1 rounded-sm shadow-md border-gray-950 p-3  mb-6">
+      <h1 className="font-semibold text-2xl text-gray-100 mb-4 sm:mb-0">Cinema in Chennai</h1>
       <div className="flex items-center border-2 border-gray-400 rounded-lg w-full sm:w-[350px]">
         <input
           type="text"
@@ -76,7 +76,7 @@ const TheaterCard = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="flex-grow p-2 focus:outline-none rounded-l-lg"
         />
-        <button className="p-2 bg-gray-400 hover:bg-gray-500 rounded-r-lg text-white">
+        <button className="p-2 bg-orange-500 hover:bg-orange-500 rounded-r-lg text-white">
           <FiSearch />
         </button>
       </div>
