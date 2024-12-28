@@ -162,7 +162,7 @@ const TicketConfirmation = () => {
 
         <div className="mt-8 flex justify-center gap-4">
           <Link
-            to="/home"
+            to="/"
             className="bg-blue-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-transform transform hover:scale-105"
           >
             Home
