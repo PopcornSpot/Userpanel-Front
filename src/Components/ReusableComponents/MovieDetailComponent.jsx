@@ -67,15 +67,24 @@ const MovieDetailComponent = () => {
         <>
           <div className="container mx-auto px-6 py-8 mt-20">
             <div className="flex flex-col lg:flex-row bg-white rounded-xl shadow-lg overflow-hidden h-auto w-full">
-              <div className="w-full lg:w-1/3 flex items-center justify-center">
-                <Link to={movie.trailerUrl}>
+              <div className="relative w-full lg:w-1/3 flex items-center justify-center">
+                <Link to={movie.trailerUrl} className="relative group">
                   <img
                     src={`${backendURL}/upload/${movie.fileName}`}
                     alt={movie.title}
                     className="w-[400px] h-[500px] object-cover rounded-l-lg"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
+                      aria-label={`Watch trailer for ${movie.title}`}
+                    >
+                      Watch Trailer
+                    </button>
+                  </div>
                 </Link>
               </div>
+
 
               <div className="w-full lg:w-2/3 p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white flex flex-col justify-between gap-8">
                 <div>
