@@ -105,9 +105,9 @@ const TermsAndConditions = () => {
         </Section>
 
         <Section title="9. Contact Information">
-          <p>
+          <p className='flex gap-3'>
             If you have any questions, contact us at 
-            <a href="mailto:support@popcornspot.com" className="text-blue-500 underline">popcornspotofficial@gmail.com</a>.
+            <a href="mailto:popcornspotofficial@gmail.com" className="text-orange-500 underline">popcornspotofficial@gmail.com</a>.
           </p>
         </Section>
       </div>
