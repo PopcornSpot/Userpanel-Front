@@ -13,9 +13,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-10 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-20">
-
         <div className="flex flex-wrap justify-between gap-8 sm:gap-12 lg:gap-20 text-center sm:text-left">
-
+          {/* Logo and Description */}
           <div className="flex-1 min-w-[250px]">
             <img
               src={Logo}
@@ -35,7 +34,7 @@ const Footer = () => {
             </a>
           </div>
 
-
+          {/* Quick Links */}
           <div className="flex-1 min-w-[150px]">
             <h4 className="text-xl font-bold mb-4 text-orange-400">
               Quick Links
@@ -84,7 +83,7 @@ const Footer = () => {
             </ul>
           </div>
 
-
+          {/* Legal & Policies */}
           <div className="flex-1 min-w-[150px]">
             <h4 className="text-xl font-bold mb-4 text-orange-400">
               Legal & Policies
@@ -117,22 +116,24 @@ const Footer = () => {
             </ul>
           </div>
 
-
-          <div className="flex-1 min-w-[250px] flex flex-col justify-start max-lg:items-center">
-            <h4 className="text-xl text-start font-bold mb-4 text-orange-400">
+          {/* Contact Us */}
+          <div className="flex-1 min-w-[250px] flex flex-col justify-start items-center sm:items-start">
+            <h4 className="text-xl font-bold mb-4 text-orange-400">
               Contact Us
             </h4>
-            <div className="space-y-4 -space-x-2 gap-3 ">
-              <div className="flex items-center -ml-3 gap-3">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
                 <FaPhoneAlt className="text-orange-400 w-5 h-5" />
-                <p className="text-gray-300 flex flex-col"><span>
-                +91 9344262658</span> <span>+91 8344024734</span></p>
+                <p className="text-gray-300">
+                  <span>+91 9344262658</span> <br />
+                  <span>+91 8344024734</span>
+                </p>
               </div>
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-3">
                 <FaEnvelope className="text-orange-400 w-5 h-5" />
                 <p className="text-gray-300">popcornspotofficial@gmail.com</p>
               </div>
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-3">
                 <FaMapMarkerAlt className="text-orange-400 w-5 h-5" />
                 <p className="text-gray-300">Chennai, India</p>
               </div>
@@ -143,8 +144,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="mt-12 border-t border-gray-700 pt-6 flex flex-col lg:flex-row justify-between items-center text-center lg:text-left">
           <p className="text-gray-400 mb-4 lg:mb-0">
-            © {new Date().getFullYear()}{" "}
-            <b className="text-orange-400">PopcornSpot</b>. All rights reserved.
+            © {new Date().getFullYear()} <b className="text-orange-400">PopcornSpot</b>. All rights reserved.
           </p>
           <div className="flex space-x-6">
             <a
