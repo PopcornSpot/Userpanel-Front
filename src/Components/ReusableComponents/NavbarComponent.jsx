@@ -7,7 +7,6 @@ import SerachBar from "./SearchBoxComp";
 import { VscActivateBreakpoints } from "react-icons/vsc";
 import Logo from "../../assets/POPFINAL.png";
 import { LiaSignInAltSolid } from "react-icons/lia";
-import { RiLogoutBoxLine } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
 
 const menuList = [
@@ -46,7 +45,7 @@ const NavBar = () => {
     <nav className="fixed z-20">
       <div className="w-screen min-h-20 flex bg-gray-800 items-center justify-between">
         <div className="max-w-[300px] px-6 min-h-20 flex items-center justify-start">
-          <img className="w-36" src={Logo} alt="" />
+          <img className="h-10 w-auto sm:h-12" src={Logo} alt="" />
         </div>
 
         <div className="max-w-[60%] min-h-20 max-lg:hidden font-medium flex justify-center items-center gap-6">

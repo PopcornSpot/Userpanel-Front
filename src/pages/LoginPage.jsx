@@ -94,12 +94,12 @@ const Login = () => {
           className="w-full h-full object-cover"
           src={LoginImage} alt="LoginImage" />
       </div>
-      <div className="w-[40%] sm:max-lg:w-[55%]  lg:max-xl:[50%] h-screen flex flex-col items-center bg-gray-50 justify-center gap-0">
+      <div className="w-[100%] sm:max-lg:w-[55%] lg:max-xl:[50%] h-screen flex flex-col items-center bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 justify-center gap-0">
 
         <form
           onSubmit={handleOnSubmit} onReset={handleReset}
           action=""
-          className="w-[400px] h-[480px] bg-gray-800 rounded-lg flex flex-col justify-center items-center gap-6">
+          className="w-[370px] h-[480px] sm:w-[400px] bg-gray-800 rounded-lg flex flex-col justify-center items-center gap-6">
           <img
             className="w-30 h-12"
             src={logo} alt="" />

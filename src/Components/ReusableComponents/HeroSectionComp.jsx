@@ -62,7 +62,7 @@ const Hero = () => {
             </strong>
           </h1>
           <Link to={"/about"}>
-            <span className="block w-full rounded bg-orange-400 mt-4 px-8 py-3 font-semibold text-white shadow focus:outline-none focus:ring sm:w-auto hover:bg-orange-500 transition">
+            <span className="block w-full rounded bg-orange-400 mt-2 sm:mt-4 px-2 sm:px-3 py-1.5 sm:py-3 font-semibold text-white shadow focus:outline-none focus:ring sm:w-auto hover:bg-orange-500 transition">
               Learn More
             </span>
           </Link>

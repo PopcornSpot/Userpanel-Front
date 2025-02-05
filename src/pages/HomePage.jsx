@@ -57,7 +57,7 @@ const Home = () => {
       <main className="relative top-20">
         <Hero />
         <section className="mt-12 px-2">
-          <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
+          <div className="w-full py-4 px-3 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Suggestion Movies
             {suggestionViewAll ? (
               <span
@@ -83,7 +83,7 @@ const Home = () => {
         </section>
 
         <section className="mt-12 px-2">
-          <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
+          <div className="w-full py-4 px-3 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Latest Movies
             {latestViewAll ? (
               <span
@@ -109,7 +109,7 @@ const Home = () => {
         </section>
 
         <section className="mt-12 px-2">
-          <div className="w-full py-4 px-14 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
+          <div className="w-full py-4 px-3 max-sm:px-4 text-3xl max-sm:text-xl font-semibold flex justify-between items-end">
             Upcoming Movies
             {upcomingViewAll ? (
               <span

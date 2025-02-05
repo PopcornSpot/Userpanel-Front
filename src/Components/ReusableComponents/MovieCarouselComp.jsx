@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useSwipeable } from "react-swipeable";
 import { Link } from "react-router-dom";
 import MovieCard from "./MovieCardComp";
 
-const MovieCarousel = ({movieData}) => {
-
+const MovieCarousel = ({ movieData }) => {
   const [startIndex, setStartIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(1); 
+  const [visibleCount, setVisibleCount] = useState(2); 
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1280) setVisibleCount(5); 
+      if (window.innerWidth >= 1280) setVisibleCount(5);
       else if (window.innerWidth >= 1024) setVisibleCount(4);
       else if (window.innerWidth >= 768) setVisibleCount(3);
-      else if (window.innerWidth >= 640) setVisibleCount(2);
-      else setVisibleCount(1);
+      else setVisibleCount(2); 
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -24,54 +24,87 @@ const MovieCarousel = ({movieData}) => {
   const handleNext = () => {
     setStartIndex((prevIndex) =>
       prevIndex + visibleCount >= movieData.length
-        ? movieData.length - visibleCount
+        ? prevIndex 
         : prevIndex + visibleCount
     );
+    setSwipeOffset(0); 
   };
 
   const handlePrev = () => {
     setStartIndex((prevIndex) =>
       prevIndex - visibleCount < 0 ? 0 : prevIndex - visibleCount
     );
+    setSwipeOffset(0); 
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwiping: (event) => {
+      setIsSwiping(true);
+      setSwipeOffset(event.deltaX);
+    },
+    onSwipedLeft: () => {
+      if (swipeOffset < -50) handleNext(); 
+      setIsSwiping(false);
+      setSwipeOffset(0);
+    },
+    onSwipedRight: () => {
+      if (swipeOffset > 50) handlePrev();
+      setIsSwiping(false);
+      setSwipeOffset(0); 
+    },
+    onSwiped: () => {
+      setIsSwiping(false);
+      setSwipeOffset(0);
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
+  
+  const handleDotClick = (index) => {
+    setStartIndex(index * visibleCount); 
+    setSwipeOffset(0);
   };
 
   const visibleCards = movieData.slice(startIndex, startIndex + visibleCount);
 
   return (
-    <div className="relative flex items-center">
-      <button
-        onClick={handlePrev}
-        disabled={startIndex === 0}
-        className={`px-2 py-2 max-sm:-mr-8 z-10 bg-gray-600 text-white rounded-full ${
-          startIndex === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-700"
-        }`}
+    <div className="relative w-full overflow-hidden">
+      <div
+        {...swipeHandlers}
+        className="flex transition-transform duration-300 ease-in-out"
+        style={{
+          transform: `translateX(calc(-${startIndex * (100 / visibleCount)}% + ${swipeOffset}px))`,
+        }}
       >
-        <MdKeyboardArrowLeft className="text-3xl"/>
-      </button>
-
-      <div className="flex overflow-hidden flex-grow pt-3">
-        {visibleCards.map((value, index) => (
-          <Link key={index} className="flex-none px-2" style={{ width: `${100 / visibleCount}%` }}>
+        {movieData.map((value, index) => (
+          <Link
+            key={index}
+            className="flex-none px-2"
+            style={{ width: `${100 / visibleCount}%` }}
+          >
             <MovieCard data={value} />
           </Link>
         ))}
       </div>
 
-      <button
-        onClick={handleNext}
-        disabled={startIndex + visibleCount >= movieData.length}
-        className={`px-2 py-2 max-sm:-ml-8 z-10 bg-gray-600 text-white rounded-full ${
-          startIndex + visibleCount >= movieData.length
-            ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-gray-700"
-        }`}
-      >
-         <MdKeyboardArrowRight className="text-3xl"/>
-      </button>
+      <div className="flex justify-center mt-4 space-x-2">
+        {Array.from({ length: Math.ceil(movieData.length / visibleCount) }).map(
+          (_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={`w-2 h-2 rounded-full mb-2 transition-all ${
+                startIndex === index * visibleCount
+                  ? "bg-gray-800 scale-125"
+                  : "bg-gray-400"
+              }`}
+            />
+          )
+        )}
+      </div>
     </div>
-
   );
 };
-
 
 export default MovieCarousel;

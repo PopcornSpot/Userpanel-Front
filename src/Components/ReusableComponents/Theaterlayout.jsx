@@ -12,6 +12,8 @@ const TheaterLayout = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
   const [shows, setShows] = useState({});
+  const [ticketCount, setTicketCount] = useState(0);
+  const [firstSeatSelected, setFirstSeatSelected] = useState(false);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const movieId = params.get("movieId");
@@ -56,11 +58,11 @@ const TheaterLayout = () => {
 
   const rows = [
     {
-      label: `DIAMOND (${shows.firstClassPrice})`,
+      label: `First Class (${shows.firstClassPrice})`,
       range: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
     },
     { label: "", range: ["L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"] },
-    { label: `PEARL (${shows.secondClassPrice})`, range: ["V", "W"] },
+    { label: `Second Class (${shows.secondClassPrice})`, range: ["V", "W"] },
   ];
 
   const seatsPerRow = 23;
@@ -97,16 +99,37 @@ const TheaterLayout = () => {
     );
   };
 
-  const toggleSeatSelection = (seatId) => {
-    setSelectedSeats((prevSelectedSeats) =>
-      prevSelectedSeats.includes(seatId)
-        ? prevSelectedSeats.filter((seat) => seat !== seatId)
-        : [...prevSelectedSeats, seatId]
-    );
+  const handleSeatSelection = (seatId) => {
+    if (!firstSeatSelected) {
+      if (seatData.find((seat) => seat.id === seatId).status === "available") {
+        setFirstSeatSelected(true);
+        setSelectedSeats([seatId]);
+
+        const firstSelectedSeat = seatId;
+        const firstSeatIndex = seatData.findIndex((seat) => seat.id === firstSelectedSeat);
+        const selectedRange = seatData.slice(firstSeatIndex, firstSeatIndex + ticketCount);
+
+        setSelectedSeats(selectedRange.map((seat) => seat.id));
+      }
+    } else {
+      const firstSelectedSeat = selectedSeats[0];
+      const firstSeatIndex = seatData.findIndex((seat) => seat.id === firstSelectedSeat);
+      const seatIndex = seatData.findIndex((seat) => seat.id === seatId);
+
+      if (seatIndex >= firstSeatIndex && seatIndex < firstSeatIndex + ticketCount) {
+        setSelectedSeats(
+          seatData.slice(firstSeatIndex, firstSeatIndex + ticketCount).map((seat) => seat.id)
+        );
+      } else {
+        setSelectedSeats([seatId]);
+        const newSelectedRange = seatData.slice(seatIndex, seatIndex + ticketCount);
+        setSelectedSeats(newSelectedRange.map((seat) => seat.id));
+      }
+    }
   };
 
-  const handleReset = () => {
-    setSelectedSeats([]);
+  const handleTicketCount = (count) => {
+    setTicketCount(count);
   };
 
   const encryptedTotalCost = CryptoJS.AES.encrypt(
@@ -119,8 +142,23 @@ const TheaterLayout = () => {
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-      <div className="flex-1 mt-24">
-        {shows && Object.keys(shows).length > 0 ? (
+      <div className="flex-1 min-h-[300px] mt-24">
+        {ticketCount === 0 ? (
+          <div className="absolute top-60 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-4 bg-white rounded-lg shadow-lg">
+          <h3 className="text-xl font-bold text-center mb-4">How many tickets?</h3>
+          <div className="flex flex-wrap justify-center gap-2">
+            {[...Array(12).keys()].map((i) => (
+              <button
+                key={i}
+                onClick={() => handleTicketCount(i + 1)}
+                className="bg-orange-400 text-white py-2 px-4 m-2 rounded-md text-sm hover:bg-orange-500 transition-transform transform hover:scale-105"
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+        </div>  
+        ) : (
           <>
             <div className="space-y-10 px-4">
               {rows.map((section, sectionIndex) => (
@@ -149,7 +187,7 @@ const TheaterLayout = () => {
                                   key={seat.id}
                                   onClick={() =>
                                     seat.status === "available" &&
-                                    toggleSeatSelection(seat.id)
+                                    handleSeatSelection(seat.id)
                                   }
                                   className={`w-10 h-10 flex items-center justify-center rounded cursor-pointer border 
                                 ${
@@ -216,14 +254,16 @@ const TheaterLayout = () => {
               </Link>
               <button
                 className="bg-orange-400 text-white py-2 px-10 rounded-lg shadow-md hover:bg-orange-500 transition-transform transform hover:scale-105"
-                onClick={handleReset}
+                onClick={() => {
+                  setFirstSeatSelected(false);
+                  setSelectedSeats([]);
+                  setTicketCount(0);
+                }}
               >
                 Reset
               </button>
             </div>
           </>
-        ) : (
-          <Loader />
         )}
       </div>
       <div className="mt-6 w-full">
