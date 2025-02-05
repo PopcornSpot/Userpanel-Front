@@ -16,7 +16,7 @@ const SerachBar = ({ setSearchBarValue }) => {
   const fetchMovie = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getallmovie`
+        `https://popcornspotbackend-production.up.railway.app/movie/user/getallmovie`
       );
     const movieNames = res.data.findAllMovies.map((movie) => movie.title);
     setMovie(movieNames); 
@@ -28,7 +28,7 @@ const SerachBar = ({ setSearchBarValue }) => {
   const fetchMovieData = async (name) => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie//user/getMoviebookinglayout/?name=${name}`
+        `https://popcornspotbackend-production.up.railway.app/movie//user/getMoviebookinglayout/?name=${name}`
       );
     return res.data.movie;
     } catch (error) {

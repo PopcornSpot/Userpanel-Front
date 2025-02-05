@@ -27,7 +27,7 @@ const Home = () => {
 
   const getAllMovies = async () => {
     try {
-      const res = await axios.get(`http://localhost:7000/movie/user/getallmovie`);
+      const res = await axios.get(`https://popcornspotbackend-production.up.railway.app/movie/user/getallmovie`);
       const allMovies = res.data.findAllMovies;
 
       const filteredMovies = allMovies.filter((movie) => movie.status === "Published");

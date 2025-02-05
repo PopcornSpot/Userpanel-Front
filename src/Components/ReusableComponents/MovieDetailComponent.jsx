@@ -24,7 +24,7 @@ const PersonCard = ({ image, name, role }) => (
 const MovieDetailComponent = () => {
   const [movie, setMovie] = useState({});
   const { _id } = useParams();
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,7 +33,7 @@ const MovieDetailComponent = () => {
   const fetchMovieForUpdate = async () => {
     try {
       await axios
-        .get(`http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`)
+        .get(`https://popcornspotbackend-production.up.railway.app/movie/user/getMovieDetails/?_id=${_id}`)
         .then((res) => {
           toast.error(res.data.Error);
           setMovie(res.data.movie);

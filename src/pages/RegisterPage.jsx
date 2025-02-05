@@ -29,7 +29,7 @@ function RegisterFormPage() {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:7000/user/register", formData);
+            const response = await axios.post("https://popcornspotbackend-production.up.railway.app/user/register", formData);
             toast.success(response.data.Message);
             setFormData(initialState);
             navigate("/login");

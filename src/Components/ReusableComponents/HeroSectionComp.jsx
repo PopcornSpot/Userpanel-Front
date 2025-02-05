@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Hero = () => {
-  const backendURL = "http://localhost:7000/upload/";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app/upload/";
   const [images, setImages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const fetchBanner = async () => {
     try {
-      const response = await axios.get("http://localhost:7000/banner/user/getallbanner");
+      const response = await axios.get("https://popcornspotbackend-production.up.railway.app/banner/user/getallbanner");
       const { allBanner, Error } = response.data;
 
       if (Error) {

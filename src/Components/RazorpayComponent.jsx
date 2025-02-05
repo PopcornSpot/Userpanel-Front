@@ -8,7 +8,7 @@ import axios from "axios";
 import logo from "../assets/POPFINAL.png";
 
 const RazorpayButton = () => {
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   const location = useLocation();
   const navigate = useNavigate();
   const [shows, setShows] = useState({});
@@ -131,7 +131,7 @@ const RazorpayButton = () => {
   }, []);
 
   const handleTimeout = () => {
-    alert("Your session has expired. Please try again.");
+    toast.error("Your session has expired. Please try again.");
     navigate(`/theatrelayout?movieId=${movieId}&showId=${showId}`);
   };
 
@@ -146,6 +146,9 @@ const RazorpayButton = () => {
 
   const handlePayment = async () => {
     try {
+      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+      console.log(razorpayKey);
+
       const amountInPaisa = finalTotal * 100;
       const response = await axios.post(`${backendURL}/payment/createorder`, {
         amount: amountInPaisa,
@@ -153,12 +156,12 @@ const RazorpayButton = () => {
       const order = response.data;
 
       if (!order || !order.orderId) {
-        alert("Failed to create Razorpay order");
+        toast.error("Failed to create Razorpay order");
         return;
       }
 
       const options = {
-        key: "rzp_test_xWDLy6FLoOyTeJ",
+        key: razorpayKey,
         amount: order.paymentOptions.amount,
         currency: "INR",
         name: "Popcorn Spot",
@@ -178,7 +181,7 @@ const RazorpayButton = () => {
               paymentDetails
             );
             if (verifyResponse.data.success) {
-              alert("Payment successfully!");
+              toast.success("Payment successfully completed!");
               const bookingDetails = {
                 showTime,
                 showDate,
@@ -194,11 +197,11 @@ const RazorpayButton = () => {
 
               await saveSeats(bookingDetails);
             } else {
-              alert("Payment verification failed!");
+              toast.error("Payment verification failed!");
             }
           } catch (error) {
             console.error("Verification error:", error);
-            alert("Payment verification error");
+            toast.error("Payment verification error");
           }
         },
         prefill: {
@@ -211,14 +214,14 @@ const RazorpayButton = () => {
         },
       };
       if (!window.Razorpay) {
-        alert("Razorpay script not loaded!");
+        toast.error("Razorpay script not loaded!");
         return;
       }
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
       console.error("Payment error:", error);
-      alert("An error occurred during payment");
+      toast.error("An error occurred during payment");
     }
   };
 

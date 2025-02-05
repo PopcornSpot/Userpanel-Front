@@ -15,7 +15,7 @@ const UserVotingPage = () => {
     const fetchPollData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:7000/poll/getpoll/?_id=${_id}`
+          `https://popcornspotbackend-production.up.railway.app/poll/getpoll/?_id=${_id}`
         );
         setPollData(response.data.getpoll);
       } catch (err) {
@@ -39,7 +39,7 @@ const UserVotingPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:7000/poll/update/?_id=${_id}`,
+        `https://popcornspotbackend-production.up.railway.app/poll/update/?_id=${_id}`,
         { movies: updatedMovies }
       );
       toast.success(response.data.Message);

@@ -8,7 +8,7 @@ import { GiConfirmed } from "react-icons/gi";
 import Loader from "../Components/ReusableComponents/LoaderComponent";
 
 const TicketConfirmation = () => {
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const bookingId = params.get("bookingDetails");
@@ -20,7 +20,7 @@ const TicketConfirmation = () => {
   const getMovie = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getMovieDetails/?_id=${movieId}`
+        `https://popcornspotbackend-production.up.railway.app/movie/user/getMovieDetails/?_id=${movieId}`
       );
       setMovie(res.data.movie);
     } catch (error) {
@@ -31,7 +31,7 @@ const TicketConfirmation = () => {
   const getTicketDetails = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/payment/user/getticketdetails/?_id=${bookingId}`
+        `https://popcornspotbackend-production.up.railway.app/payment/user/getticketdetails/?_id=${bookingId}`
       );
       setTicketDetails(res.data.ticketDetails);
     } catch (error) {
@@ -44,7 +44,7 @@ const TicketConfirmation = () => {
   const getTheatreDetails = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/theatre/user/getonedetails/?_id=${ticketDetails.theatreId}`
+        `https://popcornspotbackend-production.up.railway.app/theatre/user/getonedetails/?_id=${ticketDetails.theatreId}`
       );
       setTheatre(res.data.theatres);
     } catch (error) {

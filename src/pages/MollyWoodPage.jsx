@@ -10,7 +10,7 @@ const Mollywood = () => {
   const getAllMovies = async () => {
     try {
       await axios
-        .get(`http://localhost:7000/movie/user/getallmovie`)
+        .get(`https://popcornspotbackend-production.up.railway.app/movie/user/getallmovie`)
         .then((res) => {
           toast.error(res.data.Error);
           const allMovies = res.data.findAllMovies;

@@ -35,7 +35,7 @@ const AddFriendComponent = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:7000/friend/createfriend", formData,
+      const res = await axios.post("https://popcornspotbackend-production.up.railway.app/friend/createfriend", formData,
         {
           headers: { Authorization: `Bearer ${authToken}` },
         }

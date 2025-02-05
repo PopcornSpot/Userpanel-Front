@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { FaUserFriends } from "react-icons/fa";
 
 const FriendListPage = () => {
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   const navigate = useNavigate();
   const [friendDetails, setFriendDetails] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
@@ -61,7 +61,7 @@ const FriendListPage = () => {
           sortedTickets.map(async (ticket) => {
             try {
               const res = await axios.get(
-                `http://localhost:7000/movie/user/getMovieDetails/?_id=${ticket.movieId}`
+                `https://popcornspotbackend-production.up.railway.app/movie/user/getMovieDetails/?_id=${ticket.movieId}`
               );
               return res.data.movie.title;
             } catch (error) {

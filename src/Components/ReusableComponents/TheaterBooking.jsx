@@ -16,13 +16,13 @@ const TheaterBooking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const { _id } = useParams();
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   const navigate = useNavigate();
 
   const fetchTheatres = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/theatre/user/getonedetails/?_id=${_id}`
+        `https://popcornspotbackend-production.up.railway.app/theatre/user/getonedetails/?_id=${_id}`
       );
       toast.success(res.data.Message);
       setTheatres(res.data.theatres);
@@ -34,7 +34,7 @@ const TheaterBooking = () => {
   const fetchShows = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/show/user/getshowfortheatre/?_id=${_id}`
+        `https://popcornspotbackend-production.up.railway.app/show/user/getshowfortheatre/?_id=${_id}`
       );
       const today = new Date();
       const filteredShows = res.data.shows.filter((show) => {
@@ -50,7 +50,7 @@ const TheaterBooking = () => {
   const fetchMovies = async (movieName) => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getMoviebookinglayout/?name=${movieName}`
+        `https://popcornspotbackend-production.up.railway.app/movie/user/getMoviebookinglayout/?name=${movieName}`
       );
       setMovie(res.data.movie);
       return res.data.movie;

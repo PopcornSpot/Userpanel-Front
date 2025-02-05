@@ -17,7 +17,7 @@ const fetchUserForUpdate = async (_id, setUser) => {
   try {
     const authToken = localStorage.getItem("token");
     await axios
-      .get(`http://localhost:7000/user/getdetails/?_id=${_id}`, {
+      .get(`https://popcornspotbackend-production.up.railway.app/user/getdetails/?_id=${_id}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((res) => {
@@ -58,7 +58,7 @@ const EditProfile = () => {
     try {
       await axios
         .put(
-          `http://localhost:7000/user/updateuser/?_id=${_id}`,
+          `https://popcornspotbackend-production.up.railway.app/user/updateuser/?_id=${_id}`,
           uploadData,
           {
             headers: {

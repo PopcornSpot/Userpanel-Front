@@ -23,7 +23,7 @@ const TheaterLayout = () => {
   const fetchShows = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/show/user/getshowfortheatrelayout/?_id=${showId}`
+        `https://popcornspotbackend-production.up.railway.app/show/user/getshowfortheatrelayout/?_id=${showId}`
       );
       setShows(res.data.shows);
     } catch (error) {
@@ -34,7 +34,7 @@ const TheaterLayout = () => {
   const fetchBookedSeats = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/payment/user/getbookedseats`,
+        `https://popcornspotbackend-production.up.railway.app/payment/user/getbookedseats`,
         {
           params: { movieId, showId, selectedDate, showTime },
         }

@@ -31,7 +31,7 @@ const Login = () => {
 
     try {
       await axios
-        .post("http://localhost:7000/user/login", formData)
+        .post("https://popcornspotbackend-production.up.railway.app/user/login", formData)
         .then((res) => {
           localStorage.clear();
           localStorage.setItem("token", res.data.token);
@@ -60,10 +60,8 @@ const Login = () => {
     const data = { ...formData, userName: user.name, email: user.email, picture: user.picture };
 
     try {
-      console.log("tryyyy");
-
       await axios
-        .post("http://localhost:7000/user/googlelogin", data)
+        .post("https://popcornspotbackend-production.up.railway.app/user/googlelogin", data)
         .then((res) => {
           localStorage.clear();
           localStorage.setItem("token", res.data.token);

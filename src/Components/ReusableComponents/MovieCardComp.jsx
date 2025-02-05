@@ -2,7 +2,7 @@ import { FaStar } from "react-icons/fa";
 import { Link,} from "react-router-dom";
 
 const MovieCard = ({ data }) => {
-  const backendURL= "http://localhost:7000"
+  const backendURL= "https://popcornspotbackend-production.up.railway.app"
   const { _id,fileName, title, certificate, language } = data;
   const views="234k";
   const ratings="8.4/10";

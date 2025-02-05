@@ -2,7 +2,7 @@ import React from "react";
 import image from "../../assets/LoginImagebg.jpg";
 
 const FriendListCard = ({ friends }) => {
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {friends.map((friend, index) => (

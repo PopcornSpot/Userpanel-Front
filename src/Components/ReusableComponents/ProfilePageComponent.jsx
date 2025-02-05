@@ -35,7 +35,7 @@ const UserProfile = () => {
     totalMovies: 0,
   });
   const navigate = useNavigate();
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
 
   const calculateStatistics = (tickets) => {
     const moneySpent = tickets.reduce(

@@ -30,7 +30,7 @@ const ForgotPassword = () => {
 
     try {
       await axios
-        .put("http://localhost:7000/user/resetpassword", formData,
+        .put("https://popcornspotbackend-production.up.railway.app/user/resetpassword", formData,
         )
         .then((res) => {
           localStorage.setItem("token", res.data.token);

@@ -27,7 +27,7 @@ const MovieBooking = () => {
   const fetchMovie = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getMovieDetails/?_id=${_id}`
+        `https://popcornspotbackend-production.up.railway.app/movie/user/getMovieDetails/?_id=${_id}`
       );
       setMovie(res.data.movie);
     } catch (error) {
@@ -41,7 +41,7 @@ const MovieBooking = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:7000/theatre/user/getalltheatredetails`
+        `https://popcornspotbackend-production.up.railway.app/theatre/user/getalltheatredetails`
       );
       setTheatres(res.data.theatres);
     } catch (error) {
@@ -55,7 +55,7 @@ const MovieBooking = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:7000/show/user/getallshows`
+        `https://popcornspotbackend-production.up.railway.app/show/user/getallshows`
       );
       const filteredShows = res.data.shows.filter(
         (show) => show.movie === movie.title

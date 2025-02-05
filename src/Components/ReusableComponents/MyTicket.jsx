@@ -10,13 +10,13 @@ import ticketImage from "../../assets/ticket-Image.jpg";
 const MyTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
   const navigate = useNavigate();
 
   const fetchTicket = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/payment/user/getalltickets`,
+        `https://popcornspotbackend-production.up.railway.app/payment/user/getalltickets`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +51,7 @@ const MyTickets = () => {
   const fetchMovies = async (movieId) => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/movie/user/getMovieDetails/?_id=${movieId}`
+        `https://popcornspotbackend-production.up.railway.app/movie/user/getMovieDetails/?_id=${movieId}`
       );
       return res.data.movie;
     } catch (error) {

@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Loader from "../Components/ReusableComponents/LoaderComponent";
 
 const Card = ({ _id ,image, title, address,screenType }) => {
-  const backendURL = "http://localhost:7000";
+  const backendURL = "https://popcornspotbackend-production.up.railway.app";
 
   return (
   <Link to={`/theatrebooking/${_id}`}>
@@ -38,7 +38,7 @@ const TheaterCard = () => {
 
   const fetchTheatres = async () => {
     try {
-      const res = await axios.get(`http://localhost:7000/theatre/user/getalltheatredetails`);
+      const res = await axios.get(`https://popcornspotbackend-production.up.railway.app/theatre/user/getalltheatredetails`);
       toast.success(res.data.Message); 
       setTheatres(res.data.theatres); 
     } catch (error) {
