@@ -107,9 +107,9 @@ const FriendListPage = () => {
       <div className="w-full fixed top-0 z-50">
         <NavBar />
       </div>
-      <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100 p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Friend List</h1>
-        <div className=" w-full mb-6 px-8 mt-12 flex justify-between gap-10">
+      <div className="min-h-screen mt-16 bg-gradient-to-r from-gray-50 to-gray-100 py-8 px-2 sm:px-8">
+        <h1 className="text-3xl px-8 font-bold text-gray-800 mb-2">Friend List</h1>
+        <div className=" w-full mb-0 sm:mb-5 px-8 sm:mt-5 flex justify-between gap-10">
           <input
             type="text"
             placeholder="Search friends by name..."
@@ -118,9 +118,9 @@ const FriendListPage = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
           />
           <Link to={"/addfriend"}>
-          <div className="w-40 gap-2 rounded-lg flex justify-center items-center py-2 px-4 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-500">
+          <div className="w-10 h-10 sm:w-40 gap-2 rounded-lg flex justify-center items-center py-2 sm:px-4 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-500">
             <FaUserFriends/>
-            Add Friends
+            <span className="hidden sm:block">Add Friends</span>
           </div>
           </Link>
         </div>

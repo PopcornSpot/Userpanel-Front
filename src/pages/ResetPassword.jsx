@@ -53,11 +53,11 @@ const ForgotPassword = () => {
       <div className="w-[60%] sm:max-lg:w-[45%]  lg:max-xl:[50%] xl:max-2xl: h-full max-sm:hidden">
         <img src={ResetImage} alt="Background" className="w-full h-full object-cover" />
       </div>
-      <div className={`w-[40%] sm:max-lg:w-[55%]  lg:max-xl:[50%] h-screen flex flex-col items-center bg-gray-50 justify-center gap-0`}>
+      <div className={`w-[100%] sm:max-lg:w-[55%]  lg:max-xl:[50%] h-screen flex flex-col items-center bg-gray-50 justify-center gap-0`}>
         <h1 className={`text-2xl font-bold text-center mb-4`}>Reset Password</h1>
         <form
           onSubmit={handleOnSubmit}
-          className="w-[400px] max-w-full bg-gray-800 rounded-lg flex flex-col justify-center items-center p-6 gap-6 shadow-md"
+          className="w-[370px] sm:w-[400px] max-w-full bg-gray-800 rounded-lg flex flex-col justify-center items-center p-6 gap-6 shadow-md"
         >
           <div className="w-full">
             <label className="block text-gray-100 text-sm font-medium mb-2">Email</label>

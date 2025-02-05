@@ -44,15 +44,13 @@ function RegisterFormPage() {
 
     return (
         <div className="w-full h-screen flex items-center justify-between bg-gray-50">
-            {/* Background Image Section */}
             <div className="w-[60%] sm:max-lg:w-[45%]  lg:max-xl:[50%] xl:max-2xl: h-full max-sm:hidden">
                 <img src={Background} alt="Background" className="w-full h-full object-cover" />
             </div>
 
-            {/* Registration Form Section */}
             <div className="w-full md:w-[40%] h-screen flex flex-col items-center bg-gradient-to-br from-gray-100 to-gray-200 justify-center px-6">
                 <form
-                    className="w-[400px] h-[500px] max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center"
+                    className="w-[370px] sm:w-[400px] h-[500px] max-w-lg bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg rounded-xl p-8 space-y-6 flex flex-col items-center"
                     onSubmit={handleSubmit}
                     onReset={handleReset}
                 >
