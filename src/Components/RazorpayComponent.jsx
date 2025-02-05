@@ -181,7 +181,7 @@ const RazorpayButton = () => {
               paymentDetails
             );
             if (verifyResponse.data.success) {
-              toast.success("Payment successfully completed!");
+              alert("Payment successfully!");
               const bookingDetails = {
                 showTime,
                 showDate,
