@@ -3,7 +3,7 @@ import NavBar from "./NavbarComponent";
 
 const NestedMovies = () => (
   <>
-    <header>
+    <header className="fixed top-0 z-50">
       <NavBar />
     </header>
     <div>
