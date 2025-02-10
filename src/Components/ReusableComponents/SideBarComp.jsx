@@ -17,8 +17,8 @@ const sideBarList = [
   { page: "Movies", path: "/movies", icon: <BiMoviePlay className="text-xl text-gray-400" /> },
   { page: "Theater", path: "/theatre", icon: <GiTheater className="text-xl text-gray-400" /> },
   { page: "My Tickets", path: "/mytickets", icon: <BsTicketPerforated className="text-xl text-gray-400" /> },
-  { page: "Insights", path: "/insights", icon: <SiPagespeedinsights className="text-xl text-gray-400" /> },
-  { page: "WishList", path: "/wishlist", icon: <FaRegHeart className="text-xl text-gray-400" /> },
+  // { page: "Insights", path: "/insights", icon: <SiPagespeedinsights className="text-xl text-gray-400" /> },
+  // { page: "WishList", path: "/wishlist", icon: <FaRegHeart className="text-xl text-gray-400" /> },
   { page: "Profile", path: "/profile", icon: <FaUserCircle className="text-xl text-gray-400" /> },
 ];
 

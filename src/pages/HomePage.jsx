@@ -38,6 +38,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (movieData.length !== 0) {
       filterMoviesByDate(movieData, setNewMovies, setUpcomingMovies);
     } else {
@@ -47,7 +48,7 @@ const Home = () => {
 
   return (
     <>
-      <header>
+      <header className="fixed z-30 top-0">
         <NavBar />
       </header>
       {

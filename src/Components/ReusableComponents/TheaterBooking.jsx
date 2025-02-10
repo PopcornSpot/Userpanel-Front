@@ -60,6 +60,7 @@ const TheaterBooking = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchTheatres();
     fetchShows();
     setSelectedDate(new Date().toISOString().split("T")[0]);

@@ -61,6 +61,7 @@ const MyTickets = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchTicket();
   }, []);
 

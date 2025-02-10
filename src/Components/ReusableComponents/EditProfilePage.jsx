@@ -80,6 +80,7 @@ const EditProfile = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchUserForUpdate(_id, setFormData);
   }, [_id]);
 

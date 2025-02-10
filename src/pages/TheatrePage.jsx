@@ -48,6 +48,7 @@ const TheaterCard = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchTheatres();
   }, []);
 
@@ -60,7 +61,7 @@ const TheaterCard = () => {
 
   return (
     <div className="min-h-screen  flex flex-col items-center">
-    <div className="w-full sticky top-0 z-50">
+    <div className="w-full fixed top-0 z-50">
       <NavBar />
     </div>
 {
@@ -76,7 +77,7 @@ const TheaterCard = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="flex-grow p-2 focus:outline-none rounded-l-lg"
         />
-        <button className="p-2 bg-orange-500 hover:bg-orange-500 rounded-r-lg text-white">
+        <button className="p-2 py-3 bg-orange-500 hover:bg-orange-600 rounded-r-lg text-white">
           <FiSearch />
         </button>
       </div>

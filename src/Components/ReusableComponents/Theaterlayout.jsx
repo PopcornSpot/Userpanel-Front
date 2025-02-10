@@ -52,6 +52,7 @@ const TheaterLayout = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchShows();
     fetchBookedSeats();
   }, []);

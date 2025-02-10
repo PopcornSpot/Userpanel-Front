@@ -8,6 +8,7 @@ import {
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 import Logo from "../../assets/POPFINAL.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -25,12 +26,12 @@ const Footer = () => {
               movies. Stay updated with the latest, upcoming, and trending
               movies.
             </p>
-            <a
-              href="/about"
+            <Link
+              to="/about"
               className="mt-4 inline-block text-orange-400 font-semibold hover:underline transition duration-300"
             >
               Learn more about us
-            </a>
+            </Link>
           </div>
 
           <div className="flex-1 min-w-[150px]">
@@ -39,44 +40,60 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
+                >
+                  Suggestion Movies
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Latest Movies
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Upcoming Movies
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/movies/kollywood"
+                <Link
+                  to="/theatre"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
-                  Movies
-                </a>
+                  Theatres
+                </Link>
               </li>
               <li>
-                <a
-                  href="/mytickets"
+                <Link
+                  to="/mytickets"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   My Tickets
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/profile"
+                  className="text-gray-300 hover:text-orange-400 transition duration-300"
+                >
+                  Profile
+                </Link>
               </li>
             </ul>
           </div>
@@ -86,28 +103,28 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="/termsandcondition"
+                <Link
+                  to="/termsandcondition"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Terms of Service
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/privacy"
+                <Link
+                  to="/privacy"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/refund"
+                <Link
+                  to="/refund"
                   className="text-gray-300 hover:text-orange-400 transition duration-300"
                 >
                   Refund Policy
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -141,30 +158,30 @@ const Footer = () => {
             © {new Date().getFullYear()} <b className="text-orange-400">PopcornSpot</b>. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a
-              href="#"
+            <Link
+              to="#"
               className="text-gray-400 hover:text-orange-400 transition duration-300 text-2xl"
             >
               <FaFacebook />
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="text-gray-400 hover:text-orange-400 transition duration-300 text-2xl"
             >
               <FaInstagram />
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="text-gray-400 hover:text-orange-400 transition duration-300 text-2xl"
             >
               <FaTwitter />
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="#"
               className="text-gray-400 hover:text-orange-400 transition duration-300 text-2xl"
             >
               <FaLinkedin />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

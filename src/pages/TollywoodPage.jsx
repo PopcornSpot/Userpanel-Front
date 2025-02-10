@@ -38,6 +38,7 @@ const Tollywood = () => {
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     getAllMovies();
   }, []);
 
