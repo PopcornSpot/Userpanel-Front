@@ -57,12 +57,12 @@ const Hero = () => {
           <h1 className="text-2xl font-extrabold sm:text-5xl text-white">
             The big screen awaits
             <br />
-            <strong className="mt-4 font-extrabold text-orange-400 sm:block">
+            <strong className="mt-4 font-extrabold text-orange-500 sm:block">
               Grab your tickets now!
             </strong>
           </h1>
           <Link to={"/theatre"}>
-            <span className="block w-full rounded bg-orange-400 mt-2 sm:mt-4 px-2 sm:px-3 py-1.5 sm:py-3 font-semibold text-white shadow focus:outline-none focus:ring sm:w-auto hover:bg-orange-500 transition">
+            <span className="block w-full rounded bg-orange-500 mt-2 sm:mt-4 px-2 sm:px-3 py-1.5 sm:py-3 font-semibold text-white shadow focus:outline-none focus:ring sm:w-auto hover:bg-orange-600 transition">
               Book Tickets
             </span>
           </Link>
