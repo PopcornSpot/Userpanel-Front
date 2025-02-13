@@ -57,7 +57,7 @@ const Hero = () => {
           <h1 className="text-2xl font-extrabold sm:text-5xl text-white">
             The big screen awaits
             <br />
-            <strong className="mt-4 font-extrabold text-orange-500 sm:block">
+            <strong className="mt-4 font-extrabold text-orange-400 sm:block">
               Grab your tickets now!
             </strong>
           </h1>

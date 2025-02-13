@@ -92,7 +92,7 @@ const MyTickets = () => {
                 <img
                   src={`${backendURL}/upload/${ticket.movieDetails.fileName}` || " "}
                   alt={ticket.movieDetails.title || "Movie"}
-                  className="w-48 object-cover h-auto"
+                  className="w-48 max-sm:w-40 object-cover h-auto"
                 />
 
                 <div className="p-6 flex flex-col justify-center gap-3 w-2/3">
