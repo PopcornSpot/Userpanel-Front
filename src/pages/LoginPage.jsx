@@ -37,7 +37,7 @@ const Login = () => {
           localStorage.setItem("token", res.data.token);
           toast.success(res.data.Message);
           setFormData(initialState);
-          navigate("/");
+          navigate(-1);
         })
         .catch((err) => {
           console.log(err);
@@ -67,7 +67,7 @@ const Login = () => {
           localStorage.setItem("token", res.data.token);
           toast.success(res.data.Message);
           setFormData(initialState);
-          navigate("/");
+          navigate(-1);
         })
         .catch((err) => {
           console.log(err);
